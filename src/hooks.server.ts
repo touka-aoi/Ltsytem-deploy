@@ -1,5 +1,6 @@
 import '$lib/databaseClient/supabaseClient';
-import { Pool } from 'pg';
+import pkg from 'pg';
+const { Pool } = pkg;
 import { POSTGRES_HOST, POSTGRES_PASS, POSTGRES_USER, POSRGRES_DB } from '$env/static/private';
 
 export const pool = new Pool({
