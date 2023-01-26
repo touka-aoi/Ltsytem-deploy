@@ -2,6 +2,8 @@
 // it so that it gets served as a static asset in production
 export const prerender = true;
 import { TEST } from '$env/static/private';
+import type { PageServerLoad } from './$types';
 
-console.log(TEST);
-
+export const load: PageServerLoad = async (event) => {
+  return {test: TEST};
+}
