@@ -1,1 +1,0 @@
-import '$lib/databaseClient/supabaseClient';
