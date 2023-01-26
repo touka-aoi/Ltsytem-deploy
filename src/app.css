@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .minibtn {
+    @apply py-2 px-4 rounded-md inline-block text-center font-bold
+  }
+  .mainColor {
+    @apply bg-slate-100
+  }
+  .Ltview {
+    @apply mx-[25%] flex flex-col my-24
+  }
+  .accountView {
+    @apply mx-[15%] flex flex-col my-24
+  }
+  .flash {
+    @apply h-12
+  }
+
+}
