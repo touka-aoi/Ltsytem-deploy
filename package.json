@@ -36,6 +36,7 @@
   "engines": {
     "node": ">=16.14"
   },
+  "prepare": "svelte-kit sync",
   "dependencies": {
     "@supabase/auth-helpers-sveltekit": "^0.8.6",
     "@supabase/supabase-js": "^2.2.2",
