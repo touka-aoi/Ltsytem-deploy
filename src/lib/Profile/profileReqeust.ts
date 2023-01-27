@@ -7,7 +7,7 @@ export class ProfileRequest {
 		this._profileRequestInterface = profileInterface;
 	}
 
-	getProfile(id: Number) {
+	getProfile(id: string) {
 		return this._profileRequestInterface.getProfile(id);
 	}
 
@@ -19,7 +19,7 @@ export class ProfileRequest {
 		return this._profileRequestInterface.upsertProfile(userProfile);
 	}
 
-	deleteProfile(id: Number) {
+	deleteProfile(id: string) {
 		return this._profileRequestInterface.deleteProfile(id);
 	}
 }

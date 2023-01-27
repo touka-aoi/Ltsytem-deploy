@@ -12,7 +12,7 @@ function removeNull(obj: { [key: string]: any }) {
 }
 
 export class ProfileRequestSupabase implements ProfileRequestInterface {
-	async getProfile(id: Number): Promise<profileOutput> {
+	async getProfile(id: string): Promise<profileOutput> {
 		let response: profile | undefined = undefined;
 		let errMsg: string | undefined = undefined;
 		
@@ -96,7 +96,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 		return { message: errMsg,};
 	}
 
-	async deleteProfile(id: Number): Promise<error> {
+	async deleteProfile(id: string): Promise<error> {
 		let errMsg: string | undefined = undefined;
 		try {
 			let { error } = await supabase.from('profiles').delete().eq('id', id);

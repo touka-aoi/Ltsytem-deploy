@@ -1,5 +1,5 @@
 export interface profile {
-	id: Number, 
+	id: string, 
 	username: string | undefined;
 	avatarURL: string | undefined;
 }
@@ -14,8 +14,8 @@ export interface error {
 }
 
 export abstract class ProfileRequestInterface {
-	abstract getProfile(id: Number): Promise<profileOutput>;
+	abstract getProfile(id: string): Promise<profileOutput>;
 	abstract getProfileFromUsername(username: string): Promise<profileOutput>;
 	abstract upsertProfile(userProfile: profile): Promise<error>;
-	abstract deleteProfile(id: Number): Promise<error>;
+	abstract deleteProfile(id: string): Promise<error>;
 }
