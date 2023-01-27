@@ -1,6 +1,6 @@
 import type { ProfileRequestInterface, profile } from './profileRequestInterface';
 
-export class profileRequest {
+export class ProfileRequest {
 	private _profileRequestInterface: ProfileRequestInterface;
 
 	constructor(profileInterface: ProfileRequestInterface) {

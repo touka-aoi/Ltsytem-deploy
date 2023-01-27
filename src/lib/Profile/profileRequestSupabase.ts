@@ -11,7 +11,7 @@ function removeNull(obj: { [key: string]: any }) {
 	return newObj;
 }
 
-export class profileRequestSupabase implements ProfileRequestInterface {
+export class ProfileRequestSupabase implements ProfileRequestInterface {
 	async getProfile(id: Number): Promise<profileOutput> {
 		let response: profile | undefined = undefined;
 		let errMsg: string | undefined = undefined;

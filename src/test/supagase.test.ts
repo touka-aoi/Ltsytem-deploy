@@ -1,9 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { profileRequest } from '$lib/Profile/profileReqeust';
-import { profileRequestSupabase } from '$lib/Profile/profileRequestSupabase';
-import type { profile } from '$lib/Profile/profileRequestInterface';
+import { ProfileRequest } from '$lib/Profile/profileReqeust';
+import { ProfileRequestSupabase } from '$lib/Profile/profileRequestSupabase';
 
-const profileService = new profileRequest(new profileRequestSupabase);
+const profileService = new ProfileRequest(new ProfileRequestSupabase);
 
 describe('check profile', () => {
 	it('getprofilefromName', async () => {
