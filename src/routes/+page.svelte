@@ -1,22 +1,22 @@
 <script lang="ts">
-	// import LTInformation from '$lib/LtInformation.svelte';
-	// import { goto } from '$app/navigation';
-	// import type { PageData } from './$types';
-	// import type { LtInfoInput } from '$lib/LtHold/LtHoldRequstInterface';
+	import LTInformation from '$lib/LtInformation.svelte';
+	import { goto } from '$app/navigation';
+	import type { PageData } from './$types';
+	import type { LtInfoInput } from '$lib/LtHold/LtHoldRequstInterface';
 
-	// export let data: PageData;
+	export let data: PageData;
 
-	// const latestLt = data.latestLt; // 最新Lt
-	// let LTitems: Array<LtInfoInput> = [];
-	// for (let i = 0; i < 1; i++) {
-	// 	LTitems.push(latestLt.data);
-	// }
+	const latestLt = data.latestLt; // 最新Lt
+	let LTitems: Array<LtInfoInput> = [];
+	for (let i = 0; i < 1; i++) {
+		LTitems.push(latestLt.data);
+	}
 </script>
 
 <!-- ヒーロー画面 -->
 <section>
 	<div class="bg-gray-300 h-60v flex items-center justify-center">
-		<!-- <input type="button" id="latestLt" on:click={() => goto(`/lts/${latestLt.data.id}`)} /> -->
+		<input type="button" id="latestLt" on:click={() => goto(`/lts/${latestLt.data.id}`)} />
 		<label for="latestLt" class="minibtn bg-slate-100 cursor-pointer">LTに参加する</label>
 	</div>
 </section>
@@ -30,15 +30,15 @@
 				<!-- 複数のLTを並べる -->
 				<div class="flex m-4 gap-2">
 					<!-- LT詳細 -->
-					<!-- {#each LTitems as item}
+					{#each LTitems as item}
 						<LTInformation
 							state={item.holdDate > new Date() ? '募集中' : '終了'}
 							ltname={item.name}
 							maxMem={String(item.maxMem)}
 							ltDetailData={latestLt.speakers}
 							id={String(latestLt.data.id)}
-						/> -->
-					<!-- {/each} -->
+						/>
+					{/each}
 				</div>
 			</div>
 			<div class="flex items-end justify-end my-9">

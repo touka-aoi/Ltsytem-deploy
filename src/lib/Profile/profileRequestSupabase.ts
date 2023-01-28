@@ -1,14 +1,19 @@
 import { supabase } from '$lib/databaseClient/supabaseClient';
 import type { ProfileRequestInterface, profile, profileOutput, error } from './profileRequestInterface';
 
-function removeNull(obj: { [key: string]: any }) {
-	const newObj = { ...obj };
-	Object.keys(newObj).forEach((key) => {
-		if (newObj[key] === null) {
-			delete newObj[key];
-		}
-	});
-	return newObj;
+interface supabaseDataType {
+	username: string | undefined;
+	id: string,
+	avatar_url: string | undefined,
+}
+
+function convertProfileType(userData: profile)  {
+	const supabaseType: supabaseDataType = {
+		username: userData.username,
+		id: userData.id,
+		avatar_url : userData.avatarURL,
+	}
+	return supabaseType;
 }
 
 export class ProfileRequestSupabase implements ProfileRequestInterface {
@@ -74,15 +79,16 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 	}
 
 	async upsertProfile(userProfile: profile): Promise<error> {
+		const profile = convertProfileType(userProfile);
 		let errMsg: string | undefined = undefined;
 
 		try {
 			let { data, error } = await supabase
 				.from('profiles')
-				.upsert(userProfile)
+				.upsert(profile)
 				.select('username, avatar_url')
 				.single();
-
+			
 			if (error) throw error;
 		} catch (error: any) {
 			if (error instanceof Error) {
