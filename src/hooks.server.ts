@@ -1,11 +1,12 @@
 import '$lib/databaseClient/supabaseClient';
-// import { Pool } from 'pg';
-// import { env } from '$env/dynamic/public';
 
-// export const pool = new Pool({
-// 	host: env.PUBLIC_POSTGRES_HOST,
-// 	database: env.PUBLIC_POSRGRES_DB,
-// 	user: env.PUBLIC_POSTGRES_USER,
-// 	password: env.PUBLIC_POSTGRES_PASS,
-// 	ssl: true
-// });
+import pkg from 'pg';
+const { Pool } = pkg;
+
+export const pool = new Pool({
+	host: import.meta.env.VITE_POSTGRES_HOST,
+	database: import.meta.env.VITE_POSRGRES_DB,
+	user: import.meta.env.VITE_POSTGRES_USER,
+	password: import.meta.env.VITE_POSTGRES_PASS,
+	ssl: true
+});

@@ -1,33 +1,26 @@
 import type { LayoutServerLoad } from './$types';
 import { getServerSession } from '@supabase/auth-helpers-sveltekit';
-// import { Account } from '$lib/Account';
-import { userState } from '$lib/store/userState';
+import { Account } from '$lib/Account';
+import { redirect } from '@sveltejs/kit';
+
+const accountService = new Account();
 
 export const load: LayoutServerLoad = async (event) => {
 	const session = await getServerSession(event);
-	// if (session) {
-	// 	const request = new Account();
-	// 	const {
-	// 		user: { id }
-	// 	} = session;
-	// 	const {
-	// 		data: { username }
-	// 	} = await request.getProfile(id);
-	// 	if (username) {
-	// 		userState.set({
-	// 			userId: id,
-	// 			username: username
-	// 		});
-	// 	}
-	// } else {
-	// 	userState.set({
-	// 		userId: '',
-	// 		username: ''
-	// 	});
-	// }
-
+	const path = event.url.pathname;
+	if (session) {
+		const {	user: { id }} = session;
+		const { data } = await accountService.profileRequest.getProfile(id);
+		const isUsername = data?.username;
+		if (!isUsername && path != "/register") {
+			throw redirect(307, "/register");
+		}
+	} else {
+		if (path == "/register") {
+			throw redirect(307, "/");
+		}
+	}
 	return {
-		// supabaseのsessionを取得する
 		session: session
 	};
 };
