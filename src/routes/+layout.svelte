@@ -14,7 +14,7 @@
 		} = supabase.auth.onAuthStateChange(() => {
 			invalidate('supabase:auth');
 		});
-		
+
 		return () => {
 			subscription.unsubscribe();
 		};

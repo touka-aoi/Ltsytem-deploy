@@ -22,7 +22,7 @@
 	});
 </script>
 
-<div class="flex gap-3">
+<div class="flex gap-3 mx-2">
 	{#if !$page.data.session}
 		<a class="bg-zinc-50  minibtn" href="/login"> ログイン </a>
 	{:else}

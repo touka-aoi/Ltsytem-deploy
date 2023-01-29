@@ -16,7 +16,7 @@
 
 	let avatarData: string | undefined = undefined;
 
-	const size = 20;
+	const size = 10;
 	let loading = false;
 	let flashmessage: string | undefined = undefined;
 
@@ -40,7 +40,7 @@
 	const delteAvatar = () => {
 		avatarData = undefined;
 	};
-1
+
 	async function updateProfile() {
 		try {
 			if (!username) {
@@ -53,7 +53,7 @@
 
 			// ファイル更新
 			if (file != undefined && avatarFilename != undefined) {
-				const error = await accountRequest.avatarRequest.uploadAvatar({file: file, filename: avatarFilename});
+				const error = await accountRequest.avatarRequest.uploadAvatar({ file: file, filename: avatarFilename });
 				if (error?.message) throw Error(error.message);
 			}
 
@@ -62,7 +62,7 @@
 				const error = await accountRequest.avatarRequest.deleteAvatar(avatarURL);
 				if (error?.message) throw Error(error.message);
 			}
-			const error = await accountRequest.profileRequest.upsertProfile({id: userId, username: username, avatarURL: avatarFilename});
+			const error = await accountRequest.profileRequest.upsertProfile({ id: userId, username: username, avatarURL: avatarFilename });
 
 			if (error.message) throw Error(error.message);
 
@@ -80,11 +80,6 @@
 	});
 </script>
 
-
-
-
-
-
 {#if flashmessage}
 	<div class="flash bg-green-200 flex items-center pl-5">
 		{flashmessage}
@@ -98,63 +93,41 @@
 		</button>
 	</div>
 {/if}
-<div class="mx-[15%] flex flex-col my-24">
+<div class="flex flex-col my-24">
 	<form on:submit|preventDefault={updateProfile}>
-		<div class="bg-neutral-200 flex flex-col rounded-sm p-16 gap-20">
-			<div class="flex gap-56">
-				<!-- ユーザー名 -->
-				<div class="flex flex-col gap-3">
-					<p class="font-bold text-lg">ユーザー名</p>
-					<input
-						type="text"
-						bind:value={username}
-						placeholder="UserID"
-						class="bg-slate-100 w-[300px] h-[32px] rounded-sm px-3"
-					/>
-					{#if errorMsg}
-						<p class="text-red-500 text-sm">{errorMsg}</p>
-					{/if}
-				</div>
+		<div class="bg-neutral-200 flex flex-col rounded-sm py-4">
+			<div class="flex flex-col lg:flex-row p-3 gap-5">
 				<!-- プロフィール画像 -->
-				<div class="flex flex-col gap-3 items-center ml-auto">
+				<div class="flex flex-col gap-3 items-center md:ml-auto md:px-10">
 					<p class="font-bold text-lg mr-auto">プロフィール画像</p>
 					{#if avatarData}
 						<div style="height: {size}em; width: {size}em;" class="overflow-hidden rounded-full">
 							<img src={avatarData} alt={avatarData} />
 						</div>
 					{:else}
-						<div
-							class="bg-slate-100 rounded-full flex flex-col justify-center items-center"
-							style="height: {size}em; width: {size}em;"
-						/>
+						<div class="bg-slate-100 rounded-full flex flex-col justify-center items-center" style="height: {size}em; width: {size}em;" />
 					{/if}
 					<div class="flex gap-2">
-						<input
-							class="hidden"
-							type="file"
-							id="single"
-							accept="image/*"
-							bind:files
-							on:change={checkAvatar}
-							disabled={loading}
-						/>
-						<label
-							for="single"
-							class="minibtn cursor-pointer {loading ? 'bg-gray-300' : 'mainColor'}"
-							>プロフィール画像を変更</label
-						>
-						<button class="minibtn mx-auto bg-red-400 p-2" on:click={delteAvatar}>
+						<input class="hidden" type="file" id="single" accept="image/*" bind:files on:change={checkAvatar} disabled={loading} />
+						<label for="single" class="minibtn cursor-pointer {loading ? 'bg-gray-300' : 'mainColor'}">プロフィール画像を変更</label>
+						<button class="minibtn mx-auto bg-red-400 p-2" on:click|preventDefault={delteAvatar}>
 							<img src="/Trash.svg" alt="delteProfile" class="w-5" />
 						</button>
 					</div>
 				</div>
+				<!-- ユーザー名 -->
+				<div class="flex flex-col gap-3">
+					<p class="font-bold text-lg">ユーザー名</p>
+					<input type="text" bind:value={username} placeholder="UserID" class="bg-slate-100 w-[300px] h-[32px] rounded-sm px-3" />
+					{#if errorMsg}
+						<p class="text-red-500 text-sm">{errorMsg}</p>
+					{/if}
+				</div>
 			</div>
-			<input
-				type="submit"
-				class="cursor-pointer minibtn bg-green-500 h-[40px] mr-auto"
-				value="プロフィールを更新する"
-				disabled={loading}
-			/>
+
+			<div class="px-3 mt-6">
+				<input type="submit" class="cursor-pointer minibtn bg-green-500 h-[40px] mr-auto" value="プロフィールを更新する" disabled={loading} />
+			</div>
 		</div>
 	</form>
 </div>

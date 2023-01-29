@@ -3,16 +3,16 @@ import type { ProfileRequestInterface, profile, profileOutput, error } from './p
 
 interface supabaseDataType {
 	username: string | undefined;
-	id: string,
-	avatar_url: string | undefined,
+	id: string;
+	avatar_url: string | undefined;
 }
 
-function convertProfileType(userData: profile)  {
+function convertProfileType(userData: profile) {
 	const supabaseType: supabaseDataType = {
 		username: userData.username,
 		id: userData.id,
-		avatar_url : userData.avatarURL,
-	}
+		avatar_url: userData.avatarURL
+	};
 	return supabaseType;
 }
 
@@ -20,20 +20,16 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 	async getProfile(id: string): Promise<profileOutput> {
 		let response: profile | undefined = undefined;
 		let errMsg: string | undefined = undefined;
-		
+
 		try {
-			const { data, error, status } = await supabase
-				.from('profiles')
-				.select('username, avatar_url')
-				.eq('id', id)
-				.single();
+			const { data, error, status } = await supabase.from('profiles').select('username, avatar_url').eq('id', id).single();
 
 			if (data) {
 				response = {
 					id: id,
 					avatarURL: data.avatar_url,
-					username: data.username,
-				}
+					username: data.username
+				};
 			}
 			if (error && status !== 406) throw error;
 		} catch (error) {
@@ -43,7 +39,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 		}
 		return {
 			data: response,
-			error: {message: errMsg}
+			error: { message: errMsg }
 		};
 	}
 
@@ -52,18 +48,14 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 		let errMsg: string | undefined = undefined;
 
 		try {
-			const { data, error, status } = await supabase
-				.from('profiles')
-				.select('username, avatar_url, id')
-				.eq('username', username)
-				.single();
+			const { data, error, status } = await supabase.from('profiles').select('username, avatar_url, id').eq('username', username).single();
 
 			if (data) {
 				response = {
 					id: data.id,
 					avatarURL: data.avatar_url,
-					username: data.username,
-				}
+					username: data.username
+				};
 			}
 
 			if (error && status !== 406) throw error;
@@ -74,7 +66,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 		}
 		return {
 			data: response,
-			error: {message: errMsg}
+			error: { message: errMsg }
 		};
 	}
 
@@ -83,12 +75,8 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 		let errMsg: string | undefined = undefined;
 
 		try {
-			let { data, error } = await supabase
-				.from('profiles')
-				.upsert(profile)
-				.select('username, avatar_url')
-				.single();
-			
+			let { data, error } = await supabase.from('profiles').upsert(profile).select('username, avatar_url').single();
+
 			if (error) throw error;
 		} catch (error: any) {
 			if (error instanceof Error) {
@@ -99,7 +87,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 			}
 		}
 
-		return { message: errMsg,};
+		return { message: errMsg };
 	}
 
 	async deleteProfile(id: string): Promise<error> {

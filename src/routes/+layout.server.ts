@@ -9,15 +9,17 @@ export const load: LayoutServerLoad = async (event) => {
 	const session = await getServerSession(event);
 	const path = event.url.pathname;
 	if (session) {
-		const {	user: { id }} = session;
+		const {
+			user: { id }
+		} = session;
 		const { data } = await accountService.profileRequest.getProfile(id);
 		const isUsername = data?.username;
-		if (!isUsername && path != "/register") {
-			throw redirect(307, "/register");
+		if (!isUsername && path != '/register') {
+			throw redirect(307, '/register');
 		}
 	} else {
-		if (path == "/register") {
-			throw redirect(307, "/");
+		if (path == '/register') {
+			throw redirect(307, '/');
 		}
 	}
 	return {
