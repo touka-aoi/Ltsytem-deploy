@@ -1,8 +1,4 @@
-import type {
-	LtSpeakerInput,
-	LtSpeakerOutput,
-	LtSpeakerRequestInterface
-} from './LtSpeakerRequestInterface';
+import type { LtSpeakerInput, LtSpeakerOutput, LtSpeakerRequestInterface } from './LtSpeakerRequestInterface';
 
 interface LtSpeakerData {
 	data: LtSpeakerOutput | undefined;

@@ -13,8 +13,8 @@ interface response {
 	speaker: LtSpeakerOutput | undefined;
 }
 
-let username = "";
-let Ltname = "";
+let username = '';
+let Ltname = '';
 
 /**
  * LT登録ロード関数
@@ -36,16 +36,16 @@ export const load: PageServerLoad = async (event) => {
 	const session = await account.getSession(event);
 	if (!session) {
 		throw redirect(303, '/login');
-	} 
+	}
 
-	const {data: profileData, error: profileError} = await account.profileRequest.getProfile(session.user.id);
-	
+	const { data: profileData, error: profileError } = await account.profileRequest.getProfile(session.user.id);
+
 	if (profileData?.username) {
 		username = profileData.username;
 	}
 
 	// スピーカー情報
-	const { data: speakerData, error: speakerErr } = await LtInfo.LtSpeakerRequest.getLtSpeakerInfo(Ltname,username);
+	const { data: speakerData, error: speakerErr } = await LtInfo.LtSpeakerRequest.getLtSpeakerInfo(Ltname, username);
 
 	const response: response = {
 		Lt: LtData,
@@ -63,7 +63,6 @@ export const actions: Actions = {
 		const comment = data.get('Ltcomment') as string;
 		const link = data.get('Ltlink') as string;
 		const name = data.get('Ltname') as string;
-
 
 		if (title.length == 0) {
 			return fail(400, { title, missing: true });

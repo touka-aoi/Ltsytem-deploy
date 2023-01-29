@@ -105,13 +105,13 @@ export const load: PageServerLoad = async (event) => {
 	// URIパラメータ
 	let username: string | undefined = undefined;
 	let avatarURL: string | undefined = undefined;
-	let loginID : string = "";
-	let userID: string = "";
+	let loginID: string = '';
+	let userID: string = '';
 
 	const { users: usernameFromUri } = event.params;
 	const session = await account.getSession(event);
 	if (session) {
-		loginID = session.user.id
+		loginID = session.user.id;
 	}
 
 	// DBからユーザー情報取得
@@ -119,7 +119,7 @@ export const load: PageServerLoad = async (event) => {
 	if (data) {
 		username = data.username;
 		avatarURL = data.avatarURL;
-		userID = data.id
+		userID = data.id;
 	}
 
 	// 非登録ユーザー

@@ -88,10 +88,10 @@ export const load: PageServerLoad = async (event) => {
 	// アバター情報を付加する
 	const speakers: Array<speakersInfo> = await Promise.all(
 		res.map(async (speakerInfo: LtSpeakerOutput) => {
-			const {data} = await account.profileRequest.getProfileFromUsername(speakerInfo.username);
+			const { data } = await account.profileRequest.getProfileFromUsername(speakerInfo.username);
 			const res: speakersInfo = {
 				...speakerInfo,
-				avatarData: data?.avatarURL,
+				avatarData: data?.avatarURL
 			};
 			return res;
 		})
@@ -103,7 +103,7 @@ export const load: PageServerLoad = async (event) => {
 	/*  ユーザー情報 */
 	if (session) {
 		const userID = session.user.id;
-		const {data} = await account.profileRequest.getProfile(userID);
+		const { data } = await account.profileRequest.getProfile(userID);
 		if (data) {
 			username = data.username as string;
 			if (username) {
@@ -117,7 +117,7 @@ export const load: PageServerLoad = async (event) => {
 				username: username,
 				isSpeaker: isSpeaker,
 				isViewer: isViewer
-			}
+			};
 		}
 	}
 

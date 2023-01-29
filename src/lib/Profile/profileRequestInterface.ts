@@ -1,11 +1,11 @@
 export interface profile {
-	id: string, 
+	id: string;
 	username: string | undefined;
 	avatarURL: string | undefined;
 }
 
 export interface profileOutput {
-	data: profile | undefined,
+	data: profile | undefined;
 	error: error | undefined;
 }
 

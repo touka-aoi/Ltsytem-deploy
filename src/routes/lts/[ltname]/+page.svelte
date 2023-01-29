@@ -22,9 +22,7 @@
 <div class="Ltview flex flex-col gap-10">
 	<!-- タイトル -->
 	<div class="mx-[10%] flex-col flex gap-8 items-center">
-		<div
-			class="bg-slate-100 rounded-sm flex flex-col items-center justify-center py-10 gap-3 w-full"
-		>
+		<div class="bg-slate-100 rounded-sm flex flex-col items-center justify-center py-10 gap-3 w-full">
 			<p class="text-4xl">{Ltname}</p>
 			<p>{holdDay} {holdHour}</p>
 		</div>
@@ -54,11 +52,7 @@
 					{/if}
 					{#if !isViewer}
 						<form method="post" action="?/register">
-							<input
-								type="submit"
-								class="minibtn mainColor cursor-pointer  mr-auto"
-								value="登録する"
-							/>
+							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto" value="登録する" />
 							<input type="hidden" name="Ltname" bind:value={Ltname} />
 						</form>
 					{:else}
@@ -96,18 +90,12 @@
 						<div class="flex flex-col justify-center items-center gap-3">
 							{#if avatarData}
 								{#await account.avatarRequest.downloadAvatar(avatarData) then avatar}
-									<div
-										style="height: {size}em; width: {size}em;"
-										class="overflow-hidden rounded-full"
-									>
+									<div style="height: {size}em; width: {size}em;" class="overflow-hidden rounded-full">
 										<img src={avatar.fileUrl} alt="avatar" />
 									</div>
 								{/await}
 							{:else}
-								<div
-									class="bg-slate-100 rounded-full flex flex-col justify-center items-center"
-									style="height: {size}em; width: {size}em;"
-								/>
+								<div class="bg-slate-100 rounded-full flex flex-col justify-center items-center" style="height: {size}em; width: {size}em;" />
 							{/if}
 							<p>
 								{username}

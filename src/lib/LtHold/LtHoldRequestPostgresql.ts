@@ -76,13 +76,7 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
       ON CONFLICT (Ltname)
       DO UPDATE SET (description, maxMem, holdDate, holdPlace) = (EXCLUDED.description, EXCLUDED.maxMem, EXCLUDED.holdDate, EXCLUDED.holdPlace)
     `,
-			[
-				LtPrincipal['name'],
-				LtPrincipal['desc'],
-				LtPrincipal['maxMem'],
-				LtPrincipal['holdDate'],
-				LtPrincipal['holdPlace']
-			]
+			[LtPrincipal['name'], LtPrincipal['desc'], LtPrincipal['maxMem'], LtPrincipal['holdDate'], LtPrincipal['holdPlace']]
 		);
 		// await this.client.end();
 	}

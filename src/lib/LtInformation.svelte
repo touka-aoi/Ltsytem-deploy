@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { LtSpeakerOutput } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
-	import { base } from "$app/paths"
+	import { base } from '$app/paths';
 	const statusColor: { [key: string]: string } = {
 		募集中: 'bg-green-300',
 		満員: 'bg-red-300',
@@ -19,7 +19,7 @@
 <div class="h-full bg-gray-700 rounded-md">
 	<div class="flex flex-col items-center gap-4 m-5 h-full">
 		<!-- LT情報: LT名、時期、人数 -->
-		<div class = "h-fit w-full rounded-sm bg-slate-100 p-2 min-w-[80vw]">
+		<div class="h-fit w-full rounded-sm bg-slate-100 p-2 min-w-[80vw]">
 			<div class="flex justify-between  gap-2 items-center   flex-wrap">
 				<div class=" h-fit min-w-[80px] {statusColor[state]} rounded-xl ml-2 px-3 py-1 text-center">
 					<p class="text-lg">{state}</p>
@@ -28,7 +28,7 @@
 					<p class="text-lg">{ltDetailData.length}/{maxMem}</p>
 				</div>
 			</div>
-			<div class = "flex justify-center mt2">
+			<div class="flex justify-center mt2">
 				<p class="text-xl font-bold mt-2">{ltname}</p>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 		</div>
 		<!-- ボタン -->
 		<div class="">
-			<a href= "{base}/lts/{id}" class="minibtn bg-slate-100 cursor-pointer" >もっとみる</a>
+			<a href="{base}/lts/{id}" class="minibtn bg-slate-100 cursor-pointer">もっとみる</a>
 		</div>
 	</div>
 </div>

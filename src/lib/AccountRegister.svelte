@@ -53,11 +53,11 @@
 			}
 
 			if (file != undefined && Avatarurl != undefined) {
-				const error = await request.avatarRequest.uploadAvatar({file: file, filename: Avatarurl});
+				const error = await request.avatarRequest.uploadAvatar({ file: file, filename: Avatarurl });
 				if (error?.message) throw Error(error.message);
 			}
 
-			const error  = await request.profileRequest.upsertProfile({id: id, username: username, avatarURL:Avatarurl});
+			const error = await request.profileRequest.upsertProfile({ id: id, username: username, avatarURL: Avatarurl });
 
 			if (error.message) throw Error(error.message);
 
@@ -92,57 +92,29 @@
 						</button>
 					</div>
 					<!-- アバター画像表示 -->
-					<img
-						src={fileUrl}
-						alt={file ? 'Avatar' : 'No image'}
-						class="rounded-full"
-						style="height: {size}em; width: {size}em;"
-					/>
+					<img src={fileUrl} alt={file ? 'Avatar' : 'No image'} class="rounded-full" style="height: {size}em; width: {size}em;" />
 					<!-- アバター画像なし -->
 				{:else}
-					<div
-						class="bg-slate-100 rounded-full flex flex-col justify-center items-center"
-						style="height: {size}em; width: {size}em;"
-					/>
+					<div class="bg-slate-100 rounded-full flex flex-col justify-center items-center" style="height: {size}em; width: {size}em;" />
 				{/if}
 
 				<!-- アバター選択 -->
 				<div style="width: {size}em;" class="flex flex-col">
-					<input
-						class="hidden"
-						type="file"
-						id="single"
-						accept="image/*"
-						bind:files
-						on:change={checkAvatar}
-						disabled={loading}
-					/>
-					<label for="single" class="minibtn cursor-pointer {loading ? 'bg-gray-300' : 'mainColor'}"
-						>画像を選択</label
-					>
+					<input class="hidden" type="file" id="single" accept="image/*" bind:files on:change={checkAvatar} disabled={loading} />
+					<label for="single" class="minibtn cursor-pointer {loading ? 'bg-gray-300' : 'mainColor'}">画像を選択</label>
 				</div>
 			</div>
 			<!-- ユーザーID選択 -->
 			<div class="flex flex-col gap-4">
 				<p class="font-bold">ユーザーID</p>
-				<input
-					type="text"
-					bind:value={username}
-					placeholder="UserID"
-					class="bg-slate-100 w-[200px]"
-				/>
+				<input type="text" bind:value={username} placeholder="UserID" class="bg-slate-100 w-[200px]" />
 				<p class="text-sm text-red-600 min-h-[20px] mix-w-[200px] max-w-[200px]">
 					{errorMsg == undefined ? '' : errorMsg}
 				</p>
 			</div>
 		</div>
 		<div class="flex mt-10 items-center justify-center gap-8">
-			<input
-				type="submit"
-				class="minibtn mainColor cursor-pointer"
-				value="登録"
-				disabled={loading}
-			/>
+			<input type="submit" class="minibtn mainColor cursor-pointer" value="登録" disabled={loading} />
 		</div>
 	</form>
 	<div class="text-center mt-10">

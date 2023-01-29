@@ -1,8 +1,4 @@
-import type {
-	Ltviewers,
-	LtviewerRequestInterface,
-	Lts
-} from '$lib/Ltviewer/LtviewerRequestInterface';
+import type { Ltviewers, LtviewerRequestInterface, Lts } from '$lib/Ltviewer/LtviewerRequestInterface';
 import { pool } from '../../hooks.server';
 import type { Pool } from 'pg';
 
@@ -20,9 +16,7 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 	}
 
 	async getLtsfromUser(username: string): Promise<Lts> {
-		const res = await this.client.query('SELECT * FROM LtViewerInfo Where username = $1', [
-			username
-		]);
+		const res = await this.client.query('SELECT * FROM LtViewerInfo Where username = $1', [username]);
 		const Lts: Array<ltviewerData> = res.rows;
 		const ltviewrs = Lts.map((ele) => {
 			return ele.ltname;

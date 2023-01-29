@@ -41,48 +41,23 @@
 		<form method="POST" action="?/register" class="flex flex-col gap-10">
 			<div class="flex flex-col gap-4">
 				<p>タイトル (必須)</p>
-				<input
-				type="text"
-				name="Lttitle"
-				bind:value={LtTitle}
-				placeholder="タイトル"
-				class="border-2 rounded-sm px-2 py-1 w-[50%]"
-				/>
+				<input type="text" name="Lttitle" bind:value={LtTitle} placeholder="タイトル" class="border-2 rounded-sm px-2 py-1 w-[50%]" />
 				{#if form?.missing}<p class="error text-red-500">タイトルを入力してください</p>{/if}
 			</div>
 			<div class="flex flex-col gap-4">
 				<p>スライドURL</p>
-				<input
-					type="text"
-					name="Ltlink"
-					bind:value={LtLink}
-					placeholder="https://example.com/"
-					class="border-2 rounded-sm px-2 py-1 w-[50%]"
-				/>
+				<input type="text" name="Ltlink" bind:value={LtLink} placeholder="https://example.com/" class="border-2 rounded-sm px-2 py-1 w-[50%]" />
 			</div>
 			<div class="flex flex-col gap-4">
 				<p>コメント</p>
-				<textarea
-					name="Ltcomment"
-					bind:value={LtComment}
-					placeholder="コメント"
-					class="border-2 rounded-sm px-2 py-1 w-[50%]"
-				/>
+				<textarea name="Ltcomment" bind:value={LtComment} placeholder="コメント" class="border-2 rounded-sm px-2 py-1 w-[50%]" />
 			</div>
 			{#if form?.unknown}<p class="error text-red-500">{form.err}</p>{/if}
 			<input type="hidden" name="Ltname" bind:value={Ltname} />
-			<input
-				type="submit"
-				class="minibtn bg-green-600  text-white cursor-pointer  mr-auto"
-				value="登録する"
-			/>
+			<input type="submit" class="minibtn bg-green-600  text-white cursor-pointer  mr-auto" value="登録する" />
 		</form>
 		<form method="POST" action="?/cancel">
-			<input
-				type="submit"
-				class="minibtn bg-red-500 cursor-pointer  mr-auto text-white"
-				value="登録を取り消す"
-			/>
+			<input type="submit" class="minibtn bg-red-500 cursor-pointer  mr-auto text-white" value="登録を取り消す" />
 			<input type="hidden" name="Ltname" bind:value={Ltname} />
 		</form>
 	</div>
