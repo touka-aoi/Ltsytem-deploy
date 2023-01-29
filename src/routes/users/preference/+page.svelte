@@ -16,7 +16,7 @@
 
 	let avatarData: string | undefined = undefined;
 
-	const size = 20;
+	const size = 10;
 	let loading = false;
 	let flashmessage: string | undefined = undefined;
 
@@ -40,7 +40,7 @@
 	const delteAvatar = () => {
 		avatarData = undefined;
 	};
-1
+
 	async function updateProfile() {
 		try {
 			if (!username) {
@@ -80,11 +80,6 @@
 	});
 </script>
 
-
-
-
-
-
 {#if flashmessage}
 	<div class="flash bg-green-200 flex items-center pl-5">
 		{flashmessage}
@@ -98,10 +93,10 @@
 		</button>
 	</div>
 {/if}
-<div class="mx-[15%] flex flex-col my-24">
+<div class="flex flex-col my-24">
 	<form on:submit|preventDefault={updateProfile}>
-		<div class="bg-neutral-200 flex flex-col rounded-sm p-16 gap-20">
-			<div class="flex gap-56">
+		<div class="bg-neutral-200 flex flex-col rounded-sm py-4">
+			<div class="flex flex-col lg:flex-row p-3 gap-3">
 				<!-- ユーザー名 -->
 				<div class="flex flex-col gap-3">
 					<p class="font-bold text-lg">ユーザー名</p>
@@ -116,7 +111,7 @@
 					{/if}
 				</div>
 				<!-- プロフィール画像 -->
-				<div class="flex flex-col gap-3 items-center ml-auto">
+				<div class="flex flex-col gap-3 items-center md:ml-auto md:px-10">
 					<p class="font-bold text-lg mr-auto">プロフィール画像</p>
 					{#if avatarData}
 						<div style="height: {size}em; width: {size}em;" class="overflow-hidden rounded-full">
@@ -143,18 +138,20 @@
 							class="minibtn cursor-pointer {loading ? 'bg-gray-300' : 'mainColor'}"
 							>プロフィール画像を変更</label
 						>
-						<button class="minibtn mx-auto bg-red-400 p-2" on:click={delteAvatar}>
+						<button class="minibtn mx-auto bg-red-400 p-2" on:click|preventDefault={delteAvatar}>
 							<img src="/Trash.svg" alt="delteProfile" class="w-5" />
 						</button>
 					</div>
 				</div>
 			</div>
-			<input
-				type="submit"
-				class="cursor-pointer minibtn bg-green-500 h-[40px] mr-auto"
-				value="プロフィールを更新する"
-				disabled={loading}
-			/>
+			<div class = "px-3 mt-2">
+				<input
+					type="submit"
+					class="cursor-pointer minibtn bg-green-500 h-[40px] mr-auto"
+					value="プロフィールを更新する"
+					disabled={loading}
+				/>
+			</div>
 		</div>
 	</form>
 </div>

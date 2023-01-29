@@ -5,7 +5,7 @@
 </script>
 
 <header class="top-0 left-0 w-full sticky  bg-neutral-200 shadow border-b border-gray-200">
-	<div class="@container mx-auto px-6 h-16 flex justify-between items-center">
+	<div class="@container mx-auto h-16 flex justify-between items-center">
 		<Logo />
 		<Nav session={$page.data.session} />
 	</div>
