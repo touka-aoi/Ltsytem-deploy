@@ -96,20 +96,7 @@
 <div class="flex flex-col my-24">
 	<form on:submit|preventDefault={updateProfile}>
 		<div class="bg-neutral-200 flex flex-col rounded-sm py-4">
-			<div class="flex flex-col lg:flex-row p-3 gap-3">
-				<!-- ユーザー名 -->
-				<div class="flex flex-col gap-3">
-					<p class="font-bold text-lg">ユーザー名</p>
-					<input
-						type="text"
-						bind:value={username}
-						placeholder="UserID"
-						class="bg-slate-100 w-[300px] h-[32px] rounded-sm px-3"
-					/>
-					{#if errorMsg}
-						<p class="text-red-500 text-sm">{errorMsg}</p>
-					{/if}
-				</div>
+			<div class="flex flex-col lg:flex-row p-3 gap-5">
 				<!-- プロフィール画像 -->
 				<div class="flex flex-col gap-3 items-center md:ml-auto md:px-10">
 					<p class="font-bold text-lg mr-auto">プロフィール画像</p>
@@ -143,8 +130,22 @@
 						</button>
 					</div>
 				</div>
+								<!-- ユーザー名 -->
+								<div class="flex flex-col gap-3">
+									<p class="font-bold text-lg">ユーザー名</p>
+									<input
+										type="text"
+										bind:value={username}
+										placeholder="UserID"
+										class="bg-slate-100 w-[300px] h-[32px] rounded-sm px-3"
+									/>
+									{#if errorMsg}
+										<p class="text-red-500 text-sm">{errorMsg}</p>
+									{/if}
+								</div>
 			</div>
-			<div class = "px-3 mt-2">
+			
+			<div class = "px-3 mt-6">
 				<input
 					type="submit"
 					class="cursor-pointer minibtn bg-green-500 h-[40px] mr-auto"
