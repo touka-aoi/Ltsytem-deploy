@@ -2,7 +2,7 @@
 	import '../app.css';
 
 	import { supabase } from '$lib/databaseClient/supabaseClient';
-	import { invalidate } from '$app/navigation';
+	import { invalidate, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	import Header from '../lib/Header.svelte';
