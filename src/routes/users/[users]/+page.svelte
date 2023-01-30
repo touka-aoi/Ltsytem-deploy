@@ -26,7 +26,7 @@
 	});
 </script>
 
-<div class="flex flex-col md:flex-row justify-center gap-10 mt-10">
+<div class="flex flex-col md:flex-row justify-center gap-10 my-10">
 	<!-- userInfo -->
 	<div class="flex flex-col items-center">
 		<div style="height: {size}em; width: {size}em;" class="overflow-hidden rounded-full">
@@ -44,7 +44,7 @@
 	<!-- LT info -->
 	<div class="px-3">
 		<!-- Latest LT -->
-		<div>
+		<div class = "min-w-[70vw]">
 			<h2 class="text-2xl mb-3">参加予定LT</h2>
 			<!-- LTデータが存在する -->
 			{#if LtData.speaker.reserve.length != 0}

@@ -98,7 +98,7 @@
 		<div class="bg-neutral-200 flex flex-col rounded-sm py-4">
 			<div class="flex flex-col lg:flex-row p-3 gap-5">
 				<!-- プロフィール画像 -->
-				<div class="flex flex-col gap-3 items-center md:ml-auto md:px-10">
+				<div class="flex flex-col gap-3 items-center  md:px-10">
 					<p class="font-bold text-lg mr-auto">プロフィール画像</p>
 					{#if avatarData}
 						<div style="height: {size}em; width: {size}em;" class="overflow-hidden rounded-full">
