@@ -1,3 +1,5 @@
 # 🗣️ LTsystem
 
-LTを定期的に開催するサイト
+this repo is building the webapage for lightning talk with svelt  
+
+
