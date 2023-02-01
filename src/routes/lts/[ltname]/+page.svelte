@@ -76,11 +76,11 @@
 		<!-- LT概要 -->
 		<div class="flex flex-col gap-5 ">
 			<p class="text-xl ">概要</p>
-			<p>{desc}</p>
+			<p>{@html desc}</p>
 		</div>
 		<p class="text-xl ">参加者</p>
 		{#if speakers.length == 0}
-			<div class="border-2 rounded-sm min-h-[120px] flex flex-col justify-center items-center ">
+			<div class="border-2 rounded-sm min-h-[120px] w-[70vw] flex flex-col justify-center items-center ">
 				<p class="font-bold text-xl text-gray-500">参加者募集中</p>
 			</div>
 		{:else}

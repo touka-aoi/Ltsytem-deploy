@@ -10,6 +10,9 @@ import type { Actions } from './$types';
 import type { LtSpeakerOutput } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
 import type { Ltviewers } from '$lib/Ltviewer/LtviewerRequestInterface';
 
+import MarkdownIt  from "markdown-it";
+const md = MarkdownIt();
+
 interface speakersInfo {
 	username: string;
 	avatarData: string | undefined;
@@ -135,7 +138,8 @@ export const load: PageServerLoad = async (event) => {
 			speakers: speakers,
 			Ltname: data.name,
 			assignNum: speakers.length,
-			status: status
+			status: status,
+			desc: md.render(data.desc),
 		},
 		user: userData,
 		viewer: LtviewersInfo

@@ -1,5 +1,5 @@
 <script lang="ts">
-	let src: string = '/dummy.png';
+	let src: string = '/inaduma.png';
 	let alt: string = 'siteLogo';
 </script>
 
