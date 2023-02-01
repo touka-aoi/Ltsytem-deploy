@@ -10,18 +10,10 @@
 	let LtTitle = speaker?.LtTitle;
 	let LtLink = speaker?.LtLink;
 	let LtComment = speaker?.LtComment;
+	const LtRule = data.LtRules;
 
-	// 登録用の補足情報
-	const registerEx = `
-    この文章には以下の注意事項が含まれています: 
-    事前の準備が必要です。
-    適切な機材を使用してください。
-    作業は屋外で行ってください。
-    作業中は安全対策を取ってください。
-    作業後は適切なクリーニングを行ってください。`;
-
-	desc += registerEx;
 </script>
+
 
 <div class="flex flex-col gap-10 justify-center items-center my-10 px-10">
 	<div class="flex-col flex gap-10 items-center w-[80vw] md:w-[60vw] ">
@@ -33,6 +25,7 @@
 		<div class="flex flex-col gap-4">
 			<p class="text-xl">概要</p>
 			<p>{desc}</p>
+			<p>{@html LtRule}</p>
 		</div>
 	</div>
 	<!-- 参加登録 -->

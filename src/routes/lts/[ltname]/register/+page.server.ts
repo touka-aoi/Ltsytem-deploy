@@ -8,13 +8,23 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import type { LtSpeakerOutput } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
 import type { LtInfoOutput } from '$lib/LtHold/LtHoldRequstInterface';
 
+import MarkdownIt  from "markdown-it";
+const md = MarkdownIt();
+
+
 interface response {
 	Lt: LtInfoOutput;
 	speaker: LtSpeakerOutput | undefined;
+	LtRules: string,
 }
 
 let username = '';
 let Ltname = '';
+const LtRule = ` **ルール**  
+	- 発表時間は一人5分 + 質疑応答5分 の合計10分です。  
+	- **時間超過した場合は自動的に終了します。**  
+	- 発表するテーマは問いません。自由にテーマを持ちよって下さい。  
+		`;
 
 /**
  * LT登録ロード関数
@@ -49,7 +59,8 @@ export const load: PageServerLoad = async (event) => {
 
 	const response: response = {
 		Lt: LtData,
-		speaker: speakerData
+		speaker: speakerData,
+		LtRules: md.render(LtRule),
 	};
 
 	return response;
