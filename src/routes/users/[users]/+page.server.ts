@@ -16,8 +16,8 @@ function dateFormatter(date: Date) {
 	};
 }
 
-async function getUserSpeakLtData(username: string) {
-	const userSpeakLts = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromUser(username);
+async function getUserSpeakLtData(userID: string) {
+	const userSpeakLts = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromUser(userID);
 	speakerLtReserveInfo = [];
 	speakerLtEndInfo = [];
 	await Promise.all(
@@ -25,7 +25,7 @@ async function getUserSpeakLtData(username: string) {
 			//LT情報を取得
 			const { data: LtData } = await LtInfo.LtHoldRequest.getLtInfoFromName(userSpeakLt.Ltname);
 			if (LtData) {
-				const speakers = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(userSpeakLt.Ltname);
+				const speakers = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(userSpeakLt.LtID);
 				const userSpeakLtdata: userSpeakLtInformation = {
 					...dateFormatter(LtData.holdDate),
 					maxMem: Number(LtData.maxMem),
@@ -44,8 +44,8 @@ async function getUserSpeakLtData(username: string) {
 	);
 }
 
-async function getUserViewLtData(username: string) {
-	const userViewsLts = await LtInfo.LtviewerRequest.getLtsfromUser(username);
+async function getUserViewLtData(userID: string) {
+	const userViewsLts = await LtInfo.LtviewerRequest.getLtsfromUser(userID);
 	viewLtReserveInfo = [];
 	viewLtEndInfo = [];
 	await Promise.all(
@@ -129,8 +129,8 @@ export const load: PageServerLoad = async (event) => {
 
 	const isUser = loginID == userID;
 
-	getUserSpeakLtData(username);
-	getUserViewLtData(username);
+	getUserSpeakLtData(userID);
+	getUserViewLtData(userID);
 
 	return {
 		user: usernameFromUri,

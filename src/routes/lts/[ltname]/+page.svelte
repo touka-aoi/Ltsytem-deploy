@@ -52,18 +52,20 @@
 					{/if}
 					{#if !isViewer}
 						<form method="post" action="?/register">
-							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto" value="登録する" />
+							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto" value="LTをみる" />
 							<input type="hidden" name="Ltname" bind:value={Ltname} />
 						</form>
 					{:else}
-						<div class="box-border minibtn rounded-md border-2 cursor-default">LTをみる</div>
+						<div class="box-border minibtn rounded-md border-2 cursor-default">登録ずみ</div>
 					{/if}
 				</div>
+				{#if isSpeaker || isViewer}
 				<div>
 					<a href={holdPlace}>
 						<button class="minibtn bg-slate-100 rounded-md"> 開催場所へ移動 </button>
 					</a>
 				</div>
+				{/if}
 			{/if}
 		{:else}
 			<div class="flex flex-col justify-center items-center">
@@ -84,9 +86,9 @@
 				<p class="font-bold text-xl text-gray-500">参加者募集中</p>
 			</div>
 		{:else}
-			<div class="flex flex-col gap-3">
+			<div class="flex flex-col gap-3 items-center">
 				{#each speakers as { username, avatarData, LtTitle, LtComment, LtLink }}
-					<div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3">
+					<div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3 w-[80vw] md:w-[50vw]">
 						<div class="flex flex-col justify-center items-center gap-3">
 							{#if avatarData}
 								{#await account.avatarRequest.downloadAvatar(avatarData) then avatar}
