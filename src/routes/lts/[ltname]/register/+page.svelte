@@ -12,6 +12,7 @@
 	let LtComment = speaker?.LtComment;
 	const LtRule = data.LtRules;
 
+
 </script>
 
 
@@ -24,7 +25,7 @@
 		<!-- 概要 -->
 		<div class="flex flex-col gap-4">
 			<p class="text-xl">概要</p>
-			<p>{desc}</p>
+			<p>{@html desc}</p>
 			<p>{@html LtRule}</p>
 		</div>
 	</div>

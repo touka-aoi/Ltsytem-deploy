@@ -54,10 +54,13 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	// スピーカー情報
-	const { data: speakerData, error: speakerErr } = await LtInfo.LtSpeakerRequest.getLtSpeakerInfo(Ltname, username);
+	const { data: speakerData, error: speakerErr } = await LtInfo.LtSpeakerRequest.getLtSpeakerInfo(LtData.name, username);
 
 	const response: response = {
-		Lt: LtData,
+		Lt: {
+			...LtData,
+			desc: md.render(LtData.desc)
+		},
 		speaker: speakerData,
 		LtRules: md.render(LtRule),
 	};
