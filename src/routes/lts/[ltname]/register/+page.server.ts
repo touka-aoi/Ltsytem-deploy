@@ -96,7 +96,6 @@ export const actions: Actions = {
 			userID: userID,
 		});
 
-		console.log(res);
 
 		if (res.error) {
 			const err = res.error.message;

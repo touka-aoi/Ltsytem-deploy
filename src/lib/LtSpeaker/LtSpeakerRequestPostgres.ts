@@ -74,9 +74,9 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 		const res = await this.client.query(
 			`
     INSERT INTO LtSpeakerInfo (Ltname, LtLink, LtTitle, LtComment, userid, LtId)
-    VALUES ($1,  $3, $4, $5, $6, $7)
+    VALUES ($1, $2, $3, $4, $5, $6)
     ON CONFLICT ON CONSTRAINT unique_ltid_userid
-    DO UPDATE SET Ltname=$1,  LtLink=$3, LtTitle=$4, LtComment=$5, userid=$6, LtId=$7
+    DO UPDATE SET Ltname=$1,  LtLink=$2, LtTitle=$3, LtComment=$4, userid=$5, LtId=$6
     `,
 			[LtSeakerInfo['Ltname'],  LtSeakerInfo['LtLink'], LtSeakerInfo['LtTitle'], LtSeakerInfo['LtComment'], LtSeakerInfo["userID"], LtSeakerInfo["LtID"]]
 		);
