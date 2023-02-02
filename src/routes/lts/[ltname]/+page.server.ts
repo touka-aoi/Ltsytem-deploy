@@ -87,14 +87,17 @@ export const load: PageServerLoad = async (event) => {
 
 	// スピーカ情報を取得する
 	const res = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(Number(Ltid));
+	console.log(res);
 
-	// アバター情報を付加する
+	// ユーザー情報を取得する
 	const speakers: Array<speakersInfo> = await Promise.all(
 		res.map(async (speakerInfo: LtSpeakerOutput) => {
-			const { data } = await account.profileRequest.getProfileFromUsername(speakerInfo.username);
+			const { data } = await account.profileRequest.getProfile(speakerInfo.userID);
+			
 			const res: speakersInfo = {
 				...speakerInfo,
-				avatarData: data?.avatarURL
+				avatarData: data?.avatarURL,
+				username: data?.username as string
 			};
 			return res;
 		})

@@ -89,7 +89,6 @@ export const actions: Actions = {
 
 		const res = await LtInfo.LtSpeakerRequest.upsertLtSpeakerInfo({
 			Ltname: name,
-			username: username,
 			LtComment: comment,
 			LtLink: link,
 			LtTitle: title,

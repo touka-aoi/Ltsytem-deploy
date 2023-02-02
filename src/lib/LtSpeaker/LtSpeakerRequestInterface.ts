@@ -2,7 +2,6 @@ export interface LtSpeakerInput {
 	LtID: Number;
 	userID: string;
 	Ltname: string;
-	username: string;
 	LtLink?: string;
 	LtTitle?: string;
 	LtComment?: string;
@@ -11,7 +10,6 @@ export interface LtSpeakerInput {
 export interface LtSpeakerOutput {
 	id: Number;
 	Ltname: string;
-	username: string;
 	LtID: Number;
 	userID: string;
 	LtLink?: string;
