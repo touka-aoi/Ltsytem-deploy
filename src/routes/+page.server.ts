@@ -12,7 +12,7 @@ export const load: PageServerLoad = async (event) => {
 	// 最新Lt情報を取得
 	const latestLt = await LtInfo.LtHoldRequest.getLatestLtInfo();
 	// Ltスピーカー情報を取得
-	const latestLtSpeaker = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(latestLt.name);
+	const latestLtSpeaker = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(latestLt.id);
 
 	return {
 		latestLt: {

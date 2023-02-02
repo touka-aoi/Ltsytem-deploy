@@ -1,10 +1,11 @@
 import type { LtSpeakerRequestInterface, LtSpeakerInput, LtSpeakerOutput } from './LtSpeakerRequestInterface';
 import type { Pool } from 'pg';
-import { env } from '$env/dynamic/public';
 import { pool } from '../../hooks.server';
 
 interface postgresqlData {
 	id: Number;
+	ltid: Number;
+	userid: string;
 	ltname: string;
 	username: string;
 	ltlink: string;
@@ -15,6 +16,8 @@ interface postgresqlData {
 function convertData(data: postgresqlData): LtSpeakerOutput {
 	const convData: LtSpeakerOutput = {
 		id: data.id,
+		userID: data.userid,
+		LtID: data.ltid,
 		Ltname: data.ltname,
 		username: data.username,
 		LtComment: data.ltcomment,
@@ -44,8 +47,8 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	}
 
 	// 特定のユーザーの特定のLT情報を持ってくる
-	async getSpeakerInfo(Ltname: string, username: string): Promise<LtSpeakerOutput> {
-		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where Ltname = $1 AND username = $2 ', [Ltname, username]);
+	async getSpeakerInfo(LtId: Number, useid: string): Promise<LtSpeakerOutput> {
+		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where ltid = $1 AND userid = $2 ', [LtId, useid]);
 		const Lt = res.rows.at(0);
 		if (Lt == undefined) throw new Error('指定された行が見つかりません');
 		const out = convertData(Lt);
@@ -53,16 +56,16 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	}
 
 	// ユーザーの最新10件のLT情報を持ってくる
-	async getLtSpeakerInfoFromUser(username: string): Promise<LtSpeakerOutput[]> {
-		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where username = $1 ', [username]);
+	async getLtSpeakerInfoFromUser(userId: string): Promise<LtSpeakerOutput[]> {
+		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where userid = $1 ', [userId]);
 		const Lts = res.rows;
 		const convSpeakers = Lts.map(convertData);
 		return convSpeakers;
 	}
 
 	// Lt名から特定のLTの情報を持ってくるめ
-	async getSpeakerInfoFromLt(Ltname: string): Promise<LtSpeakerOutput[]> {
-		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where ltname = $1 ', [Ltname]);
+	async getSpeakerInfoFromLt(LtId: Number): Promise<LtSpeakerOutput[]> {
+		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where ltid = $1 ', [LtId]);
 		const speakers = res.rows;
 		const convSpeakers = speakers.map(convertData);
 		return convSpeakers;
@@ -72,16 +75,16 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	async upsertLtSpeakerInfo(LtSeakerInfo: LtSpeakerInput): Promise<void> {
 		const res = await this.client.query(
 			`
-    INSERT INTO LtSpeakerInfo (Ltname, username, LtLink, LtTitle, LtComment)
-    VALUES ($1, $2, $3, $4, $5)
-    ON CONFLICT ON CONSTRAINT unique_ltname_username
-    DO UPDATE SET Ltname=$1, username=$2, LtLink=$3, LtTitle=$4, LtComment=$5
+    INSERT INTO LtSpeakerInfo (Ltname, username, LtLink, LtTitle, LtComment, userid, LtId)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    ON CONFLICT ON CONSTRAINT unique_ltid_userid
+    DO UPDATE SET Ltname=$1, username=$2, LtLink=$3, LtTitle=$4, LtComment=$5, userid=$6, LtId=$7
     `,
-			[LtSeakerInfo['Ltname'], LtSeakerInfo['username'], LtSeakerInfo['LtLink'], LtSeakerInfo['LtTitle'], LtSeakerInfo['LtComment']]
+			[LtSeakerInfo['Ltname'], LtSeakerInfo['username'], LtSeakerInfo['LtLink'], LtSeakerInfo['LtTitle'], LtSeakerInfo['LtComment'], LtSeakerInfo["userID"], LtSeakerInfo["LtID"]]
 		);
 	}
 
-	async deleteLtSpeakerInfo(Ltname: string, username: string): Promise<void> {
-		const res = await this.client.query(`DELETE FROM LtSpeakerInfo WHERE ltname = $1 AND username = $2`, [Ltname, username]);
+	async deleteLtSpeakerInfo(LtId: Number, userId: string): Promise<void> {
+		const res = await this.client.query(`DELETE FROM LtSpeakerInfo WHERE ltid = $1 AND userid = $2`, [LtId, userId]);
 	}
 }

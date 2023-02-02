@@ -16,10 +16,10 @@ export class LtSpeakerRequest {
 		this._LtSpeakerRequstInterface = LtSpeakerRequest;
 	}
 
-	async getLtSpeakerInfo(Ltname: string, username: string) {
+	async getLtSpeakerInfo(LtID: Number, userID: string) {
 		const data: LtSpeakerData = { data: undefined, error: undefined };
 		try {
-			const res = await this._LtSpeakerRequstInterface.getSpeakerInfo(Ltname, username);
+			const res = await this._LtSpeakerRequstInterface.getSpeakerInfo(LtID, userID);
 			data.data = res;
 		} catch (e) {
 			if (e instanceof Error) {
@@ -33,8 +33,8 @@ export class LtSpeakerRequest {
 		return this._LtSpeakerRequstInterface.getLtSpeakerInfoFromUser(username);
 	}
 
-	getLtSpeakerInfoFromLt(Ltname: string) {
-		return this._LtSpeakerRequstInterface.getSpeakerInfoFromLt(Ltname);
+	getLtSpeakerInfoFromLt(LtID: Number) {
+		return this._LtSpeakerRequstInterface.getSpeakerInfoFromLt(LtID);
 	}
 
 	async upsertLtSpeakerInfo(LtSpeakerInfo: LtSpeakerInput) {
@@ -49,10 +49,10 @@ export class LtSpeakerRequest {
 		return data;
 	}
 
-	async deleteLtSpeakerInfo(Ltname: string, username: string) {
+	async deleteLtSpeakerInfo(LtID: Number, userID: string) {
 		const data: LtSpeakerData = { data: undefined, error: undefined };
 		try {
-			const res = await this._LtSpeakerRequstInterface.deleteLtSpeakerInfo(Ltname, username);
+			const res = await this._LtSpeakerRequstInterface.deleteLtSpeakerInfo(LtID, userID);
 		} catch (e) {
 			if (e instanceof Error) {
 				data.error = { message: e.message };

@@ -20,6 +20,8 @@ interface response {
 
 let username = '';
 let Ltname = '';
+let LtID = "";
+let userID = "";
 const LtRule = ` **ルール**  
 	- 発表時間は一人5分 + 質疑応答5分 の合計10分です。  
 	- **時間超過した場合は自動的に終了します。**  
@@ -30,7 +32,7 @@ const LtRule = ` **ルール**
  * @param event
  */
 export const load: PageServerLoad = async (event) => {
-	const LtID = event.params.ltname;
+	LtID = event.params.ltname;
 	const LtInfo = new LtInfoFacade();
 	const account = new Account();
 
@@ -47,6 +49,8 @@ export const load: PageServerLoad = async (event) => {
 		throw redirect(303, '/login');
 	}
 
+	userID = session.user.id;
+
 	const { data: profileData, error: profileError } = await account.profileRequest.getProfile(session.user.id);
 
 	if (profileData?.username) {
@@ -54,7 +58,7 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	// スピーカー情報
-	const { data: speakerData, error: speakerErr } = await LtInfo.LtSpeakerRequest.getLtSpeakerInfo(LtData.name, username);
+	const { data: speakerData, error: speakerErr } = await LtInfo.LtSpeakerRequest.getLtSpeakerInfo(LtData.id, session.user.id);
 
 	const response: response = {
 		Lt: {
@@ -88,7 +92,9 @@ export const actions: Actions = {
 			username: username,
 			LtComment: comment,
 			LtLink: link,
-			LtTitle: title
+			LtTitle: title,
+			LtID: Number(LtID),
+			userID: userID,
 		});
 
 		console.log(res);
@@ -108,7 +114,7 @@ export const actions: Actions = {
 
 		const LtInfo = new LtInfoFacade();
 
-		LtInfo.LtSpeakerRequest.deleteLtSpeakerInfo(name, username);
+		LtInfo.LtSpeakerRequest.deleteLtSpeakerInfo(Number(LtID), userID);
 
 		throw redirect(303, url.pathname.replace('register', ''));
 	}
