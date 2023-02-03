@@ -11,7 +11,6 @@ interface speakersInfo {
 	LtLink?: string;
 }
 
-
 /**
  * rootページ読み込み時サーバーロード関数
  * @param event
