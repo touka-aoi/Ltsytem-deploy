@@ -1,6 +1,6 @@
 import type { LayoutServerLoad } from './$types';
 import { getServerSession } from '@supabase/auth-helpers-sveltekit';
-import { Account } from '$lib/Account';
+import { Account } from '$lib/AccountsFacade';
 import { redirect } from '@sveltejs/kit';
 
 const accountService = new Account();

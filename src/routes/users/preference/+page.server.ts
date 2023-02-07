@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { Account } from '$lib/Account';
+import { Account } from '$lib/AccountsFacade';
 
 export const load: PageServerLoad = async (event) => {
 	const request = new Account();

@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { LtInfoFacade } from '$lib/LtInfoFacade';
 import type { LtSpeakerOutput } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
-import { Account } from '$lib/Account';
+import { Account } from '$lib/AccountsFacade';
 
 interface speakersInfo {
 	username: string;
@@ -10,7 +10,6 @@ interface speakersInfo {
 	LtComment?: string;
 	LtLink?: string;
 }
-
 
 /**
  * rootページ読み込み時サーバーロード関数
@@ -42,6 +41,7 @@ export const load: PageServerLoad = async (event) => {
 	);
 
 	return {
+		hoge: LtInfo.LtHoldRequest.getLatestLtInfo(),
 		latestLt: {
 			data: latestLt,
 			speakers: speakers

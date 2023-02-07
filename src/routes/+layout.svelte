@@ -5,8 +5,8 @@
 	import { invalidate, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 
-	import Header from '../lib/Header.svelte';
-	import Fotter from '../lib/Fotter.svelte';
+	import Header from '../lib/Navigation/Header.svelte';
+	import Fotter from '../lib/Navigation/Fotter.svelte';
 
 	onMount(() => {
 		const {

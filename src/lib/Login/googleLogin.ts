@@ -4,7 +4,7 @@ export async function signInWithGoogle(supabase: SupabaseClient<any, 'public', a
 	const { data, error } = await supabase.auth.signInWithOAuth({
 		provider: 'google',
 		options: {
-			redirectTo: 'www.touka-dev.net'
+			redirectTo: 'http://localhost:5173/'
 		}
 	});
 }

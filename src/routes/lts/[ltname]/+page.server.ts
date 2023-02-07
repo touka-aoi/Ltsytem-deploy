@@ -3,7 +3,7 @@
 
 import type { PageServerLoad } from './$types';
 import { LtInfoFacade } from '$lib/LtInfoFacade';
-import { Account } from '$lib/Account';
+import { Account } from '$lib/AccountsFacade';
 import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 

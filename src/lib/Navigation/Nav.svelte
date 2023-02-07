@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import type { AuthSession } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
-	import { Account } from '$lib/Account';
+	import { Account } from '$lib/AccountsFacade';
 
 	export let session: AuthSession;
 

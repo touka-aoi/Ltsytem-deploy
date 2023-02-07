@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Account } from '$lib/Account';
+	import { Account } from '$lib/AccountsFacade';
 
 	export let data: PageData;
 

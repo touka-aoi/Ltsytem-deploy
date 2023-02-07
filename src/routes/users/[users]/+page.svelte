@@ -2,7 +2,7 @@
 	import Logout from '$lib/Login/Logout.svelte';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
-	import { Account } from '$lib/Account';
+	import { Account } from '$lib/AccountsFacade';
 	import { base } from '$app/paths';
 
 	// サーバー情報

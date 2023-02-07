@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { AuthSession } from '@supabase/supabase-js';
-	import { Account } from '$lib/Account';
+	import { Account } from '$lib/AccountsFacade';
 	import { Session } from '$lib/Session';
-	import { isAlphaNumeric } from '$lib/utilities';
-	import { redirect } from '@sveltejs/kit';
 
+function isAlphaNumeric(str: string): boolean {
+	return /^[0-9a-zA-Z]+$/.test(str);
+}
 	export let session: AuthSession;
 
 	const {

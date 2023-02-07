@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Register from '$lib/AccountRegister.svelte';
+	import Register from 'src/routes/register/AccountRegister.svelte';
 	import { page } from '$app/stores';
 </script>
 

@@ -2,7 +2,6 @@ import { ProfileRequest } from '$lib/Profile/profileReqeust';
 import { ProfileRequestSupabase } from '$lib/Profile/profileRequestSupabase';
 import { AvatarRequest } from '$lib/Avatar/avatarRequest';
 import { AvatarRequestSupabase } from '$lib/Avatar/avatarRequestSupabase';
-import type { profile } from '$lib/Profile/profileRequestInterface';
 import { getServerSession } from '@supabase/auth-helpers-sveltekit';
 import type { ServerLoadEvent } from '@sveltejs/kit';
 

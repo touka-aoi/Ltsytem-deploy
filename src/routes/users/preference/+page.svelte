@@ -1,8 +1,11 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
-	import { Account } from '$lib/Account';
-	import { isAlphaNumeric } from '$lib/utilities';
+	import { Account } from '$lib/AccountsFacade';
+
+	function isAlphaNumeric(str: string): boolean {
+		return /^[0-9a-zA-Z]+$/.test(str);
+	}
 
 	export let data: PageData;
 
