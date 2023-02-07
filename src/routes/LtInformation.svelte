@@ -14,7 +14,8 @@
 	export let LtData: LtInfoOutput;
 	export let speakerData: any;
 
-	const holdDate = LtData.holdDate;
+	const holdDate = new Date(LtData.holdDate);
+	const holdDateFormarted = holdDate.toLocaleTimeString('ja-JP', {year: 'numeric',	month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
 	const state = holdDate <= new Date() ? "終了" : LtData.maxMem > speakerData.length ? "募集中" : "満員";
 </script>
 
@@ -26,7 +27,7 @@
 		<div class="h-fit w-full rounded-sm bg-slate-100 p-2">
 			<!-- 開催日時 -->
 			<div class = "flex justify-center mb-2">
-				<p class="text-lg">日時</p>
+				<p class="text-lg">{holdDateFormarted}</p>
 			</div>
 			<div class="flex justify-between  gap-2 items-center ">
 				<!-- LT状態 -->
