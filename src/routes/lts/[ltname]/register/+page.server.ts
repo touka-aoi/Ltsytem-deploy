@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import type { Actions } from './$types';
 
 import { LtInfoFacade } from '$lib/LtInfoFacade';
-import { Account } from '$lib/Account';
+import { Account } from '$lib/AccountsFacade';
 import { error, fail, redirect } from '@sveltejs/kit';
 
 import type { LtSpeakerOutput } from '$lib/LtSpeaker/LtSpeakerRequestInterface';

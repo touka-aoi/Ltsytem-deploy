@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { Account } from '$lib/Account';
+import { Account } from '$lib/AccountsFacade';
 import { LtInfoFacade } from '$lib/LtInfoFacade';
 
 function dateFormatter(date: Date) {
