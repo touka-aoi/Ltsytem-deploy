@@ -9,7 +9,6 @@
 	onMount(async () => {
 		const res =  await fetch("/API/latestsLts");
 		latestLtData = await res.json();
-		console.log(latestLtData);
 		loading = false;
 	})
 

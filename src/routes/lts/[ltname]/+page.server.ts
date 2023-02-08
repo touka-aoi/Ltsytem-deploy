@@ -87,7 +87,6 @@ export const load: PageServerLoad = async (event) => {
 
 	// スピーカ情報を取得する
 	const res = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(Number(Ltid));
-	console.log(res);
 
 	// ユーザー情報を取得する
 	const speakers: Array<speakersInfo> = await Promise.all(
