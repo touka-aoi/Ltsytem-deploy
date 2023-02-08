@@ -27,7 +27,7 @@
 		<div class="h-fit w-full rounded-sm bg-slate-100 p-2">
 			<!-- 開催日時 -->
 			<div class = "flex justify-center mb-2">
-				<p class="text-lg">{holdDateFormarted}</p>
+				<p class="text-lg">{holdDate}</p>
 			</div>
 			<div class="flex justify-between  gap-2 items-center ">
 				<!-- LT状態 -->
