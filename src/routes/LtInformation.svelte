@@ -20,7 +20,7 @@
 </script>
 
 <!-- LT情報コンポーネント -->
-<div class="h-full md:w-40v bg-gray-700 rounded-md">
+<div class="h-full w-90v md:w-40v bg-gray-700 rounded-md">
 	<!-- LTタイトル, LTスピーカー -->
 	<div class="flex flex-col items-center gap-4 m-5 h-full">
 		<!-- LT名、時期、人数 -->
@@ -51,6 +51,7 @@
 				<div class="flex flex-col justify-center bg-slate-100 mx-2 px-5 py-2 gap-2 rounded-sm">
 					<p>{username}</p>
 					<div class="border-solid w-full overflow-hidden">
+						<!-- LTタイトル -->
 						<p class="font-bold truncate ...">{LtTitle}</p>
 					</div>
 				</div>
