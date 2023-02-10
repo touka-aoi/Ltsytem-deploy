@@ -18,8 +18,8 @@ function dateFormatter(date: Date) {
 
 async function getUserSpeakLtData(userID: string) {
 	const userSpeakLts = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromUser(userID);
-	speakerLtReserveInfo = [];
-	speakerLtEndInfo = [];
+	const speakerLtReserveInfo: Array<userSpeakLtInformation> = [];
+	const speakerLtEndInfo: Array<userSpeakLtInformation> = [];
 	await Promise.all(
 		userSpeakLts.map(async (userSpeakLt) => {
 			//LT情報を取得
@@ -42,12 +42,16 @@ async function getUserSpeakLtData(userID: string) {
 			}
 		})
 	);
+	return {
+		speakerLtReserveInfo: speakerLtReserveInfo,
+		speakerLtEndInfo: speakerLtEndInfo,
+	};
 }
 
 async function getUserViewLtData(userID: string) {
 	const userViewsLts = await LtInfo.LtviewerRequest.getLtsfromUser(userID);
-	viewLtReserveInfo = [];
-	viewLtEndInfo = [];
+	let viewLtReserveInfo: Array<userViewLtInformation> = [];
+	let viewLtEndInfo: Array<userViewLtInformation> = [];
 	await Promise.all(
 		userViewsLts.Ltnames.map(async (Ltname) => {
 			const { data: LtData } = await LtInfo.LtHoldRequest.getLtInfoFromName(Ltname);
@@ -66,15 +70,14 @@ async function getUserViewLtData(userID: string) {
 			}
 		})
 	);
+	return {
+		viewLtReserveInfo: viewLtReserveInfo,
+		viewLtEndInfo: viewLtEndInfo,
+	}
 }
 
 const account = new Account();
 const LtInfo = new LtInfoFacade();
-
-let speakerLtReserveInfo: Array<userSpeakLtInformation> = [];
-let speakerLtEndInfo: Array<userSpeakLtInformation> = [];
-let viewLtReserveInfo: Array<userViewLtInformation> = [];
-let viewLtEndInfo: Array<userViewLtInformation> = [];
 
 interface userSpeakLtInformation {
 	Ltname: string;
@@ -102,6 +105,7 @@ interface userViewLtInformation {
  * 取得情報: ユーザー情報(username, avatarURL), ログインユーザーかどうか
  */
 export const load: PageServerLoad = async (event) => {
+
 	// URIパラメータ
 	let username: string | undefined = undefined;
 	let avatarURL: string | undefined = undefined;
@@ -129,8 +133,9 @@ export const load: PageServerLoad = async (event) => {
 
 	const isUser = loginID == userID;
 
-	getUserSpeakLtData(userID);
-	getUserViewLtData(userID);
+	const {speakerLtReserveInfo, speakerLtEndInfo} = await getUserSpeakLtData(userID);
+	const { viewLtReserveInfo, viewLtEndInfo } = await getUserViewLtData(userID);
+
 
 	return {
 		user: usernameFromUri,
