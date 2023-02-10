@@ -3,6 +3,11 @@ import { error } from '@sveltejs/kit';
 import { Account } from '$lib/AccountsFacade';
 import { LtInfoFacade } from '$lib/LtInfoFacade';
 
+/**
+ * Date型をstring型に変換する
+ * @param date 変換するDate型
+ * @returns holdHourとholdDayを返す ex. holdHour 12:12, holdDay 2022-12-12
+ */
 function dateFormatter(date: Date) {
 	const dayformated: string = date.toLocaleDateString('ja-JP', {
 		year: 'numeric',
@@ -16,15 +21,25 @@ function dateFormatter(date: Date) {
 	};
 }
 
+/**
+ * LT登壇データを取得する
+ * @param userID 取得したいユーザーID
+ * @returns 予約LTと終了LTと返す
+ */
 async function getUserSpeakLtData(userID: string) {
+	// 登壇データ取得
 	const userSpeakLts = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromUser(userID);
+	// 予約データ
 	const speakerLtReserveInfo: Array<userSpeakLtInformation> = [];
+	// 終了データ
 	const speakerLtEndInfo: Array<userSpeakLtInformation> = [];
+	// LT情報を取得する
 	await Promise.all(
 		userSpeakLts.map(async (userSpeakLt) => {
 			//LT情報を取得
 			const { data: LtData } = await LtInfo.LtHoldRequest.getLtInfoFromName(userSpeakLt.Ltname);
 			if (LtData) {
+				// 登壇人数を取得
 				const speakers = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(userSpeakLt.LtID);
 				const userSpeakLtdata: userSpeakLtInformation = {
 					...dateFormatter(LtData.holdDate),
@@ -135,7 +150,6 @@ export const load: PageServerLoad = async (event) => {
 
 	const {speakerLtReserveInfo, speakerLtEndInfo} = await getUserSpeakLtData(userID);
 	const { viewLtReserveInfo, viewLtEndInfo } = await getUserViewLtData(userID);
-
 
 	return {
 		user: usernameFromUri,
