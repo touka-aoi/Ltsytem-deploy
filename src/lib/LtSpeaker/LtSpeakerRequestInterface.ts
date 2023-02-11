@@ -24,7 +24,7 @@ export abstract class LtSpeakerRequestInterface {
 	// ユーザーの最新10件のLT情報を持ってくる
 	abstract getLtSpeakerInfoFromUser(username: string): Promise<Array<LtSpeakerOutput>>;
 	// 特定のLTの情報を持ってくるめ
-	abstract getSpeakerInfoFromLt(LtId: Number): Promise<Array<LtSpeakerOutput>>;
+	abstract getSpeakerInfoFromLtID(LtId: Number): Promise<Array<LtSpeakerOutput>>;
 	// LT情報を登録する
 	abstract upsertLtSpeakerInfo(LtRegisterInfo: LtSpeakerInput): Promise<void>;
 	// 特定のユーザーの特定のlT情報を持ってくる

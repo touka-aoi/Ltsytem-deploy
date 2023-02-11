@@ -15,13 +15,22 @@ export interface LtInfoInput {
 	holdPlace: string;
 }
 
+interface postgresqlData {
+	id: Number;
+	ltname: string;
+	description: string;
+	maxmem: Number;
+	holddate: Date;
+	holdplace: string;
+}
+
 export abstract class LtHoldRequestInterface {
 	// idからLT情報を得る
 	abstract getLtInfoFromId(id: string): Promise<LtInfoOutput>;
 	// LT名からLT情報を得る
 	abstract getLtInfofromName(Ltnmae: string): Promise<LtInfoOutput>;
 	// 最新のLT情報を得る
-	abstract getLatestLt(): Promise<LtInfoOutput>;
+	abstract getLatestLts50(): Promise<Array<postgresqlData>>;
 	// idからLT情報を登録・変更する
 	abstract upsertLtInfo(LtPrincipal: LtInfoInput): Promise<void>;
 	// idからLT情報を削除する

@@ -62,7 +62,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	}
 
 	// Lt名から特定のLTの情報を持ってくるめ
-	async getSpeakerInfoFromLt(LtId: Number): Promise<LtSpeakerOutput[]> {
+	async getSpeakerInfoFromLtID(LtId: Number): Promise<LtSpeakerOutput[]> {
 		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where ltid = $1 ', [LtId]);
 		const speakers = res.rows;
 		const convSpeakers = speakers.map(convertData);

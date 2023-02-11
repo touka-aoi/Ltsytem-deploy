@@ -33,8 +33,8 @@ export class LtSpeakerRequest {
 		return this._LtSpeakerRequstInterface.getLtSpeakerInfoFromUser(username);
 	}
 
-	getLtSpeakerInfoFromLt(LtID: Number) {
-		return this._LtSpeakerRequstInterface.getSpeakerInfoFromLt(LtID);
+	getLtSpeakerInfoFromLtID(LtID: Number) {
+		return this._LtSpeakerRequstInterface.getSpeakerInfoFromLtID(LtID);
 	}
 
 	async upsertLtSpeakerInfo(LtSpeakerInfo: LtSpeakerInput) {
