@@ -41,16 +41,16 @@
 				<div class="flex gap-10">
 					{#if !isSpeaker}
 						<a href="./{id}/register">
-							<button class="minibtn bg-slate-100 rounded-md drop-shadow">LTをする</button>
+							<button class="minibtn bg-slate-100 rounded-md shadow-md">LTをする</button>
 						</a>
 					{:else}
 						<a href="./{id}/register">
-							<button class="minibtn bg-slate-100 rounded-md drop-shadow">LTを修正する</button>
+							<button class="minibtn bg-slate-100 rounded-md shadow-md">LTを修正する</button>
 						</a>
 					{/if}
 					{#if !isViewer}
 						<form method="post" action="?/register">
-							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto drop-shadow" value="LTをみる" />
+							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto shadow-md" value="LTをみる" />
 							<input type="hidden" name="Ltname" bind:value={Ltname} />
 						</form>
 					{:else}
@@ -60,7 +60,7 @@
 				{#if isSpeaker || isViewer}
 				<div>
 					<a href={holdPlace}>
-						<button class="minibtn bg-slate-100 rounded-md drop-shadow"> 開催場所へ移動 </button>
+						<button class="minibtn bg-slate-100 rounded-md shadow-md"> 開催場所へ移動 </button>
 					</a>
 				</div>
 				{/if}
