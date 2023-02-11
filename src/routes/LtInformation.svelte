@@ -24,7 +24,7 @@
 	<!-- LTタイトル, LTスピーカー -->
 	<div class="flex flex-col items-center gap-4 m-5 h-full">
 		<!-- LT名、時期、人数 -->
-		<div class="h-fit w-full rounded-sm bg-slate-100 p-2 shadow-md">
+		<div class="h-fit w-full rounded-sm bg-slate-100 p-2 ">
 			<!-- 開催日時 -->
 			<div class = "flex justify-center mb-2">
 				<!-- <p class="text-lg">{holdDate}</p> -->
@@ -48,12 +48,12 @@
 		<!-- 登壇者情報 -->
 		<div class="w-full rounded-sm flex-col flex gap-2">
 			{#each speakerData as { username, LtTitle }}
-				<div class="flex flex-col justify-center bg-slate-100 mx-2 px-5 py-2 gap-2 rounded-sm shadow-md" >
-					<p>{username}</p>
+				<div class="flex flex-col justify-center mx-2 px-5 py-2 gap-2 rounded-sm border-b" >
 					<div class="border-solid w-full overflow-hidden">
 						<!-- LTタイトル -->
 						<p class="font-bold truncate ...">{LtTitle}</p>
 					</div>
+					<p>{username}</p>
 				</div>
 			{/each}
 		</div>
