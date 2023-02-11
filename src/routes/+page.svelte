@@ -20,7 +20,7 @@
 	<section>
 		<!-- 最新LT -->
 		<div class="bg-gray-300 h-50v flex items-center justify-center">
-			<a href="{base}/lts/{latestLtData.Lt.id}" class="minibtn bg-slate-100 cursor-pointer">LTに参加する</a>
+			<a href="{base}/lts/{latestLtData.Lt.id}" class="minibtn bg-slate-100 cursor-pointer shadow-md">LTに参加する</a>
 		</div>
 	</section>
 	<section>
