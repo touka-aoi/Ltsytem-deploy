@@ -48,8 +48,8 @@
 						speakerData={latestLtData.speaker}
 					/>
 			</div>
-			<div class="flex items-end justify-end my-9">
-				<!-- <button class="minibtn bg-slate-100">過去の開催情報を見る</button> -->
+			<div class="flex justify-end">
+				<a href="{base}/lts/archive" class="minibtn bg-slate-100 cursor-pointer shadow-md">過去の開催情報を見る</a>
 			</div>
 		</div>
 	</section>
