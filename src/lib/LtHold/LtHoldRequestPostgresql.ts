@@ -1,6 +1,5 @@
 import type { LtHoldRequestInterface, LtInfoInput, LtInfoOutput } from './LtHoldRequstInterface';
 import type { Pool } from 'pg';
-import { env } from '$env/dynamic/public';
 import { pool } from '../../hooks.server';
 
 interface postgresqlData {
@@ -60,12 +59,11 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 		return out;
 	}
 
-	async getLatestLt(): Promise<LtInfoOutput> {
-		const res = await this.client.query('SELECT * FROM Ltinfo ORDER BY holdDate DESC LIMIT 1');
-		const Lt = res.rows.at(0);
-		// await this.client.end();
-		const out = LtHoldRequestPostgresql.convertData(Lt);
-		return out;
+	// 最新50件のLT開催データを取得する
+	async getLatestLts50(): Promise<Array<postgresqlData>> {
+		const res = await this.client.query('SELECT * FROM Ltinfo ORDER BY holdDate DESC LIMIT 50');
+		const Lt = res.rows;
+		return Lt;
 	}
 
 	async upsertLtInfo(LtPrincipal: LtInfoInput): Promise<void> {

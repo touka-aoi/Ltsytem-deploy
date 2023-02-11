@@ -40,7 +40,7 @@ async function getUserSpeakLtData(userID: string) {
 			const { data: LtData } = await LtInfo.LtHoldRequest.getLtInfoFromName(userSpeakLt.Ltname);
 			if (LtData) {
 				// 登壇人数を取得
-				const speakers = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLt(userSpeakLt.LtID);
+				const speakers = await LtInfo.LtSpeakerRequest.getLtSpeakerInfoFromLtID(userSpeakLt.LtID);
 				const userSpeakLtdata: userSpeakLtInformation = {
 					...dateFormatter(LtData.holdDate),
 					maxMem: Number(LtData.maxMem),

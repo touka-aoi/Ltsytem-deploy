@@ -1,5 +1,14 @@
 import type { LtHoldRequestInterface, LtInfoInput, LtInfoOutput } from './LtHoldRequstInterface';
 
+interface postgresqlData {
+	id: Number;
+	ltname: string;
+	description: string;
+	maxmem: Number;
+	holddate: Date;
+	holdplace: string;
+}
+
 interface LtHoldData {
 	data: LtInfoOutput | undefined;
 	error:
@@ -7,6 +16,18 @@ interface LtHoldData {
 				message: string;
 		  }
 		| undefined;
+}
+
+function convertData(data: postgresqlData): LtInfoOutput {
+	const convData: LtInfoOutput = {
+		id: data.id,
+		name: data.ltname,
+		desc: data.description,
+		maxMem: data.maxmem,
+		holdDate: new Date(data.holddate),
+		holdPlace: data.holdplace
+	};
+	return convData;
 }
 
 /**
@@ -47,8 +68,12 @@ export class LtHoldRequest {
 		return data;
 	}
 
-	getLatestLtInfo() {
-		return this._LtHoldRequestInterface.getLatestLt();
+	async getLatestLtInfo() {
+		const latestLtData =  await this._LtHoldRequestInterface.getLatestLts50();
+		const ConvertLatestLtData = latestLtData.map((LtData) => {
+			return convertData(LtData);
+		});
+		return ConvertLatestLtData;
 	}
 
 	upsertLtInfo(LtInfo: LtInfoInput) {

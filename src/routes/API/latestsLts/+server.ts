@@ -11,9 +11,11 @@ const AccountService = new Account;
 
 export async function GET() {
   // 最新Lt情報を取得
-  const latestLt: LtInfoOutput = await LtService.LtHoldRequest.getLatestLtInfo();
+  const latestLts: Array<LtInfoOutput> = await LtService.LtHoldRequest.getLatestLtInfo();
+  const latestLt = latestLts[0];
+  
   // スピーカー情報を取得
-  const latestLtSpeaker = await LtService.LtSpeakerRequest.getLtSpeakerInfoFromLt(latestLt.id);
+  const latestLtSpeaker = await LtService.LtSpeakerRequest.getLtSpeakerInfoFromLtID(latestLt.id);
   // ユーザー名を取得
   const latestLtSpeakerAddUserData = await Promise.all(
     latestLtSpeaker.map(async(speakerInfo: LtSpeakerOutput) => {
