@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Account } from '$lib/AccountsFacade';
+	import SpeakerInformatino from './SpeakerInformatino.svelte';
 
 	export let data: PageData;
 
@@ -15,8 +15,6 @@
 	}
 	let { usernames: viewers } = data.viewer;
 
-	const size = 4;
-	const account = new Account();
 </script>
 
 <div class="flex flex-col gap-10 justify-center items-center my-10 px-10">
@@ -43,26 +41,26 @@
 				<div class="flex gap-10">
 					{#if !isSpeaker}
 						<a href="./{id}/register">
-							<button class="minibtn bg-slate-100 rounded-md">LTをする</button>
+							<button class="minibtn bg-slate-100 rounded-md drop-shadow">LTをする</button>
 						</a>
 					{:else}
 						<a href="./{id}/register">
-							<button class="minibtn bg-slate-100 rounded-md">LTを修正する</button>
+							<button class="minibtn bg-slate-100 rounded-md drop-shadow">LTを修正する</button>
 						</a>
 					{/if}
 					{#if !isViewer}
 						<form method="post" action="?/register">
-							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto" value="LTをみる" />
+							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto drop-shadow" value="LTをみる" />
 							<input type="hidden" name="Ltname" bind:value={Ltname} />
 						</form>
 					{:else}
-						<div class="box-border minibtn rounded-md border-2 cursor-default">登録ずみ</div>
+						<div class="box-border minibtn rounded-md border-2 cursor-default">登録完了</div>
 					{/if}
 				</div>
 				{#if isSpeaker || isViewer}
 				<div>
 					<a href={holdPlace}>
-						<button class="minibtn bg-slate-100 rounded-md"> 開催場所へ移動 </button>
+						<button class="minibtn bg-slate-100 rounded-md drop-shadow"> 開催場所へ移動 </button>
 					</a>
 				</div>
 				{/if}
@@ -87,36 +85,8 @@
 			</div>
 		{:else}
 			<div class="flex flex-col gap-3 items-center">
-				{#each speakers as { username, avatarData, LtTitle, LtComment, LtLink }}
-					<div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3 w-[80vw] md:w-[50vw]">
-						<div class="flex flex-col justify-center items-center gap-3">
-							{#if avatarData}
-								{#await account.avatarRequest.downloadAvatar(avatarData) then avatar}
-									<div class="overflow-hidden rounded-full w-[2em] h-[2em] md:w-[4em] md:h-[4em]">
-										<img src={avatar.fileUrl} alt="avatar" />
-									</div>
-								{/await}
-							{:else}
-								<div class="bg-slate-100 rounded-full flex flex-col justify-center items-center" style="height: {size}em; width: {size}em;" />
-							{/if}
-							<p>
-								{username}
-							</p>
-						</div>
-						<div class="flex flex-col gap-2">
-							<p class="text-lg">
-								{LtTitle}
-							</p>
-							<p>
-								{LtComment}
-							</p>
-							{#if LtLink}
-								<a href={LtLink} class="px-2 py-1 rounded-xl bg-gray-300 mr-auto mt-3">
-									<img src="/link.svg" alt="presentation link" class="w-4" />
-								</a>
-							{/if}
-						</div>
-					</div>
+				{#each speakers as speaker}
+					<SpeakerInformatino speaker={speaker} />
 				{/each}
 			</div>
 		{/if}
