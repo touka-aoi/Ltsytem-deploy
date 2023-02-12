@@ -49,7 +49,7 @@ async function getUserSpeakLtData(userID: string) {
 					assginMem: speakers.length,
 					...userSpeakLt
 				};
-				if (new Date() < LtData.holdDate) {
+				if (new Date().getTime() < LtData.holdDate.getTime()) {
 					speakerLtReserveInfo.push(userSpeakLtdata);
 				} else {
 					speakerLtEndInfo.push(userSpeakLtdata);
@@ -77,7 +77,7 @@ async function getUserViewLtData(userID: string) {
 					Ltid: Number(LtData.id),
 					holdPlace: LtData.holdPlace
 				};
-				if (new Date() < LtData.holdDate) {
+				if (new Date().getTime() < LtData.holdDate.getTime()) {
 					viewLtReserveInfo.push(userViewLtdata);
 				} else {
 					viewLtEndInfo.push(userViewLtdata);
