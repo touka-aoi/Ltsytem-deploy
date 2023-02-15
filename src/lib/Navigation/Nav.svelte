@@ -26,7 +26,6 @@
 	{#if !$page.data.session}
 		<a class="bg-zinc-50  minibtn" href="/login"> ログイン </a>
 	{:else}
-		<a class="bg-zinc-50 minibtn" href="/users/{username}"> マイページ </a>
-		<!-- <a class="bg-zinc-50 minibtn" href="/register"> LTに参加 </a> -->
+		<a class="bg-zinc-50 minibtn" href="/users"> マイページ </a>
 	{/if}
 </div>

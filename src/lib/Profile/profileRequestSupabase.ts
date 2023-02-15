@@ -1,24 +1,35 @@
 import { supabase } from '$lib/databaseClient/supabaseClient';
 import type { ProfileRequestInterface, profile, profileOutput, error } from './profileRequestInterface';
 
-interface supabaseDataType {
-	username: string | undefined;
-	id: string;
-	avatar_url: string | undefined;
-}
-
-function convertProfileType(userData: profile) {
-	const supabaseType: supabaseDataType = {
-		username: userData.username,
-		id: userData.id,
-		avatar_url: userData.avatarURL
-	};
-	return supabaseType;
-}
-
 export class ProfileRequestSupabase implements ProfileRequestInterface {
+	async insertProfile(userProfile: profile): Promise<error> {
+		// 翻訳
+		const profile = {
+			username: userProfile.username,
+			id: userProfile.id,
+			avatar_url: userProfile.avatarURL,
+		}
+		// エラーメッセージ
+		let errMsg: string | undefined = undefined;
+
+		try {
+			let { data, error } = await supabase.from('profiles').insert(profile);
+
+			if (error) throw error;
+		} catch (error: any) {
+			if (error instanceof Error) {
+				errMsg = error.message;
+			}
+			if (error.code == 23505) {
+				errMsg = 'ユーザー名が重複しています';
+			}
+		}
+
+		return { message: errMsg };
+	}
+
 	async getProfile(id: string): Promise<profileOutput> {
-		let response: profile | undefined = undefined;
+		let response;
 		let errMsg: string | undefined = undefined;
 
 		try {
@@ -28,7 +39,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 				response = {
 					id: id,
 					avatarURL: data.avatar_url,
-					username: data.username
+					username: data.username,
 				};
 			}
 			if (error && status !== 406) throw error;
@@ -44,7 +55,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 	}
 
 	async getProfileFromUsername(username: string): Promise<profileOutput> {
-		let response: profile | undefined = undefined;
+		let response = undefined;
 		let errMsg: string | undefined = undefined;
 
 		try {
@@ -54,7 +65,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 				response = {
 					id: data.id,
 					avatarURL: data.avatar_url,
-					username: data.username
+					username: data.username,
 				};
 			}
 
@@ -71,11 +82,16 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 	}
 
 	async upsertProfile(userProfile: profile): Promise<error> {
-		const profile = convertProfileType(userProfile);
+		const profile = {
+			id: userProfile.id,
+			avatar_url: userProfile.avatarURL,
+			username: userProfile.username,
+		}
+
 		let errMsg: string | undefined = undefined;
 
 		try {
-			let { data, error } = await supabase.from('profiles').upsert(profile).select('username, avatar_url').single();
+			let { data, error } = await supabase.from('profiles').upsert(profile);
 
 			if (error) throw error;
 		} catch (error: any) {
