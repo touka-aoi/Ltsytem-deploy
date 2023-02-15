@@ -10,6 +10,7 @@
 	let LtTitle = speaker?.LtTitle;
 	let LtLink = speaker?.LtLink;
 	let selectedTags = speaker?.tags;
+	if (selectedTags == undefined) selectedTags = [];
 	let LtComment = speaker?.LtComment;
 	const LtRule = data.LtRules;
   let tags = ["技術", "生活", "表明", "甘口" , "辛口", "中辛"]
