@@ -39,7 +39,7 @@
 		{#if status == 'reserve'}
 			{#if username}
 				<div class="flex gap-10">
-					{#if !isSpeaker}
+					{#if !isSpeaker} 
 						<a href="./{id}/register">
 							<button class="minibtn bg-slate-100 rounded-md shadow-md">LTをする</button>
 						</a>
@@ -50,7 +50,7 @@
 					{/if}
 					{#if !isViewer}
 						<form method="post" action="?/register">
-							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto shadow-md" value="LTをみる" />
+							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto shadow-md" value="LTを見る" />
 							<input type="hidden" name="Ltname" bind:value={Ltname} />
 						</form>
 					{:else}
