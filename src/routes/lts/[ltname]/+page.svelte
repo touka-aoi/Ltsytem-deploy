@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import SpeakerInformatino from './SpeakerInformatino.svelte';
+	import SpeakerInformation from './SpeakerInformation.svelte';
 
 	export let data: PageData;
 
@@ -14,6 +14,7 @@
 		isViewer = data.user.isViewer;
 	}
 	let { usernames: viewers } = data.viewer;
+	
 
 </script>
 
@@ -86,7 +87,7 @@
 		{:else}
 			<div class="flex flex-col gap-3 items-center">
 				{#each speakers as speaker}
-					<SpeakerInformatino speaker={speaker} />
+					<SpeakerInformation speaker={speaker} />
 				{/each}
 			</div>
 		{/if}

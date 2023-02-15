@@ -76,6 +76,7 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	register: async ({ cookies, request, url }) => {
 		const data = await request.formData();
+		const tag = data.getAll('tag') as Array<string>;	
 		const title = data.get('Lttitle') as string;
 		const comment = data.get('Ltcomment') as string;
 		const link = data.get('Ltlink') as string;
@@ -94,6 +95,7 @@ export const actions: Actions = {
 			LtTitle: title,
 			LtID: Number(LtID),
 			userID: userID,
+			tags: tag,
 		});
 
 

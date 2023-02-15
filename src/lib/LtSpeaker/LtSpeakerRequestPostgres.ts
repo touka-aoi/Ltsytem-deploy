@@ -10,6 +10,7 @@ interface postgresqlData {
 	ltlink: string;
 	lttitle: string;
 	ltcomment: string;
+	tags: Array<string>;
 }
 
 function convertData(data: postgresqlData): LtSpeakerOutput {
@@ -20,7 +21,8 @@ function convertData(data: postgresqlData): LtSpeakerOutput {
 		Ltname: data.ltname,
 		LtComment: data.ltcomment,
 		LtLink: data.ltlink,
-		LtTitle: data.lttitle
+		LtTitle: data.lttitle,
+		tags: data.tags
 	};
 	return convData;
 }
@@ -73,12 +75,12 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	async upsertLtSpeakerInfo(LtSeakerInfo: LtSpeakerInput): Promise<void> {
 		const res = await this.client.query(
 			`
-    INSERT INTO LtSpeakerInfo (Ltname, LtLink, LtTitle, LtComment, userid, LtId)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO LtSpeakerInfo (Ltname, LtLink, LtTitle, LtComment, userid, LtId, tags)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
     ON CONFLICT ON CONSTRAINT unique_ltid_userid
-    DO UPDATE SET Ltname=$1,  LtLink=$2, LtTitle=$3, LtComment=$4, userid=$5, LtId=$6
+    DO UPDATE SET Ltname=$1,  LtLink=$2, LtTitle=$3, LtComment=$4, userid=$5, LtId=$6, tags=$7
     `,
-			[LtSeakerInfo['Ltname'],  LtSeakerInfo['LtLink'], LtSeakerInfo['LtTitle'], LtSeakerInfo['LtComment'], LtSeakerInfo["userID"], LtSeakerInfo["LtID"]]
+			[LtSeakerInfo['Ltname'],  LtSeakerInfo['LtLink'], LtSeakerInfo['LtTitle'], LtSeakerInfo['LtComment'], LtSeakerInfo["userID"], LtSeakerInfo["LtID"], LtSeakerInfo["tags"]]
 		);
 	}
 

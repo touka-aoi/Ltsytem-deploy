@@ -9,9 +9,10 @@
 
 	let LtTitle = speaker?.LtTitle;
 	let LtLink = speaker?.LtLink;
+	let selectedTags = speaker?.tags;
 	let LtComment = speaker?.LtComment;
 	const LtRule = data.LtRules;
-
+  let tags = ["技術", "生活", "表明", "甘口" , "辛口", "中辛"]
 
 </script>
 
@@ -45,6 +46,17 @@
 			<div class="flex flex-col gap-4">
 				<p>コメント</p>
 				<textarea name="Ltcomment" bind:value={LtComment} placeholder="コメント" class="border-2 rounded-sm px-2 py-1 h-[100px]" />
+			</div>
+			<div class = "flex flex-col gap-4">
+				<p>タグ</p>
+				<div class = "flex gap-4">
+					{#each tags as tag}
+						<div>
+							<input type="checkbox" class = "hidden peer" id={tag} name="tag" value={tag} bind:group={selectedTags}>
+							<label for={tag} class="bg-slate-400 rounded-lg px-2 py-1 select-none text-white font-bold shadow-sm peer-checked:bg-blue-500">{tag}</label>
+						</div>
+					{/each}
+				</div>
 			</div>
 			{#if form?.unknown}<p class="error text-red-500">{form.err}</p>{/if}
 			<input type="hidden" name="Ltname" bind:value={Ltname} />

@@ -5,6 +5,7 @@ export interface LtSpeakerInput {
 	LtLink?: string;
 	LtTitle?: string;
 	LtComment?: string;
+	tags: Array<string>;
 }
 
 export interface LtSpeakerOutput {
@@ -15,6 +16,7 @@ export interface LtSpeakerOutput {
 	LtLink?: string;
 	LtTitle?: string;
 	LtComment?: string;
+	tags: Array<string>;
 }
 
 export abstract class LtSpeakerRequestInterface {
