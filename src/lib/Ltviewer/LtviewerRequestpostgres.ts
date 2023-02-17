@@ -1,12 +1,7 @@
-import type { Ltviewers, LtviewerRequestInterface, Lts } from '$lib/Ltviewer/LtviewerRequestInterface';
+import type { Ltviewers, viewLts, error } from '$lib/Ltviewer/LtviewerRequestInterface';
+import {LtviewerRequestInterface} from '$lib/Ltviewer/LtviewerRequestInterface';
 import { pool } from '../../hooks.server';
 import type { Pool } from 'pg';
-
-interface ltviewerData {
-	id: Number;
-	username: string;
-	ltname: string;
-}
 
 export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 	private client: Pool;
@@ -15,47 +10,66 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 		this.client = pool;
 	}
 
-	async getLtviewersFromID(id: Number): Promise<Ltviewers> {
-		const res = await this.client.query('SELECT userid FROM LtViewerInfo Where userid = $1', [id]);
-		const viewers: Array<string> = res.rows;
-		return { user: viewers };
+	async getLtviewersFromID(LtID: Number): Promise<Ltviewers> {
+		let response = LtviewerRequestInterface.NULLVIEWER;
+		try {
+			const res = await this.client.query('SELECT userid FROM LtViewerInfo Where ltid = $1', [LtID]);
+			const viewers: Array<{userid: string}> = res.rows;			
+			response.data = viewers;
+		} catch (e) {
+			if (e instanceof Error) {
+				response.error = {message: e.message};
+			}
+		}
+		return response;
 	}
 
-	async getLtsfromUser(username: string): Promise<Lts> {
-		const res = await this.client.query('SELECT * FROM LtViewerInfo Where username = $1', [username]);
-		const Lts: Array<ltviewerData> = res.rows;
-		const ltviewrs = Lts.map((ele) => {
-			return ele.ltname;
-		});
-		return { Ltnames: ltviewrs };
-	}
-	async getLtviewersfromLtname(Ltname: string): Promise<Ltviewers> {
-		const res = await this.client.query('SELECT * FROM LtViewerInfo Where ltname = $1', [Ltname]);
-		const Lts: Array<ltviewerData> = res.rows;
-		const ltviewrs = Lts.map((ele) => {
-			return ele.username;
-		});
-		return { user: ltviewrs };
+	async getLtsfromUser(userID: string): Promise<viewLts> {
+		let response = LtviewerRequestInterface.NULLLTS;
+		try {
+			const res = await this.client.query('SELECT ltid FROM LtViewerInfo Where userid = $1', [userID]);
+			const Lts: Array<{ltid: Number}>  = res.rows;
+			response.data = Lts;
+		} catch (e) {
+			if (e instanceof Error) {
+				response.error = {message: e.message};
+			}
+		}
+		return response;
 	}
 
-	async upsertLtviewer(Ltname: string, username: string): Promise<void> {
-		const res = await this.client.query(
-			`
-    INSERT INTO LtViewerInfo (ltname, username)
-    VALUES ($1, $2)
-    ON CONFLICT ON CONSTRAINT ltviewerinfo_username_ltname_key
-    DO UPDATE SET ltname=$1, username=$2
-    `,
-			[Ltname, username]
-		);
+	async upsertLtviewer(LtID: Number, userID: string): Promise<error> {
+		let response = LtviewerRequestInterface.NULLERR;
+		try {
+			const res = await this.client.query(
+				`
+			INSERT INTO LtViewerInfo (ltid, userid)
+			VALUES ($1, $2)
+			ON CONFLICT ON CONSTRAINT ltviewerinfo_userid_ltid_key
+			DO UPDATE SET ltid=$1, userid=$2
+			`,
+				[LtID, userID]
+			);
+		} catch (e) {
+			if (e instanceof Error) {
+				response = {message: e.message};
+			}
+		}
+		return response;
 	}
 
-	async delteLtviewer(Ltname: string, username: string): Promise<void> {
-		const res = await this.client.query(
-			`
-      DELETE FROM LtViewerInfo WHERE ltname = $1 AND username = $2
-    `,
-			[Ltname, username]
-		);
+	async delteLtviewer(LtID: Number, userID: string): Promise<error> {
+		let response = LtviewerRequestInterface.NULLERR;
+		try {
+			const res = await this.client.query(
+				`DELETE FROM LtViewerInfo WHERE ltid = $1 AND userid = $2`,
+				[LtID, userID]
+			);
+		} catch (e) {
+			if (e instanceof Error) {
+				response = {message: e.message};
+			}
+		}
+		return response;
 	}
 }

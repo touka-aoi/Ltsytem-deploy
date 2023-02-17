@@ -1,15 +1,24 @@
 export interface Ltviewers {
-	user: Array<string>;
+	data: Array<{userid: string}>;
+	error: error;
 }
 
-export interface Lts {
-	Ltnames: Array<string>;
+export interface viewLts {
+	data: Array<{ltid: Number}>;
+	error: error;
+}
+
+export interface error {
+	message: string;
 }
 
 export abstract class LtviewerRequestInterface {
-	abstract getLtsfromUser(username: string): Promise<Lts>;
-	abstract getLtviewersFromID(id: Number): Promise<Ltviewers>;
-	abstract getLtviewersfromLtname(Ltname: string): Promise<Ltviewers>;
-	abstract upsertLtviewer(Ltname: string, username: string): Promise<void>;
-	abstract delteLtviewer(Ltname: string, username: string): Promise<void>;
+	abstract getLtsfromUser(userID: string): Promise<viewLts>;
+	abstract getLtviewersFromID(LtID: Number): Promise<Ltviewers>;
+	abstract upsertLtviewer(LtID: Number, userID: string): Promise<error>;
+	abstract delteLtviewer(LtID: Number, userID: string): Promise<error>;
+
+	static readonly NULLERR: error = {message: ""};
+	static readonly NULLVIEWER:Ltviewers = {data: [], error: {message: ""}};
+	static readonly NULLLTS:viewLts = {data: [], error: {message: ""}};
 }
