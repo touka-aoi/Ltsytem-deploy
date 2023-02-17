@@ -42,7 +42,7 @@ export class LtHoldRequest {
 		this._LtHoldRequestInterface = LtHoldInterface;
 	}
 
-	async getLtInfoFromId(id: string) {
+	async getLtInfoFromId(id: Number) {
 		const data: LtHoldData = { data: undefined, error: undefined };
 		try {
 			const res = await this._LtHoldRequestInterface.getLtInfoFromId(id);
@@ -69,7 +69,7 @@ export class LtHoldRequest {
 	}
 
 	async getLatestLtInfo() {
-		const latestLtData =  await this._LtHoldRequestInterface.getLatestLts50();
+		const latestLtData = await this._LtHoldRequestInterface.getLatestLts50();
 		const ConvertLatestLtData = latestLtData.map((LtData) => {
 			return convertData(LtData);
 		});

@@ -59,7 +59,7 @@ async function getUserSpeakLtData(userID: string) {
 	);
 	return {
 		speakerLtReserveInfo: speakerLtReserveInfo,
-		speakerLtEndInfo: speakerLtEndInfo,
+		speakerLtEndInfo: speakerLtEndInfo
 	};
 }
 
@@ -87,8 +87,8 @@ async function getUserViewLtData(userID: string) {
 	);
 	return {
 		viewLtReserveInfo: viewLtReserveInfo,
-		viewLtEndInfo: viewLtEndInfo,
-	}
+		viewLtEndInfo: viewLtEndInfo
+	};
 }
 
 const account = new Account();
@@ -120,7 +120,6 @@ interface userViewLtInformation {
  * 取得情報: ユーザー情報(username, avatarURL), ログインユーザーかどうか
  */
 export const load: PageServerLoad = async (event) => {
-
 	// URIパラメータ
 	let username: string | undefined = undefined;
 	let avatarURL: string | undefined = undefined;
@@ -148,7 +147,7 @@ export const load: PageServerLoad = async (event) => {
 
 	const isUser = loginID == userID;
 
-	const {speakerLtReserveInfo, speakerLtEndInfo} = await getUserSpeakLtData(userID);
+	const { speakerLtReserveInfo, speakerLtEndInfo } = await getUserSpeakLtData(userID);
 	const { viewLtReserveInfo, viewLtEndInfo } = await getUserViewLtData(userID);
 
 	return {

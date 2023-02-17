@@ -17,16 +17,7 @@ export class LtSpeakerRequest {
 	}
 
 	async getLtSpeakerInfo(LtID: Number, userID: string) {
-		const data: LtSpeakerData = { data: undefined, error: undefined };
-		try {
-			const res = await this._LtSpeakerRequstInterface.getSpeakerInfo(LtID, userID);
-			data.data = res;
-		} catch (e) {
-			if (e instanceof Error) {
-				data.error = { message: e.message };
-			}
-		}
-		return data;
+		return this._LtSpeakerRequstInterface.getSpeakerInfo(LtID, userID);
 	}
 
 	getLtSpeakerInfoFromUser(username: string) {

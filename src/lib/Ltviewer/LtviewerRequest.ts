@@ -16,6 +16,10 @@ export class LtviewrRequest {
 		this._LtviewerRequest = LtviewerRequest;
 	}
 
+	async getLtviewersFromID(id: Number): Promise<Ltviewers> {
+		return this._LtviewerRequest.getLtviewersFromID(id);
+	}
+
 	async getLtsfromUser(username: string): Promise<Lts> {
 		return this._LtviewerRequest.getLtsfromUser(username);
 	}

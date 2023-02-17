@@ -38,7 +38,7 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 		await this.client.connect();
 	}
 
-	async getLtInfoFromId(id: string): Promise<LtInfoOutput> {
+	async getLtInfoFromId(id: Number): Promise<LtInfoOutput> {
 		const res = await this.client.query('SELECT * FROM Ltinfo WHERE id = $1', [id]);
 		// 取得する値がない場合
 		if (res.rows.length == 0) throw new Error('指定された行が見つかりません');

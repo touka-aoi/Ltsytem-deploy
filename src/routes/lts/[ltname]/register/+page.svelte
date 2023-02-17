@@ -4,31 +4,32 @@
 	export let data: PageData;
 	export let form: ActionData;
 
-	let { name: Ltname, desc } = data.Lt;
-	let speaker = data.speaker;
+	const LtInfo = data.LtInfo;
+	const userSpekerInfo = data.userSpekaerInfo;
+	const userProfile = data.userProfile;
 
-	let LtTitle = speaker?.LtTitle;
-	let LtLink = speaker?.LtLink;
-	let selectedTags = speaker?.tags;
+	const holdDateJp = LtInfo.holdDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
+	
+	$: LtTitle = userSpekerInfo?.LtTitle;
+	$: LtLink = userSpekerInfo?.LtLink;
+	$: LtComment = userSpekerInfo?.LtComment;
+	let selectedTags = userSpekerInfo?.tags;
 	if (selectedTags == undefined) selectedTags = [];
-	let LtComment = speaker?.LtComment;
-	const LtRule = data.LtRules;
-  let tags = ["技術", "生活", "表明", "甘口" , "辛口", "中辛"]
 
+	let tags = ["技術", "生活", "表明", "甘口" , "中辛", "辛口"]
 </script>
-
 
 <div class="flex flex-col gap-10 justify-center items-center my-10 px-10">
 	<div class="flex-col flex gap-10 items-center w-[80vw] md:w-[60vw] ">
 		<!-- LT名 -->
 		<div class="bg-slate-100 rounded-md flex flex-col items-center justify-center p-10 gap-3 w-full">
-			<p class="text-2xl">{Ltname}</p>
+			<p class="text-2xl">{LtInfo.name}</p>
+			<p>{holdDateJp}</p>
 		</div>
 		<!-- 概要 -->
 		<div class="flex flex-col gap-4">
 			<p class="text-xl">概要</p>
-			<p>{@html desc}</p>
-			<p>{@html LtRule}</p>
+			<p>{LtInfo.desc}</p>
 		</div>
 	</div>
 	<!-- 参加登録 -->
@@ -50,7 +51,7 @@
 			</div>
 			<div class = "flex flex-col gap-4">
 				<p>タグ</p>
-				<div class = "flex gap-4">
+				<div class = "flex flex-wrap gap-4">
 					{#each tags as tag}
 						<div>
 							<input type="checkbox" class = "hidden peer" id={tag} name="tag" value={tag} bind:group={selectedTags}>
@@ -60,12 +61,15 @@
 				</div>
 			</div>
 			{#if form?.unknown}<p class="error text-red-500">{form.err}</p>{/if}
-			<input type="hidden" name="Ltname" bind:value={Ltname} />
+			<input type="hidden" name="Ltname" value={LtInfo.name} />
+			<input type="hidden" name="LtID" value={LtInfo.id} />
+			<input type="hidden" name="username" value={userProfile.data?.username} />
 			<input type="submit" class="minibtn bg-green-600  text-white cursor-pointer  mr-auto" value="登録する" />
 		</form>
 		<form method="POST" action="?/cancel">
 			<input type="submit" class="minibtn bg-red-500 cursor-pointer  mr-auto text-white" value="登録を取り消す" />
-			<input type="hidden" name="Ltname" bind:value={Ltname} />
+			<input type="hidden" name="LtID" value={LtInfo.id} />
+			<input type="hidden" name="username" value={userProfile.data?.username} />
 		</form>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 export interface Ltviewers {
-	usernames: Array<string>;
+	user: Array<string>;
 }
 
 export interface Lts {
@@ -8,6 +8,7 @@ export interface Lts {
 
 export abstract class LtviewerRequestInterface {
 	abstract getLtsfromUser(username: string): Promise<Lts>;
+	abstract getLtviewersFromID(id: Number): Promise<Ltviewers>;
 	abstract getLtviewersfromLtname(Ltname: string): Promise<Ltviewers>;
 	abstract upsertLtviewer(Ltname: string, username: string): Promise<void>;
 	abstract delteLtviewer(Ltname: string, username: string): Promise<void>;

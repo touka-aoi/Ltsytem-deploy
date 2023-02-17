@@ -21,7 +21,7 @@ export const load: LayoutServerLoad = async (event) => {
 		if (path == '/register') {
 			throw redirect(307, '/');
 		}
-		if (path == "/users/preference") {
+		if (path == '/users/preference') {
 			throw redirect(307, '/');
 		}
 	}

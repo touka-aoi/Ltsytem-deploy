@@ -2,7 +2,7 @@
 	import Logout from '$lib/Login/Logout.svelte';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
-	import UserInfo from "./Userinfo.svelte"
+	import UserInfo from './Userinfo.svelte';
 	import UserLtInformation from './UserLtInformation.svelte';
 	import PastUserLtInformation from './PastUserLtInformation.svelte';
 
@@ -12,19 +12,18 @@
 	const userName = data.user;
 	const LtData = data.LtData;
 	const isUser = data.isUser;
-	$: speakerReserveData = LtData.speaker.reserve
-	$: speakerEndData = LtData.speaker.end
-	onMount(async () => {
-	});
+	$: speakerReserveData = LtData.speaker.reserve;
+	$: speakerEndData = LtData.speaker.end;
+	onMount(async () => {});
 </script>
 
 <div class="flex flex-col md:flex-row justify-center gap-10 my-10">
 	<!-- userInfo -->
-	<UserInfo userName={userName} size={12}></UserInfo>
+	<UserInfo {userName} size={12} />
 	<!-- LT info -->
 	<div class="px-3">
 		<!-- Latest LT -->
-		<div class = "min-w-[70vw]">
+		<div class="min-w-[70vw]">
 			<h2 class="text-2xl pb-4">参加予定LT</h2>
 			<!-- LTデータが存在する -->
 			{#if speakerReserveData.length != 0}
@@ -57,18 +56,18 @@
 			</div> -->
 		<!-- Past LT -->
 		<div>
-			<p class = "text-2xl pt-20 pb-4">参加したLT</p>
+			<p class="text-2xl pt-20 pb-4">参加したLT</p>
 			{#each speakerEndData as data}
-				<PastUserLtInformation LtData={data}/>
+				<PastUserLtInformation LtData={data} />
 			{/each}
 		</div>
 		{#if isUser}
-		<div class="flex justify-between my-4 items-end">
-			<a href="/users/preference" class="bg-slate-100 rounded drop-shadow">
-				<img src="/config.svg" class="max-w-[28px] min-w-[28px]" alt="preference" />
-			</a>
-			<Logout />
-		</div>
+			<div class="flex justify-between my-4 items-end">
+				<a href="/users/preference" class="bg-slate-100 rounded drop-shadow">
+					<img src="/config.svg" class="max-w-[28px] min-w-[28px]" alt="preference" />
+				</a>
+				<Logout />
+			</div>
 		{/if}
 	</div>
 </div>

@@ -5,11 +5,13 @@ export interface profile {
 }
 
 export interface profileOutput {
-	data: {
-		id: string;
-		username: string | undefined;
-		avatarURL: string | undefined;
-	} | undefined;
+	data:
+		| {
+				id: string;
+				username: string | undefined;
+				avatarURL: string | undefined;
+		  }
+		| undefined;
 	error: error | undefined;
 }
 

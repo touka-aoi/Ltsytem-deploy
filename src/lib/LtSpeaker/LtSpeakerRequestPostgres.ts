@@ -31,15 +31,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	private client: Pool;
 
 	constructor() {
-		// this.client = new Client({
-		//   host: env.PUBLIC_POSTGRES_HOST,
-		//   database: env.PUBLIC_POSRGRES_DB,
-		//   user: env.PUBLIC_POSTGRES_USER,
-		//   password: env.PUBLIC_POSTGRES_PASS,
-		//   ssl: true,
-		// })
 		this.client = pool;
-		// this.connect();
 	}
 
 	async connect() {
@@ -50,7 +42,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	async getSpeakerInfo(LtId: Number, useid: string): Promise<LtSpeakerOutput> {
 		const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where ltid = $1 AND userid = $2 ', [LtId, useid]);
 		const Lt = res.rows.at(0);
-		if (Lt == undefined) throw new Error('指定された行が見つかりません');
+		if (Lt == undefined) return Lt;
 		const out = convertData(Lt);
 		return out;
 	}

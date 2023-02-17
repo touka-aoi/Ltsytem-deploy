@@ -26,7 +26,7 @@ interface postgresqlData {
 
 export abstract class LtHoldRequestInterface {
 	// idからLT情報を得る
-	abstract getLtInfoFromId(id: string): Promise<LtInfoOutput>;
+	abstract getLtInfoFromId(id: Number): Promise<LtInfoOutput>;
 	// LT名からLT情報を得る
 	abstract getLtInfofromName(Ltnmae: string): Promise<LtInfoOutput>;
 	// 最新のLT情報を得る

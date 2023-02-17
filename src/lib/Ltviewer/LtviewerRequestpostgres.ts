@@ -15,6 +15,12 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 		this.client = pool;
 	}
 
+	async getLtviewersFromID(id: Number): Promise<Ltviewers> {
+		const res = await this.client.query('SELECT userid FROM LtViewerInfo Where userid = $1', [id]);
+		const viewers: Array<string> = res.rows;
+		return { user: viewers };
+	}
+
 	async getLtsfromUser(username: string): Promise<Lts> {
 		const res = await this.client.query('SELECT * FROM LtViewerInfo Where username = $1', [username]);
 		const Lts: Array<ltviewerData> = res.rows;
@@ -29,7 +35,7 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 		const ltviewrs = Lts.map((ele) => {
 			return ele.username;
 		});
-		return { usernames: ltviewrs };
+		return { user: ltviewrs };
 	}
 
 	async upsertLtviewer(Ltname: string, username: string): Promise<void> {

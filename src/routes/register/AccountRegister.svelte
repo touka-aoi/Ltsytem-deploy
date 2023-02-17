@@ -3,9 +3,9 @@
 	import { Account } from '$lib/AccountsFacade';
 	import { Session } from '$lib/Session';
 
-function isAlphaNumeric(str: string): boolean {
-	return /^[0-9a-zA-Z]+$/.test(str);
-}
+	function isAlphaNumeric(str: string): boolean {
+		return /^[0-9a-zA-Z]+$/.test(str);
+	}
 	export let session: AuthSession;
 
 	const {

@@ -7,8 +7,8 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 		const profile = {
 			username: userProfile.username,
 			id: userProfile.id,
-			avatar_url: userProfile.avatarURL,
-		}
+			avatar_url: userProfile.avatarURL
+		};
 		// エラーメッセージ
 		let errMsg: string | undefined = undefined;
 
@@ -39,7 +39,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 				response = {
 					id: id,
 					avatarURL: data.avatar_url,
-					username: data.username,
+					username: data.username
 				};
 			}
 			if (error && status !== 406) throw error;
@@ -65,7 +65,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 				response = {
 					id: data.id,
 					avatarURL: data.avatar_url,
-					username: data.username,
+					username: data.username
 				};
 			}
 
@@ -85,8 +85,8 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 		const profile = {
 			id: userProfile.id,
 			avatar_url: userProfile.avatarURL,
-			username: userProfile.username,
-		}
+			username: userProfile.username
+		};
 
 		let errMsg: string | undefined = undefined;
 
