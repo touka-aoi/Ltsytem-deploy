@@ -6,15 +6,17 @@ export interface LtInfoInput {
 	holdPlace: string;
 }
 
+export interface LtInformation {
+	id: Number;
+	name: string;
+	desc: string;
+	maxMem: Number;
+	holdDate: Date;
+	holdPlace: string;
+}
+
 export interface LtInfoOutput {
-	data : Array<{
-		id: Number;
-		name: string;
-		desc: string;
-		maxMem: Number;
-		holdDate: Date;
-		holdPlace: string;
-	}>,
+	data : Array<LtInformation>,
 	error: error,
 }
 
