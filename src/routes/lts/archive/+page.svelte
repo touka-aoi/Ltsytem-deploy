@@ -14,7 +14,7 @@
 	}
 
 	async function getSpeakerData(LtID: Number) {
-		const res = await fetch(`/api/speakerinfo?ltid=${LtID}`);
+		const res = await fetch(`/API/speakerinfo?ltid=${LtID}`);
 		const speakerdata: LtSpeakerInfomation = await res.json();
 		return speakerdata;
 	}
