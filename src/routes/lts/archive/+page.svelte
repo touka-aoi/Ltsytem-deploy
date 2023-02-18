@@ -10,7 +10,7 @@
 
 	function convertDate(date: Date) {
 		const DateJp = date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
-		return DateJp;
+		return new Date(DateJp);
 	}
 
 	async function getSpeakerData(LtID: Number) {
