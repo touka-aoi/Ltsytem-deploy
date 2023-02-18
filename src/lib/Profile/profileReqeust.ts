@@ -7,10 +7,6 @@ export class ProfileRequest {
 		this._profileRequestInterface = profileInterface;
 	}
 
-	insertProfile(userProfile: profile) {
-		return this._profileRequestInterface.insertProfile(userProfile);
-	}
-
 	getProfile(id: string) {
 		return this._profileRequestInterface.getProfile(id);
 	}

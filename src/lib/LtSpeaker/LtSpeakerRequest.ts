@@ -1,14 +1,5 @@
 import type { LtSpeakerInput, LtSpeakerOutput, LtSpeakerRequestInterface } from './LtSpeakerRequestInterface';
 
-interface LtSpeakerData {
-	data: LtSpeakerOutput | undefined;
-	error:
-		| {
-				message: string;
-		  }
-		| undefined;
-}
-
 export class LtSpeakerRequest {
 	private _LtSpeakerRequstInterface: LtSpeakerRequestInterface;
 
@@ -17,20 +8,11 @@ export class LtSpeakerRequest {
 	}
 
 	async getLtSpeakerInfo(LtID: Number, userID: string) {
-		const data: LtSpeakerData = { data: undefined, error: undefined };
-		try {
-			const res = await this._LtSpeakerRequstInterface.getSpeakerInfo(LtID, userID);
-			data.data = res;
-		} catch (e) {
-			if (e instanceof Error) {
-				data.error = { message: e.message };
-			}
-		}
-		return data;
+		return this._LtSpeakerRequstInterface.getSpeakerInfo(LtID, userID);
 	}
 
-	getLtSpeakerInfoFromUser(username: string) {
-		return this._LtSpeakerRequstInterface.getLtSpeakerInfoFromUser(username);
+	getLtSpeakerInfoFromUserID(userID: string) {
+		return this._LtSpeakerRequstInterface.getLtSpeakerInfoFromUser(userID);
 	}
 
 	getLtSpeakerInfoFromLtID(LtID: Number) {
@@ -38,26 +20,10 @@ export class LtSpeakerRequest {
 	}
 
 	async upsertLtSpeakerInfo(LtSpeakerInfo: LtSpeakerInput) {
-		const data: LtSpeakerData = { data: undefined, error: undefined };
-		try {
-			const res = await this._LtSpeakerRequstInterface.upsertLtSpeakerInfo(LtSpeakerInfo);
-		} catch (e) {
-			if (e instanceof Error) {
-				data.error = { message: e.message };
-			}
-		}
-		return data;
+		return await this._LtSpeakerRequstInterface.upsertLtSpeakerInfo(LtSpeakerInfo);
 	}
 
 	async deleteLtSpeakerInfo(LtID: Number, userID: string) {
-		const data: LtSpeakerData = { data: undefined, error: undefined };
-		try {
-			const res = await this._LtSpeakerRequstInterface.deleteLtSpeakerInfo(LtID, userID);
-		} catch (e) {
-			if (e instanceof Error) {
-				data.error = { message: e.message };
-			}
-		}
-		return data;
+		return await this._LtSpeakerRequstInterface.deleteLtSpeakerInfo(LtID, userID);
 	}
 }

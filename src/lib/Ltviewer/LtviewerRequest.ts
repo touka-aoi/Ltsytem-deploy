@@ -1,13 +1,4 @@
-import type { LtviewerRequestInterface, Lts, Ltviewers } from './LtviewerRequestInterface';
-
-interface LtviewerData {
-	data: Lts | Ltviewers | undefined;
-	error:
-		| {
-				message: string;
-		  }
-		| undefined;
-}
+import type { LtviewerRequestInterface, viewLts, error, Ltviewers } from './LtviewerRequestInterface';
 
 export class LtviewrRequest {
 	private _LtviewerRequest;
@@ -16,26 +7,19 @@ export class LtviewrRequest {
 		this._LtviewerRequest = LtviewerRequest;
 	}
 
-	async getLtsfromUser(username: string): Promise<Lts> {
-		return this._LtviewerRequest.getLtsfromUser(username);
+	async getLtviewersFromID(LtID: Number): Promise<Ltviewers> {
+		return this._LtviewerRequest.getLtviewersFromID(LtID);
 	}
 
-	async getLtviewersfromLtname(Ltname: string): Promise<Ltviewers> {
-		return this._LtviewerRequest.getLtviewersfromLtname(Ltname);
+	async getLtsfromUser(userID: string): Promise<viewLts> {
+		return this._LtviewerRequest.getLtsfromUser(userID);
 	}
 
-	async upsertLtviewer(Ltname: string, username: string): Promise<LtviewerData> {
-		let data: LtviewerData = { data: undefined, error: undefined };
-		try {
-			this._LtviewerRequest.upsertLtviewer(Ltname, username);
-		} catch (e) {
-			if (e instanceof Error) {
-				data.error = { message: e.message };
-			}
-		}
-		return data;
+	async upsertLtviewer(LtID: Number, userID: string): Promise<error> {
+		return this._LtviewerRequest.upsertLtviewer(LtID, userID);
 	}
-	async delteLtviewer(Ltname: string, username: string): Promise<void> {
-		return this._LtviewerRequest.delteLtviewer(Ltname, username);
+
+	async delteLtviewer(LtID: Number, userID: string): Promise<error> {
+		return this._LtviewerRequest.delteLtviewer(LtID, userID);
 	}
 }

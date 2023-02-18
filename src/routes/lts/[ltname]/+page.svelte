@@ -4,32 +4,36 @@
 
 	export let data: PageData;
 
-	let { id, Ltname, desc, maxMem, holdDay, holdHour, assignNum, holdPlace, speakers, status } = data.Lt;
-	let username: string | undefined = undefined;
-	let isViewer: boolean = false;
-	let isSpeaker: boolean = false;
-	if (data.user) {
-		username = data.user.username;
-		isSpeaker = data.user.isSpeaker;
-		isViewer = data.user.isViewer;
-	}
-	let { usernames: viewers } = data.viewer;
-	
+	// get data from server
+	const LtInfo = data.LtInfo[0];
+	const session = data.session;
+	const spekaerInfo = data.speaker.data;
+	const { data: viewers } = data.viewer;
 
+	// data process
+	const acceptReserve = LtInfo.holdDate > new Date();
+	const holdDateJp = LtInfo.holdDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
+
+	let isSpeaker = false;
+	let isViewer = true;
+	if (session) {
+		isSpeaker = spekaerInfo.some((ele) => ele.userID == session.user.id);
+		isViewer = viewers.some((ele) => ele.userid == session.user.id);
+	}
 </script>
 
 <div class="flex flex-col gap-10 justify-center items-center my-10 px-10">
 	<!-- タイトル -->
 	<div class="flex-col flex gap-7 items-center w-[80vw] md:w-[60vw] ">
 		<div class="bg-slate-100 rounded-md flex flex-col items-center justify-center p-10 gap-3 w-full">
-			<p class="text-2xl">{Ltname}</p>
-			<p>{holdDay} {holdHour}</p>
+			<p class="text-2xl">{LtInfo.name}</p>
+			<p>{holdDateJp}</p>
 		</div>
 		<!-- 人数カウンタ -->
 		<div class="w-fit rounded-3xl px-5 py-1 flex gap-10">
 			<div class="flex flex-col justify-center items-center gap-2">
 				<p>登壇者</p>
-				<p class="border-2 px-5 py-1 rounded-3xl">{assignNum}/{maxMem}</p>
+				<p class="border-2 px-5 py-1 rounded-3xl">{spekaerInfo.length}/{LtInfo.maxMem}</p>
 			</div>
 			<div class="flex flex-col justify-center items-center gap-2">
 				<p>閲覧者</p>
@@ -37,33 +41,39 @@
 			</div>
 		</div>
 		<!-- 参加ボタン -->
-		{#if status == 'reserve'}
-			{#if username}
+		{#if acceptReserve}
+			<!-- ログイン状態のチェック -->
+			{#if session}
 				<div class="flex gap-10">
-					{#if !isSpeaker} 
-						<a href="./{id}/register">
+					{#if !isSpeaker}
+						<a href="./{LtInfo.id}/register">
 							<button class="minibtn bg-slate-100 rounded-md shadow-md">LTをする</button>
 						</a>
 					{:else}
-						<a href="./{id}/register">
+						<a href="./{LtInfo.id}/register">
 							<button class="minibtn bg-slate-100 rounded-md shadow-md">LTを修正する</button>
 						</a>
 					{/if}
-					{#if !isViewer}
-						<form method="post" action="?/register">
-							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto shadow-md" value="LTを見る" />
-							<input type="hidden" name="Ltname" bind:value={Ltname} />
+					{#if isViewer}
+						<form method="post" action="?/cancel">
+							<input type="submit" class="minibtn bg-red-500 text-white cursor-pointer  mr-auto shadow-md" value="閲覧キャンセル" />
+							<input type="hidden" name="LtID" bind:value={LtInfo.id} />
+							<input type="hidden" name="userID" bind:value={session.user.id} />
 						</form>
 					{:else}
-						<div class="box-border minibtn rounded-md border-2 cursor-default">登録完了</div>
+						<form method="post" action="?/register">
+							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto shadow-md" value="LTを見る" />
+							<input type="hidden" name="LtID" bind:value={LtInfo.id} />
+							<input type="hidden" name="userID" bind:value={session.user.id} />
+						</form>
 					{/if}
 				</div>
 				{#if isSpeaker || isViewer}
-				<div>
-					<a href={holdPlace}>
-						<button class="minibtn bg-slate-100 rounded-md shadow-md"> 開催場所へ移動 </button>
-					</a>
-				</div>
+					<div>
+						<a href={LtInfo.holdPlace}>
+							<button class="minibtn bg-slate-100 rounded-md shadow-md"> 開催場所へ移動 </button>
+						</a>
+					</div>
 				{/if}
 			{/if}
 		{:else}
@@ -77,17 +87,17 @@
 		<!-- LT概要 -->
 		<div class="flex flex-col gap-5 ">
 			<p class="text-xl ">概要</p>
-			<p>{@html desc}</p>
+			<p>{LtInfo.desc}</p>
 		</div>
 		<p class="text-xl ">参加者</p>
-		{#if speakers.length == 0}
+		{#if spekaerInfo.length == 0}
 			<div class="border-2 rounded-sm min-h-[120px] w-[70vw] flex flex-col justify-center items-center ">
 				<p class="font-bold text-xl text-gray-500">参加者募集中</p>
 			</div>
 		{:else}
 			<div class="flex flex-col gap-3 items-center">
-				{#each speakers as speaker}
-					<SpeakerInformation speaker={speaker} />
+				{#each spekaerInfo as speaker}
+					<SpeakerInformation {speaker} />
 				{/each}
 			</div>
 		{/if}

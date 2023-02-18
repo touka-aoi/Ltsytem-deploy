@@ -16,12 +16,13 @@ export const load: LayoutServerLoad = async (event) => {
 		const isUsername = data?.username;
 		if (!isUsername && path != '/register') {
 			throw redirect(307, '/register');
+		} else {
+			if (path == '/register') {
+				throw redirect(307, '/');
+			}
 		}
 	} else {
-		if (path == '/register') {
-			throw redirect(307, '/');
-		}
-		if (path == "/users/preference") {
+		if (path == '/users/preference') {
 			throw redirect(307, '/');
 		}
 	}
