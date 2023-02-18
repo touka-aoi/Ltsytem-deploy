@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Account } from '$lib/AccountsFacade';
-	import type { LtSpeakerOutput } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
+	import type { speakerInformation } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
 
 	const accountService = new Account();
 
@@ -23,7 +23,7 @@
 		辛口: 'bg-red-500'
 	};
 
-	export let speaker: LtSpeakerOutput;
+	export let speaker: speakerInformation;
 
 	const userID = speaker.userID;
   const userProfile = accountService.profileRequest.getProfile(userID);
