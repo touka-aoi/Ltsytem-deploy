@@ -28,6 +28,7 @@
 	});
 
 	const holdDate = new Date(LtData.holdDate);
+	holdDate.setHours(holdDate.getHours() - 9);
 	const holdDateFormarted = holdDate.toLocaleTimeString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
 	$: state = holdDate <= new Date() ? '終了' : LtData.maxMem > speakerMember ? '募集中' : '満員';
 </script>
