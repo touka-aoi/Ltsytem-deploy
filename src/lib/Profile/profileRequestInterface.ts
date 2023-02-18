@@ -19,9 +19,9 @@ export abstract class ProfileRequestInterface {
 	abstract upsertProfile(userProfile: profile): Promise<error>;
 	abstract deleteProfile(id: string): Promise<error>;
 
-	static readonly NULL: profileOutput = {
+	static NULL(): profileOutput {return {
 		data: {id: "", username: "", avatarURL: ""},
 		error: {message: ""}
-	};
-	static readonly NULLERR: error = {message: ""};
+	}};
+	static NULLERR(): error {return {message: ""}};
 }

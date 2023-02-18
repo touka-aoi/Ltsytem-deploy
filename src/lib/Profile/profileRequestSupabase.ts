@@ -5,7 +5,7 @@ import type {profile, profileOutput, error} from "./profileRequestInterface";
 export class ProfileRequestSupabase implements ProfileRequestInterface {
 
 	async getProfile(id: string): Promise<profileOutput> {
-		let Response = ProfileRequestInterface.NULL;
+		let Response = ProfileRequestInterface.NULL();
 		try {
 			const { data, error, status } = await supabase.from('profiles').select('username, avatar_url, id').eq('id', id).single();
 			if (error && status !== 406) throw error;
@@ -24,7 +24,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 	}
 
 	async getProfileFromUsername(username: string): Promise<profileOutput> {
-		let Response = ProfileRequestInterface.NULL;
+		let Response = ProfileRequestInterface.NULL();
 		try {
 			const { data, error, status } = await supabase.from('profiles').select('username, avatar_url, id').eq('username', username).single();
 			if (error && status !== 406) throw error;
@@ -44,7 +44,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 	}
 
 	async upsertProfile(userProfile: profile): Promise<error> {
-		let Response = ProfileRequestInterface.NULLERR;
+		let Response = ProfileRequestInterface.NULLERR();
 		
 		const profile = {
 			id: userProfile.id,
@@ -63,7 +63,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 	}
 
 	async deleteProfile(id: string): Promise<error> {
-		let Response = ProfileRequestInterface.NULLERR;
+		let Response = ProfileRequestInterface.NULLERR();
 		try {
 			let { error } = await supabase.from('profiles').delete().eq('id', id);
 			if (error) throw error;
