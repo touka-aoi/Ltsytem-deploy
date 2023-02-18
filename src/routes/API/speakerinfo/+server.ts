@@ -4,14 +4,26 @@ import { LtInfoFacade } from '$lib/LtInfoFacade';
 import { Account } from '$lib/AccountsFacade';
 
 import type { LtSpeakerInfomation } from '$lib/LtInfoFacade';
-import { LtSpeakerRequestInterface } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
 
 export async function GET(event: RequestEvent) {
+  let response: LtSpeakerInfomation = {
+    data: [{
+      id: 0,
+      Ltname: "",
+      avatarData: "",
+      LtComment: "",
+      LtID: 0,
+      LtLink: "",
+      LtTitle: "",
+      tags: [],
+      username: "",
+    }],
+    error: {message: ""},
+  }
   const query = event.url.search;
   const querParams = new URLSearchParams(query);
   const LtID = Number(querParams.get("ltid") as string);
   if (Number.isNaN(LtID)) {
-    let response =  LtSpeakerRequestInterface.NULL;
     response.error = {message: "invalid query parameter"};
     return json(response);
   }
@@ -21,12 +33,12 @@ export async function GET(event: RequestEvent) {
 
 	// スピーカー情報を取得
 	const LtSpeakerInfo = await LtInfoService.LtSpeakerRequest.getLtSpeakerInfoFromLtID(LtID);
-  const response = await Promise.all(LtSpeakerInfo.data.map(async (ele) => {
+  response.data = await Promise.all(LtSpeakerInfo.data.map(async (ele) => {
     const {data: {avatarURL, username}} = await accountService.profileRequest.getProfile(ele.userID)
     const response = {
-      id: ele.id,
+      id: ele.id as number,
       Ltname: ele.Ltname,
-      LtID: ele.LtID,
+      LtID: ele.LtID as number,
       LtLink: ele.LtLink,
       LtTitle: ele.LtTitle,
       LtComment: ele.LtComment,
@@ -37,5 +49,5 @@ export async function GET(event: RequestEvent) {
     return response;
   }));
     
-  return json({data: response});
+  return json(response);
 }
