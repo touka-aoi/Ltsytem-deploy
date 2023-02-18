@@ -1,14 +1,17 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageData, ActionData } from './$types';
 	import SpeakerInformation from './SpeakerInformation.svelte';
 
 	export let data: PageData;
 
 	// get data from server
-	const LtInfo = data.LtInfo;
+	const LtInfo = data.LtInfo[0];
 	const session = data.session;
-	const spekaerInfo = data.speaker;
-	const { user: viewerInfo } = data.viewer;
+	const spekaerInfo = data.speaker.data;
+	const { data: viewers } = data.viewer;
+
+	console.log(spekaerInfo);
+	
 
 	// data process
 	const acceptReserve = LtInfo.holdDate > new Date();
@@ -18,8 +21,10 @@
 	let isViewer = true;
 	if (session) {
 		isSpeaker = spekaerInfo.some((ele) => ele.userID == session.user.id);
+		isViewer = viewers.some((ele) => ele.userid == session.user.id);
 	}
 </script>
+
 
 <div class="flex flex-col gap-10 justify-center items-center my-10 px-10">
 	<!-- タイトル -->
@@ -36,7 +41,7 @@
 			</div>
 			<div class="flex flex-col justify-center items-center gap-2">
 				<p>閲覧者</p>
-				<p class="border-2 px-5 py-1 rounded-3xl">{viewerInfo.length}</p>
+				<p class="border-2 px-5 py-1 rounded-3xl">{viewers.length}</p>
 			</div>
 		</div>
 		<!-- 参加ボタン -->
@@ -53,13 +58,18 @@
 							<button class="minibtn bg-slate-100 rounded-md shadow-md">LTを修正する</button>
 						</a>
 					{/if}
-					{#if !isViewer}
-						<form method="post" action="?/register">
-							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto shadow-md" value="LTを見る" />
-							<input type="hidden" name="Ltname" bind:value={LtInfo.id} />
+					{#if isViewer}
+						<form method="post" action="?/cancel">
+							<input type="submit" class="minibtn bg-red-500 text-white cursor-pointer  mr-auto shadow-md" value="閲覧キャンセル" />
+							<input type="hidden" name="LtID" bind:value={LtInfo.id} />
+							<input type="hidden" name="userID" bind:value={session.user.id} />
 						</form>
 					{:else}
-						<div class="box-border minibtn rounded-md border-2 cursor-default">登録完了</div>
+						<form method="post" action="?/register">
+							<input type="submit" class="minibtn mainColor cursor-pointer  mr-auto shadow-md" value="LTを見る" />
+							<input type="hidden" name="LtID" bind:value={LtInfo.id} />
+							<input type="hidden" name="userID" bind:value={session.user.id} />
+						</form>
 					{/if}
 				</div>
 				{#if isSpeaker || isViewer}

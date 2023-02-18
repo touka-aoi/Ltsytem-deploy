@@ -8,17 +8,19 @@ export interface LtSpeakerInput {
 	tags: Array<string>;
 }
 
+export interface speakerInformation {
+	id: Number;
+	Ltname: string;
+	LtID: Number;
+	userID: string;
+	LtLink: string;
+	LtTitle: string;
+	LtComment: string;
+	tags: Array<string>;
+}
+
 export interface LtSpeakerOutput {
-	data : Array<{
-		id: Number;
-		Ltname: string;
-		LtID: Number;
-		userID: string;
-		LtLink: string;
-		LtTitle: string;
-		LtComment: string;
-		tags: Array<string>;
-	}>,
+	data : Array<speakerInformation>,
 	error : error
 }
 

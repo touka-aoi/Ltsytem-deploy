@@ -51,7 +51,7 @@
 			{#if loading}
 				<p></p>
 			{:else}
-				<div class="flex justify-between  gap-2 items-center ">
+				<div class="flex justify-between  gap-2 items-center my-2 ">
 					<!-- LT状態 -->
 					<div class=" h-fit min-w-[80px] {statusColor[state]} rounded-xl ml-2 px-3 py-1 text-center">
 						<p class="text-lg">{state}</p>

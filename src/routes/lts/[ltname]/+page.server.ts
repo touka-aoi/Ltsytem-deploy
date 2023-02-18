@@ -14,7 +14,7 @@ export const load: PageServerLoad = async (event) => {
 	const { data: LtInformation, error: err } = await LtInfoService.LtHoldRequest.getLtInfoFromId(LtID);
 
 	// throw 404
-	if (LtInformation == undefined || err != undefined) throw error(404, 'Not found');
+	if (err.message != '') throw error(404, 'Not found');
 
 	// get LtSpeaker Information
 	const LtSpeakerInfo = LtInfoService.LtSpeakerRequest.getLtSpeakerInfoFromLtID(LtID);
@@ -35,20 +35,34 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	register: async ({ cookies, request, url }) => {
 		const data = await request.formData();
-		const name = data.get('Ltname') as string;
+		const LtID = data.get('LtID') as string;
+		const userID = data.get('userID') as string;
 
-		if (!username) {
-			return fail(400, { unkonwn: true });
-		}
-		const LtInfo = new LtInfoFacade();
-
-		const res = await LtInfo.LtviewerRequest.upsertLtviewer(name, username);
-
-		if (res.error) {
-			const err = res.error.message;
+		const LtInfo = new LtInfoFacade;
+		const {message} = await LtInfo.LtviewerRequest.upsertLtviewer(Number(LtID), userID);
+		
+		if (message) {
+			const err = message;
 			return fail(400, { err, unknown: true });
 		}
 
-		return { success: true };
+		return { registeSuccess: true };
+	},
+
+	cancel: async ({ cookies, request, url }) => {
+		const data = await request.formData();
+		const LtID = data.get('LtID') as string;
+		const userID = data.get('userID') as string;
+
+		const LtInfo = new LtInfoFacade;
+		const {message} = await LtInfo.LtviewerRequest.delteLtviewer(Number(LtID), userID);
+		
+		if (message) {
+			const err = message;
+			return fail(400, { err, unknown: true });
+		}
+
+		return { cancelSuccess: true };
 	}
 };
+
