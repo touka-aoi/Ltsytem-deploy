@@ -1,11 +1,24 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { base } from '$app/paths';
+	import type {LtSpeakerInfomation} from "$lib/LtInfoFacade"
 
 	// サーバー情報
 	export let data: PageData;
+	$: LatestLts = data.latestLt.data;
+	let loading = true;
 
-	$: LatestLts = data.latestLt;
+	function convertDate(date: Date) {
+		const DateJp = date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
+		return DateJp
+	}
+
+	async function getSpeakerData(LtID: Number) {
+		const res = await fetch(`/api/speakerinfo?ltid=${LtID}`);
+		const speakerdata: LtSpeakerInfomation = await res.json();
+		return speakerdata;
+	}
+
 </script>
 
 <div class="mx-4">
@@ -27,14 +40,16 @@
 						{#if new Date() < new Date(Lt.holdDate)}
 							<tr class="bg-white border-b  hover:bg-gray-50 ">
 								<td class="px-6 py-3">
-									{Lt.holdDate}
+									{convertDate(Lt.holdDate)}
 								</td>
 								<th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 									<a href="{base}/lts/{Lt.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{Lt.name}</a>
 								</th>
-								<td class="px-6 py-3">
-									{Lt.assignMem}/{Lt.maxMem}
-								</td>
+								{#await getSpeakerData(Lt.id) then speakerdata}
+									<td class="px-6 py-3">
+										{speakerdata.data.length}/{Lt.maxMem}
+									</td>
+								{/await}
 							</tr>
 						{/if}
 					{/each}
@@ -61,14 +76,16 @@
 						{#if new Date() > new Date(Lt.holdDate)}
 							<tr class="bg-white border-b  hover:bg-gray-50 ">
 								<td class="px-6 py-3">
-									{Lt.holdDate}
+									{convertDate(Lt.holdDate)}
 								</td>
 								<th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 									<a href="{base}/lts/{Lt.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{Lt.name}</a>
 								</th>
-								<td class="px-6 py-3">
-									{Lt.assignMem}/{Lt.maxMem}
-								</td>
+								{#await getSpeakerData(Lt.id) then speakerdata}
+									<td class="px-6 py-3">
+										{speakerdata.data.length}/{Lt.maxMem}
+									</td>
+								{/await}
 							</tr>
 						{/if}
 					{/each}
