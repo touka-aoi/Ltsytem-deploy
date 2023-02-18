@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { marked } from 'marked';
 	import SpeakerInformation from './SpeakerInformation.svelte';
 
 	export let data: PageData;
@@ -94,7 +95,7 @@
 		<!-- LT概要 -->
 		<div class="flex flex-col gap-5 ">
 			<p class="text-xl ">概要</p>
-			<p>{LtInfo.desc}</p>
+			<p>{@html marked.parse(LtInfo.desc)}</p>
 		</div>
 		<p class="text-xl ">参加者</p>
 		{#if spekaerInfo.length == 0}
