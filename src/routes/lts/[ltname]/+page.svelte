@@ -82,6 +82,11 @@
 			<div class="flex flex-col justify-center items-center">
 				<p class="font-bold text-xl text-gray-500">このLTは終了しました</p>
 			</div>
+			{#if isSpeaker}
+				<a href="./{LtInfo.id}/register">
+					<button class="minibtn bg-slate-100 rounded-md shadow-md">LTを修正する</button>
+				</a>
+			{/if}
 		{/if}
 	</div>
 	<!-- 他ユーザーの参加状態 -->
