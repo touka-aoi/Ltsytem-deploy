@@ -12,7 +12,9 @@
 
 	// data process
 	const acceptReserve = LtInfo.holdDate > new Date();
-	const holdDateJp = LtInfo.holdDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
+	const holdDate = LtInfo.holdDate;
+	holdDate.setHours(holdDate.getHours() - 9);
+	const holdDateJp = holdDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
 
 	let isSpeaker = false;
 	let isViewer = true;
