@@ -22,7 +22,7 @@
 
 </script>
 
-<div class="flex items-center gap-3">
+<div class="flex items-center gap-3 flex-wrap">
   {#if tags}
     {#each tags as tag}
       <p class="select-none px-3 {tagColor[tag]} text-white rounded-lg font-bold">{tag}</p>
