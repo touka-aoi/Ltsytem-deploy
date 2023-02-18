@@ -20,7 +20,7 @@
 	$: speakers = [];
 
 	onMount(async () => {
-		const res = await fetch(`/api/speakerinfo?ltid=${LtData.id}`);
+		const res = await fetch(`/API/speakerinfo?ltid=${LtData.id}`);
 		const speakerdata = await res.json();
 		speakerMember = speakerdata.data.length;
 		speakers = speakerdata.data;

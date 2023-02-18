@@ -25,13 +25,13 @@
 	$: endLt = [];
 
 	async function getLtInfromation(LtID: Number) {
-		const res = await fetch(`/api/ltinfo?ltid=${LtID}`);
+		const res = await fetch(`/API/ltinfo?ltid=${LtID}`);
 		const LtInfo: LtInfoOutput = await res.json();
 		return LtInfo;
 	}
 
 	async function getSpeakerData(LtID: Number) {
-		const res = await fetch(`/api/speakerinfo?ltid=${LtID}`);
+		const res = await fetch(`/API/speakerinfo?ltid=${LtID}`);
 		const speakerdata: LtSpeakerInfomation = await res.json();
 		return speakerdata;
 	}
