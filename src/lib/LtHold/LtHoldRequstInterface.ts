@@ -35,7 +35,8 @@ export abstract class LtHoldRequestInterface {
 	// idからLT情報を削除する
 	abstract deleteLtInfo(id: Number): Promise<error>;
 
-	static readonly NULL: LtInfoOutput = {
+	static NULL(): LtInfoOutput {
+	const Null =  {
 		data: [{
 			id: 0,
 			name: "",
@@ -44,6 +45,8 @@ export abstract class LtHoldRequestInterface {
 			holdDate: new Date(0),
 			holdPlace: "",
 		}],
-		error : {message: ""},
-	};
+			error : {message: ""},
+		};
+		return Null;	
+	}
 }

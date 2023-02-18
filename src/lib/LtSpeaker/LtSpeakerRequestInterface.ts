@@ -40,18 +40,25 @@ export abstract class LtSpeakerRequestInterface {
 	// 特定のユーザーの特定のlT情報を削除する
 	abstract deleteLtSpeakerInfo(LtId: Number, username: string): Promise<error>;
 
-	static readonly NULL: LtSpeakerOutput = {
-		data: [{
-			id: 0,
-			Ltname: "",
-			LtID: 0,
-			userID: "",
-			LtLink: "",
-			LtTitle: "",
-			LtComment: "",
-			tags: [],
-		}],
-		error: {message: ""},
+	static NULL(): LtSpeakerOutput {
+		const Null = {
+			data: [{
+				id: 0,
+				Ltname: "",
+				LtID: 0,
+				userID: "",
+				LtLink: "",
+				LtTitle: "",
+				LtComment: "",
+				tags: [],
+			}],
+			error: {message: ""},
+		}
+		return Null;
 	}
-	static readonly NULLERR: error = {message: ""};
+	
+	static NULLERR(): error {
+		const Null = {message: ""};
+		return Null;
+	}
 }

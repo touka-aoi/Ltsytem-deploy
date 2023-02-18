@@ -37,7 +37,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 
 	// 特定のユーザーの特定のLT情報を持ってくる
 	async getSpeakerInfo(LtId: Number, useid: string): Promise<LtSpeakerOutput> {
-		let response = LtSpeakerRequestInterface.NULL;
+		let response = LtSpeakerRequestInterface.NULL();
 		try {
 			const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where ltid = $1 AND userid = $2 ', [LtId, useid]);
 			const Lt = res.rows.at(0);
@@ -50,7 +50,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 
 	// ユーザーの最新10件のLT情報を持ってくる
 	async getLtSpeakerInfoFromUser(userId: string): Promise<LtSpeakerOutput> {
-		let response = LtSpeakerRequestInterface.NULL;
+		let response = LtSpeakerRequestInterface.NULL();
 		try {
 			const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where userid = $1 ', [userId]);
 			const Lts = res.rows;
@@ -64,7 +64,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 
 	// Lt名から特定のLTの情報を持ってくる
 	async getSpeakerInfoFromLtID(LtId: Number): Promise<LtSpeakerOutput> {
-		let response = LtSpeakerRequestInterface.NULL;
+		let response = LtSpeakerRequestInterface.NULL();
 		try {
 			const res = await this.client.query('SELECT * FROM LtSpeakerInfo Where ltid = $1 ', [LtId]);
 			const speakers = res.rows;
@@ -78,7 +78,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 
 	// LT情報を登録する
 	async upsertLtSpeakerInfo(LtSeakerInfo: LtSpeakerInput): Promise<error> {
-		let response = LtSpeakerRequestInterface.NULLERR;
+		let response = LtSpeakerRequestInterface.NULLERR();
 		try {
 			const res = await this.client.query(
 				`
@@ -95,7 +95,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	}
 
 	async deleteLtSpeakerInfo(LtId: Number, userId: string): Promise<error> {
-		let response = LtSpeakerRequestInterface.NULLERR;
+		let response = LtSpeakerRequestInterface.NULLERR();
 		try {
 			const res = await this.client.query(`DELETE FROM LtSpeakerInfo WHERE ltid = $1 AND userid = $2`, [LtId, userId]);
 		} catch (e) {

@@ -11,7 +11,7 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 	}
 
 	async getLtviewersFromID(LtID: Number): Promise<Ltviewers> {
-		let response = LtviewerRequestInterface.NULLVIEWER;
+		let response = LtviewerRequestInterface.NULLVIEWER();
 		try {
 			const res = await this.client.query('SELECT userid FROM LtViewerInfo Where ltid = $1', [LtID]);
 			const viewers: Array<{userid: string}> = res.rows;			
@@ -25,7 +25,7 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 	}
 
 	async getLtsfromUser(userID: string): Promise<viewLts> {
-		let response = LtviewerRequestInterface.NULLLTS;
+		let response = LtviewerRequestInterface.NULLLTS();
 		try {
 			const res = await this.client.query('SELECT ltid FROM LtViewerInfo Where userid = $1', [userID]);
 			const Lts: Array<{ltid: Number}>  = res.rows;
@@ -39,7 +39,7 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 	}
 
 	async upsertLtviewer(LtID: Number, userID: string): Promise<error> {
-		let response = LtviewerRequestInterface.NULLERR;
+		let response = LtviewerRequestInterface.NULLERR();
 		try {
 			const res = await this.client.query(
 				`
@@ -59,7 +59,7 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 	}
 
 	async delteLtviewer(LtID: Number, userID: string): Promise<error> {
-		let response = LtviewerRequestInterface.NULLERR;
+		let response = LtviewerRequestInterface.NULLERR();
 		try {
 			const res = await this.client.query(
 				`DELETE FROM LtViewerInfo WHERE ltid = $1 AND userid = $2`,

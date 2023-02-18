@@ -34,7 +34,7 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 	async connect() {	await this.client.connect(); }
 
 	async getLtInfoFromId(id: Number): Promise<LtInfoOutput> {
-		let response = LtHoldRequestInterface.NULL;
+		let response = LtHoldRequestInterface.NULL();
 		try {
 			const res = await this.client.query('SELECT * FROM Ltinfo WHERE id = $1', [id]);
 			const Lt: postgresqlData = res.rows.at(0);
@@ -47,7 +47,7 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 
 	// 最新50件のLT開催データを取得する
 	async getLatestLts(): Promise<LtInfoOutput> {
-		let response = LtHoldRequestInterface.NULL;
+		let response = LtHoldRequestInterface.NULL();
 		try {
 			const res = await this.client.query('SELECT * FROM Ltinfo ORDER BY holdDate DESC LIMIT 50');
 			const Lt: Array<postgresqlData> = res.rows;

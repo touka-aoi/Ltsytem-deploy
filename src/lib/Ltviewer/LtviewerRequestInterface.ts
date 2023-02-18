@@ -18,7 +18,7 @@ export abstract class LtviewerRequestInterface {
 	abstract upsertLtviewer(LtID: Number, userID: string): Promise<error>;
 	abstract delteLtviewer(LtID: Number, userID: string): Promise<error>;
 
-	static readonly NULLERR: error = {message: ""};
-	static readonly NULLVIEWER:Ltviewers = {data: [], error: {message: ""}};
-	static readonly NULLLTS:viewLts = {data: [], error: {message: ""}};
+	static NULLERR(): error {return  {message: ""}};
+	static NULLVIEWER():Ltviewers {return {data: [], error: {message: ""}}};
+	static NULLLTS():viewLts {return {data: [], error: {message: ""}}};
 }
