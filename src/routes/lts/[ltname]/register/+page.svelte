@@ -4,16 +4,17 @@
 	export let data: PageData;
 	export let form: ActionData;
 
-	const LtInfo = data.LtInfo;
-	const userSpekerInfo = data.userSpekaerInfo;
+	const LtInfo = data.LtInfo[0];
+	const userSpekerInfo = data.userSpekaerInfo.data[0];
 	const userProfile = data.userProfile;
+
 
 	const holdDateJp = LtInfo.holdDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
 	
-	$: LtTitle = userSpekerInfo?.LtTitle;
-	$: LtLink = userSpekerInfo?.LtLink;
-	$: LtComment = userSpekerInfo?.LtComment;
-	let selectedTags = userSpekerInfo?.tags;
+	$: LtTitle = userSpekerInfo.LtTitle;
+	$: LtLink = userSpekerInfo.LtLink;
+	$: LtComment = userSpekerInfo.LtComment;
+	let selectedTags = userSpekerInfo.tags;
 	if (selectedTags == undefined) selectedTags = [];
 
 	let tags = ["技術", "生活", "表明", "甘口" , "中辛", "辛口"]

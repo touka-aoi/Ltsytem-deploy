@@ -10,9 +10,6 @@
 	const spekaerInfo = data.speaker.data;
 	const { data: viewers } = data.viewer;
 
-	console.log(spekaerInfo);
-	
-
 	// data process
 	const acceptReserve = LtInfo.holdDate > new Date();
 	const holdDateJp = LtInfo.holdDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });

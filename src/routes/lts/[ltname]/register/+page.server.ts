@@ -4,7 +4,6 @@ import type { Actions } from './$types';
 import { LtInfoFacade } from '$lib/LtInfoFacade';
 import { Account } from '$lib/AccountsFacade';
 import { error, fail, redirect } from '@sveltejs/kit';
-import type { LtSpeakerOutput } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
 
 export const load: PageServerLoad = async (event) => {
 	// get Page Parm
@@ -15,12 +14,10 @@ export const load: PageServerLoad = async (event) => {
 	const accountService = new Account();
 
 	// get LtInformation
-	const { data: LtInfo, error: LtError } = await LtInfoService.LtHoldRequest.getLtInfoFromId(LtID);
+	const { data: LtInfo, error: err } = await LtInfoService.LtHoldRequest.getLtInfoFromId(LtID);
 	
-	// throw error
-	if (LtInfo == undefined || LtError != undefined) {
-		throw error(404, 'Not found');
-	}
+	// throw 404
+	if (err.message != '') throw error(404, 'Not found');
 	
 	// get session
 	const session = await accountService.getSession(event);
@@ -34,7 +31,8 @@ export const load: PageServerLoad = async (event) => {
 	const userProfile =  accountService.profileRequest.getProfile(session.user.id);
 
 	// get user Speaker Information
-	const userSpeakerInfo = LtInfoService.LtSpeakerRequest.getLtSpeakerInfo(LtID, session.user.id);
+	const userSpeakerInfo = await LtInfoService.LtSpeakerRequest.getLtSpeakerInfo(LtID, session.user.id);
+	
 
 	// create response data
 	const response = {
@@ -78,8 +76,8 @@ export const actions: Actions = {
 			tags: tag
 		});
 
-		if (res.error) {
-			const err = res.error.message;
+		if (res.message) {
+			const err = res.message;
 			return fail(400, { err, unknown: true });
 		}
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Account } from '$lib/AccountsFacade';
 	import type { speakerInformation } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
+	import Tags from '../../Tags.svelte';
 
 	const accountService = new Account();
 
@@ -63,11 +64,7 @@
         </p>
       {/if}
       <div class="flex items-center gap-3">
-        {#if tags}
-          {#each tags as tag}
-            <p class="select-none px-3 {tagColor[tag]} text-white rounded-lg font-bold">{tag}</p>
-          {/each}
-        {/if}
+        <Tags tags={tags} />
         {#if LtLink}
           <a href={LtLink} class="px-2 py-1 rounded-xl bg-gray-300 ml-auto mt-3 ">
             <img src="/link.svg" alt="presentation link" class="w-4" />
