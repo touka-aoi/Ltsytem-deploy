@@ -43,7 +43,9 @@
     "@supabase/auth-helpers-sveltekit": "^0.8.6",
     "@supabase/supabase-js": "^2.2.2",
     "@types/markdown-it": "^12.2.3",
+    "@types/marked": "^4.0.8",
     "markdown-it": "^13.0.1",
+    "marked": "^4.2.12",
     "pg": "^8.8.0"
   }
 }

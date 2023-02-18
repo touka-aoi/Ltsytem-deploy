@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData, ActionData } from './$types';
+	import { marked } from 'marked';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -31,7 +32,7 @@
 		<!-- 概要 -->
 		<div class="flex flex-col gap-4">
 			<p class="text-xl">概要</p>
-			<p>{LtInfo.desc}</p>
+			<p>{@html marked.parse(LtInfo.desc)}</p>
 		</div>
 	</div>
 	<!-- 参加登録 -->
