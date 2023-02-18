@@ -16,7 +16,8 @@ export interface LtSpeakerInfomation {
     tags: Array<string>;
     username: string;  
     avatarData: string;
-  }>
+  }>,
+  error: {message: string}
 }
 
 export class LtInfoFacade {
