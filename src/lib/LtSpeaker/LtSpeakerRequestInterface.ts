@@ -32,7 +32,7 @@ export abstract class LtSpeakerRequestInterface {
 	// 特定のユーザーの特定のLT情報を持ってくる
 	abstract getSpeakerInfo(LtId: Number, username: string): Promise<LtSpeakerOutput>;
 	// ユーザーの最新10件のLT情報を持ってくる
-	abstract getLtSpeakerInfoFromUser(username: string): Promise<LtSpeakerOutput>;
+	abstract getLtSpeakerInfoFromUser(userID: string): Promise<LtSpeakerOutput>;
 	// 特定のLTの情報を持ってくるめ
 	abstract getSpeakerInfoFromLtID(LtId: Number): Promise<LtSpeakerOutput>;
 	// LT情報を登録する

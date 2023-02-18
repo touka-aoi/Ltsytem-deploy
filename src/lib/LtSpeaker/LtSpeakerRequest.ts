@@ -11,8 +11,8 @@ export class LtSpeakerRequest {
 		return this._LtSpeakerRequstInterface.getSpeakerInfo(LtID, userID);
 	}
 
-	getLtSpeakerInfoFromUser(username: string) {
-		return this._LtSpeakerRequstInterface.getLtSpeakerInfoFromUser(username);
+	getLtSpeakerInfoFromUserID(userID: string) {
+		return this._LtSpeakerRequstInterface.getLtSpeakerInfoFromUser(userID);
 	}
 
 	getLtSpeakerInfoFromLtID(LtID: Number) {
