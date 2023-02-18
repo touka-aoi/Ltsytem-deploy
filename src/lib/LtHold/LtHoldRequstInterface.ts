@@ -36,7 +36,7 @@ export abstract class LtHoldRequestInterface {
 	abstract deleteLtInfo(id: Number): Promise<error>;
 
 	static NULL(): LtInfoOutput {
-	const Null =  {
+	return {
 		data: [{
 			id: 0,
 			name: "",
@@ -47,6 +47,5 @@ export abstract class LtHoldRequestInterface {
 		}],
 			error : {message: ""},
 		};
-		return Null;	
 	}
 }
