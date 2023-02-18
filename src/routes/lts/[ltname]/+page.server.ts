@@ -38,9 +38,9 @@ export const actions: Actions = {
 		const LtID = data.get('LtID') as string;
 		const userID = data.get('userID') as string;
 
-		const LtInfo = new LtInfoFacade;
-		const {message} = await LtInfo.LtviewerRequest.upsertLtviewer(Number(LtID), userID);
-		
+		const LtInfo = new LtInfoFacade();
+		const { message } = await LtInfo.LtviewerRequest.upsertLtviewer(Number(LtID), userID);
+
 		if (message) {
 			const err = message;
 			return fail(400, { err, unknown: true });
@@ -54,9 +54,9 @@ export const actions: Actions = {
 		const LtID = data.get('LtID') as string;
 		const userID = data.get('userID') as string;
 
-		const LtInfo = new LtInfoFacade;
-		const {message} = await LtInfo.LtviewerRequest.delteLtviewer(Number(LtID), userID);
-		
+		const LtInfo = new LtInfoFacade();
+		const { message } = await LtInfo.LtviewerRequest.delteLtviewer(Number(LtID), userID);
+
 		if (message) {
 			const err = message;
 			return fail(400, { err, unknown: true });
@@ -65,4 +65,3 @@ export const actions: Actions = {
 		return { cancelSuccess: true };
 	}
 };
-

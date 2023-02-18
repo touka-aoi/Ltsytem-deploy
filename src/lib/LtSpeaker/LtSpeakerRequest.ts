@@ -24,6 +24,6 @@ export class LtSpeakerRequest {
 	}
 
 	async deleteLtSpeakerInfo(LtID: Number, userID: string) {
-		return  await this._LtSpeakerRequstInterface.deleteLtSpeakerInfo(LtID, userID);
+		return await this._LtSpeakerRequstInterface.deleteLtSpeakerInfo(LtID, userID);
 	}
 }

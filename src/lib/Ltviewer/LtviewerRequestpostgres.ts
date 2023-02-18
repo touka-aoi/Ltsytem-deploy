@@ -1,5 +1,5 @@
 import type { Ltviewers, viewLts, error } from '$lib/Ltviewer/LtviewerRequestInterface';
-import {LtviewerRequestInterface} from '$lib/Ltviewer/LtviewerRequestInterface';
+import { LtviewerRequestInterface } from '$lib/Ltviewer/LtviewerRequestInterface';
 import { pool } from '../../hooks.server';
 import type { Pool } from 'pg';
 
@@ -14,11 +14,11 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 		let response = LtviewerRequestInterface.NULLVIEWER();
 		try {
 			const res = await this.client.query('SELECT userid FROM LtViewerInfo Where ltid = $1', [LtID]);
-			const viewers: Array<{userid: string}> = res.rows;			
+			const viewers: Array<{ userid: string }> = res.rows;
 			response.data = viewers;
 		} catch (e) {
 			if (e instanceof Error) {
-				response.error = {message: e.message};
+				response.error = { message: e.message };
 			}
 		}
 		return response;
@@ -28,11 +28,11 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 		let response = LtviewerRequestInterface.NULLLTS();
 		try {
 			const res = await this.client.query('SELECT ltid FROM LtViewerInfo Where userid = $1', [userID]);
-			const Lts: Array<{ltid: Number}>  = res.rows;
+			const Lts: Array<{ ltid: Number }> = res.rows;
 			response.data = Lts;
 		} catch (e) {
 			if (e instanceof Error) {
-				response.error = {message: e.message};
+				response.error = { message: e.message };
 			}
 		}
 		return response;
@@ -52,7 +52,7 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 			);
 		} catch (e) {
 			if (e instanceof Error) {
-				response = {message: e.message};
+				response = { message: e.message };
 			}
 		}
 		return response;
@@ -61,13 +61,10 @@ export class LtviewerRequestPostgresql implements LtviewerRequestInterface {
 	async delteLtviewer(LtID: Number, userID: string): Promise<error> {
 		let response = LtviewerRequestInterface.NULLERR();
 		try {
-			const res = await this.client.query(
-				`DELETE FROM LtViewerInfo WHERE ltid = $1 AND userid = $2`,
-				[LtID, userID]
-			);
+			const res = await this.client.query(`DELETE FROM LtViewerInfo WHERE ltid = $1 AND userid = $2`, [LtID, userID]);
 		} catch (e) {
 			if (e instanceof Error) {
-				response = {message: e.message};
+				response = { message: e.message };
 			}
 		}
 		return response;

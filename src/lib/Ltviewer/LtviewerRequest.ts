@@ -16,7 +16,7 @@ export class LtviewrRequest {
 	}
 
 	async upsertLtviewer(LtID: Number, userID: string): Promise<error> {
-		return	this._LtviewerRequest.upsertLtviewer(LtID, userID);
+		return this._LtviewerRequest.upsertLtviewer(LtID, userID);
 	}
 
 	async delteLtviewer(LtID: Number, userID: string): Promise<error> {

@@ -1,9 +1,8 @@
 import { supabase } from '$lib/databaseClient/supabaseClient';
 import { ProfileRequestInterface } from './profileRequestInterface';
-import type {profile, profileOutput, error} from "./profileRequestInterface";
+import type { profile, profileOutput, error } from './profileRequestInterface';
 
 export class ProfileRequestSupabase implements ProfileRequestInterface {
-
 	async getProfile(id: string): Promise<profileOutput> {
 		let Response = ProfileRequestInterface.NULL();
 		try {
@@ -11,14 +10,16 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 			if (error && status !== 406) throw error;
 
 			if (data) {
-				Response["data"] = {
+				Response['data'] = {
 					id: data.id,
 					avatarURL: data.avatar_url,
 					username: data.username
-				};}
+				};
+			}
 		} catch (error) {
 			if (error instanceof Error) {
-				Response["error"] = {message: error.message}}
+				Response['error'] = { message: error.message };
+			}
 		}
 		return Response;
 	}
@@ -30,7 +31,7 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 			if (error && status !== 406) throw error;
 
 			if (data) {
-				Response["data"] = {
+				Response['data'] = {
 					id: data.id,
 					avatarURL: data.avatar_url,
 					username: data.username
@@ -38,14 +39,15 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 			}
 		} catch (error) {
 			if (error instanceof Error) {
-				Response["error"] = {message: error.message}}
+				Response['error'] = { message: error.message };
+			}
 		}
 		return Response;
 	}
 
 	async upsertProfile(userProfile: profile): Promise<error> {
 		let Response = ProfileRequestInterface.NULLERR();
-		
+
 		const profile = {
 			id: userProfile.id,
 			avatar_url: userProfile.avatarURL,
@@ -57,7 +59,8 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 			if (error) throw error;
 		} catch (error: any) {
 			if (error instanceof Error) {
-				Response = {message: error.message};}
+				Response = { message: error.message };
+			}
 		}
 		return Response;
 	}
@@ -69,7 +72,8 @@ export class ProfileRequestSupabase implements ProfileRequestInterface {
 			if (error) throw error;
 		} catch (error) {
 			if (error instanceof Error) {
-				Response = {message: error.message};}
+				Response = { message: error.message };
+			}
 		}
 		return Response;
 	}

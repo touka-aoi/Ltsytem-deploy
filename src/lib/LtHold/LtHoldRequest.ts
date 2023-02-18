@@ -8,11 +8,11 @@ export class LtHoldRequest {
 	}
 
 	async getLtInfoFromId(id: Number) {
-		return  await this._LtHoldRequestInterface.getLtInfoFromId(id);
+		return await this._LtHoldRequestInterface.getLtInfoFromId(id);
 	}
 
 	async getLatestLtInfo() {
-		return  await this._LtHoldRequestInterface.getLatestLts();
+		return await this._LtHoldRequestInterface.getLatestLts();
 	}
 
 	upsertLtInfo(LtInfo: LtInfoInput) {
@@ -22,5 +22,4 @@ export class LtHoldRequest {
 	deleteLtInfo(id: Number) {
 		return this._LtHoldRequestInterface.deleteLtInfo(id);
 	}
-
 }

@@ -6,14 +6,14 @@ import { Account } from '$lib/AccountsFacade';
 import type { LtInfoOutput } from '$lib/LtHold/LtHoldRequstInterface';
 
 export const load: PageServerLoad = async (event) => {
-  // createService
-  const LtService = new LtInfoFacade();
-  const AccountService = new Account();
+	// createService
+	const LtService = new LtInfoFacade();
+	const AccountService = new Account();
 
-  // get LatestLtinformation
+	// get LatestLtinformation
 	const latestLts: Promise<LtInfoOutput> = LtService.LtHoldRequest.getLatestLtInfo();
 
 	return {
 		latestLts: latestLts
 	};
-}
+};

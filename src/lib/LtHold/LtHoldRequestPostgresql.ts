@@ -31,7 +31,9 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 		this.client = pool;
 	}
 
-	async connect() {	await this.client.connect(); }
+	async connect() {
+		await this.client.connect();
+	}
 
 	async getLtInfoFromId(id: Number): Promise<LtInfoOutput> {
 		let response = LtHoldRequestInterface.NULL();
@@ -40,7 +42,7 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 			const Lt: postgresqlData = res.rows.at(0);
 			response.data = [convertData(Lt)];
 		} catch (e) {
-			if (e instanceof Error) response.error = {message: e.message};
+			if (e instanceof Error) response.error = { message: e.message };
 		}
 		return response;
 	}
@@ -54,7 +56,7 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 			const LtInfo = Lt.map(convertData);
 			response.data = LtInfo;
 		} catch (e) {
-			if (e instanceof Error) response.error = {message: e.message};
+			if (e instanceof Error) response.error = { message: e.message };
 		}
 		return response;
 	}
@@ -67,4 +69,3 @@ export class LtHoldRequestPostgresql implements LtHoldRequestInterface {
 		throw new Error('Method not implemented.');
 	}
 }
-

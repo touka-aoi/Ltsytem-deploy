@@ -9,7 +9,6 @@ export const load: LayoutServerLoad = async (event) => {
 	const session = await getServerSession(event);
 	const path = event.url.pathname;
 	if (session) {
-		
 		const {
 			user: { id }
 		} = session;

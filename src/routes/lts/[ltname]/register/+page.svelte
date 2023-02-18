@@ -8,16 +8,15 @@
 	const userSpekerInfo = data.userSpekaerInfo.data[0];
 	const userProfile = data.userProfile;
 
-
 	const holdDateJp = LtInfo.holdDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
-	
+
 	$: LtTitle = userSpekerInfo.LtTitle;
 	$: LtLink = userSpekerInfo.LtLink;
 	$: LtComment = userSpekerInfo.LtComment;
 	let selectedTags = userSpekerInfo.tags;
 	if (selectedTags == undefined) selectedTags = [];
 
-	let tags = ["技術", "生活", "表明", "甘口" , "中辛", "辛口"]
+	let tags = ['技術', '生活', '表明', '甘口', '中辛', '辛口'];
 </script>
 
 <div class="flex flex-col gap-10 justify-center items-center my-10 px-10">
@@ -38,7 +37,7 @@
 		<p class="text-xl">参加登録</p>
 		<form method="POST" action="?/register" class="flex flex-col gap-10">
 			<div class="flex flex-col gap-4">
-				<p>タイトル <span class = "text-red-500"> (必須) </span></p>
+				<p>タイトル <span class="text-red-500"> (必須) </span></p>
 				<input type="text" name="Lttitle" bind:value={LtTitle} placeholder="タイトル" class="border-2 rounded-sm px-2 py-1 " />
 				{#if form?.missing}<p class="error text-red-500">タイトルを入力してください</p>{/if}
 			</div>
@@ -50,12 +49,12 @@
 				<p>コメント</p>
 				<textarea name="Ltcomment" bind:value={LtComment} placeholder="コメント" class="border-2 rounded-sm px-2 py-1 h-[100px]" />
 			</div>
-			<div class = "flex flex-col gap-4">
+			<div class="flex flex-col gap-4">
 				<p>タグ</p>
-				<div class = "flex flex-wrap gap-4">
+				<div class="flex flex-wrap gap-4">
 					{#each tags as tag}
 						<div>
-							<input type="checkbox" class = "hidden peer" id={tag} name="tag" value={tag} bind:group={selectedTags}>
+							<input type="checkbox" class="hidden peer" id={tag} name="tag" value={tag} bind:group={selectedTags} />
 							<label for={tag} class="bg-slate-400 rounded-lg px-2 py-1 select-none text-white font-bold shadow-sm peer-checked:bg-blue-500">{tag}</label>
 						</div>
 					{/each}

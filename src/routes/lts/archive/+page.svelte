@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { base } from '$app/paths';
-	import type {LtSpeakerInfomation} from "$lib/LtInfoFacade"
+	import type { LtSpeakerInfomation } from '$lib/LtInfoFacade';
 
 	// サーバー情報
 	export let data: PageData;
@@ -10,7 +10,7 @@
 
 	function convertDate(date: Date) {
 		const DateJp = date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
-		return DateJp
+		return DateJp;
 	}
 
 	async function getSpeakerData(LtID: Number) {
@@ -18,7 +18,6 @@
 		const speakerdata: LtSpeakerInfomation = await res.json();
 		return speakerdata;
 	}
-
 </script>
 
 <div class="mx-4">

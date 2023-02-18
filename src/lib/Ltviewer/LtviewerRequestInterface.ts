@@ -1,10 +1,10 @@
 export interface Ltviewers {
-	data: Array<{userid: string}>;
+	data: Array<{ userid: string }>;
 	error: error;
 }
 
 export interface viewLts {
-	data: Array<{ltid: Number}>;
+	data: Array<{ ltid: Number }>;
 	error: error;
 }
 
@@ -18,7 +18,13 @@ export abstract class LtviewerRequestInterface {
 	abstract upsertLtviewer(LtID: Number, userID: string): Promise<error>;
 	abstract delteLtviewer(LtID: Number, userID: string): Promise<error>;
 
-	static NULLERR(): error {return  {message: ""}};
-	static NULLVIEWER():Ltviewers {return {data: [], error: {message: ""}}};
-	static NULLLTS():viewLts {return {data: [], error: {message: ""}}};
+	static NULLERR(): error {
+		return { message: '' };
+	}
+	static NULLVIEWER(): Ltviewers {
+		return { data: [], error: { message: '' } };
+	}
+	static NULLLTS(): viewLts {
+		return { data: [], error: { message: '' } };
+	}
 }

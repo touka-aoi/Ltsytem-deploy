@@ -1,5 +1,5 @@
 import type { LtSpeakerInput, LtSpeakerOutput, error } from './LtSpeakerRequestInterface';
-import { LtSpeakerRequestInterface } from "./LtSpeakerRequestInterface";
+import { LtSpeakerRequestInterface } from './LtSpeakerRequestInterface';
 import type { Pool } from 'pg';
 import { pool } from '../../hooks.server';
 
@@ -31,9 +31,13 @@ function convertData(data: postgresqlData) {
 export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	private client: Pool;
 
-	constructor() { this.client = pool; }
+	constructor() {
+		this.client = pool;
+	}
 
-	async connect() { await this.client.connect(); }
+	async connect() {
+		await this.client.connect();
+	}
 
 	// 特定のユーザーの特定のLT情報を持ってくる
 	async getSpeakerInfo(LtId: Number, useid: string): Promise<LtSpeakerOutput> {
@@ -43,7 +47,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 			const Lt = res.rows.at(0);
 			response.data = [convertData(Lt)];
 		} catch (e) {
-			if (e instanceof Error) response.error = {message: e.message};
+			if (e instanceof Error) response.error = { message: e.message };
 		}
 		return response;
 	}
@@ -57,7 +61,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 			const speakerData = Lts.map(convertData);
 			response.data = speakerData;
 		} catch (e) {
-		if (e instanceof Error) response.error = {message: e.message};
+			if (e instanceof Error) response.error = { message: e.message };
 		}
 		return response;
 	}
@@ -71,7 +75,7 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 			const convSpeakers = speakers.map(convertData);
 			response.data = convSpeakers;
 		} catch (e) {
-		if (e instanceof Error) response.error = {message: e.message};
+			if (e instanceof Error) response.error = { message: e.message };
 		}
 		return response;
 	}
@@ -87,10 +91,11 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 			ON CONFLICT ON CONSTRAINT unique_ltid_userid
 			DO UPDATE SET Ltname=$1,  LtLink=$2, LtTitle=$3, LtComment=$4, userid=$5, LtId=$6, tags=$7
 			`,
-				[LtSeakerInfo['Ltname'],  LtSeakerInfo['LtLink'], LtSeakerInfo['LtTitle'], LtSeakerInfo['LtComment'], LtSeakerInfo["userID"], LtSeakerInfo["LtID"], LtSeakerInfo["tags"]]
+				[LtSeakerInfo['Ltname'], LtSeakerInfo['LtLink'], LtSeakerInfo['LtTitle'], LtSeakerInfo['LtComment'], LtSeakerInfo['userID'], LtSeakerInfo['LtID'], LtSeakerInfo['tags']]
 			);
 		} catch (e) {
-			if (e instanceof Error) response = {message: e.message};}
+			if (e instanceof Error) response = { message: e.message };
+		}
 		return response;
 	}
 
@@ -99,7 +104,8 @@ export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 		try {
 			const res = await this.client.query(`DELETE FROM LtSpeakerInfo WHERE ltid = $1 AND userid = $2`, [LtId, userId]);
 		} catch (e) {
-			if (e instanceof Error) response = {message: e.message};}
+			if (e instanceof Error) response = { message: e.message };
+		}
 		return response;
 	}
 }

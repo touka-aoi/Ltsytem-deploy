@@ -11,7 +11,7 @@ export const load: PageServerLoad = async (event) => {
 	const { data } = await accountService.profileRequest.getProfileFromUsername(username);
 
 	// thrown 404 for unkown user
-	if (data.username == '') throw error(404, 'Not found');  
+	if (data.username == '') throw error(404, 'Not found');
 
 	const userSpeakerData = LtInfoService.LtSpeakerRequest.getLtSpeakerInfoFromUserID(data.id);
 	const userViewrDarta = LtInfoService.LtviewerRequest.getLtsfromUser(data.id);
@@ -19,6 +19,6 @@ export const load: PageServerLoad = async (event) => {
 	return {
 		speakerData: userSpeakerData,
 		viewerData: userViewrDarta,
-		userData: data,
-	}
+		userData: data
+	};
 };

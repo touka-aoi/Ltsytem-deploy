@@ -27,7 +27,7 @@
 	export let speaker: speakerInformation;
 
 	const userID = speaker.userID;
-  const userProfile = accountService.profileRequest.getProfile(userID);
+	const userProfile = accountService.profileRequest.getProfile(userID);
 
 	$: LtTitle = speaker.LtTitle;
 	$: LtComment = speaker.LtComment;
@@ -35,42 +35,42 @@
 	$: tags = speaker.tags;
 </script>
 
-{#await userProfile then {data}}
-  <div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3 w-[80vw] md:w-[50vw]">
-    <!-- profile Data -->
-    <div class="flex flex-col justify-center items-center gap-3">
-      <!-- avatar Data -->
-      {#if data?.avatarURL}
-        {#await accountService.avatarRequest.downloadAvatar(data?.avatarURL) then avatar}
-          <div class="overflow-hidden rounded-full w-[3em] h-[3em] md:w-[4em] md:h-[4em]">
-            <img src={avatar.fileUrl} alt="avatar" />
-          </div>
-        {/await}
-      {:else}
-        <div class="bg-slate-100 rounded-full flex flex-col justify-center items-center" />
-      {/if}
-      <!-- username -->
-      <p>
-        {data?.username}
-      </p>
-    </div>
-    <div class="flex flex-col gap-2">
-      <p class="text-lg font-bold text-center bg-white py-2 rounded-lg">
-        {LtTitle}
-      </p>
-      {#if LtComment}
-        <p class=" p-2 text-center">
-          {LtComment}
-        </p>
-      {/if}
-      <div class="flex items-center gap-3">
-        <Tags tags={tags} />
-        {#if LtLink}
-          <a href={LtLink} class="px-2 py-1 rounded-xl bg-gray-300 ml-auto mt-3 ">
-            <img src="/link.svg" alt="presentation link" class="w-4" />
-          </a>
-        {/if}
-      </div>
-    </div>
-  </div>
+{#await userProfile then { data }}
+	<div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3 w-[80vw] md:w-[50vw]">
+		<!-- profile Data -->
+		<div class="flex flex-col justify-center items-center gap-3">
+			<!-- avatar Data -->
+			{#if data?.avatarURL}
+				{#await accountService.avatarRequest.downloadAvatar(data?.avatarURL) then avatar}
+					<div class="overflow-hidden rounded-full w-[3em] h-[3em] md:w-[4em] md:h-[4em]">
+						<img src={avatar.fileUrl} alt="avatar" />
+					</div>
+				{/await}
+			{:else}
+				<div class="bg-slate-100 rounded-full flex flex-col justify-center items-center" />
+			{/if}
+			<!-- username -->
+			<p>
+				{data?.username}
+			</p>
+		</div>
+		<div class="flex flex-col gap-2">
+			<p class="text-lg font-bold text-center bg-white py-2 rounded-lg">
+				{LtTitle}
+			</p>
+			{#if LtComment}
+				<p class=" p-2 text-center">
+					{LtComment}
+				</p>
+			{/if}
+			<div class="flex items-center gap-3">
+				<Tags {tags} />
+				{#if LtLink}
+					<a href={LtLink} class="px-2 py-1 rounded-xl bg-gray-300 ml-auto mt-3 ">
+						<img src="/link.svg" alt="presentation link" class="w-4" />
+					</a>
+				{/if}
+			</div>
+		</div>
+	</div>
 {/await}

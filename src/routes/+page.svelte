@@ -5,8 +5,7 @@
 
 	export let data: PageData;
 	const latestLts = data.latestLts;
-	const latestLt = latestLts.data[0]
-
+	const latestLt = latestLts.data[0];
 </script>
 
 <!-- ヒーロー画面 -->

@@ -15,10 +15,10 @@ export const load: PageServerLoad = async (event) => {
 
 	// get LtInformation
 	const { data: LtInfo, error: err } = await LtInfoService.LtHoldRequest.getLtInfoFromId(LtID);
-	
+
 	// throw 404
 	if (err.message != '') throw error(404, 'Not found');
-	
+
 	// get session
 	const session = await accountService.getSession(event);
 
@@ -28,17 +28,16 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	// get User Profile
-	const userProfile =  accountService.profileRequest.getProfile(session.user.id);
+	const userProfile = accountService.profileRequest.getProfile(session.user.id);
 
 	// get user Speaker Information
 	const userSpeakerInfo = await LtInfoService.LtSpeakerRequest.getLtSpeakerInfo(LtID, session.user.id);
-	
 
 	// create response data
 	const response = {
 		LtInfo: LtInfo,
-		userSpekaerInfo:  userSpeakerInfo,
-		userProfile: userProfile,
+		userSpekaerInfo: userSpeakerInfo,
+		userProfile: userProfile
 	};
 
 	return response;

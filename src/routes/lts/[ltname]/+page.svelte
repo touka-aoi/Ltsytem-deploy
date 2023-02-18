@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData, ActionData } from './$types';
+	import type { PageData } from './$types';
 	import SpeakerInformation from './SpeakerInformation.svelte';
 
 	export let data: PageData;
@@ -22,14 +22,13 @@
 	}
 </script>
 
-
 <div class="flex flex-col gap-10 justify-center items-center my-10 px-10">
 	<!-- タイトル -->
 	<div class="flex-col flex gap-7 items-center w-[80vw] md:w-[60vw] ">
-	<div class="bg-slate-100 rounded-md flex flex-col items-center justify-center p-10 gap-3 w-full">
-		<p class="text-2xl">{LtInfo.name}</p>
-		<p>{holdDateJp}</p>
-	</div>
+		<div class="bg-slate-100 rounded-md flex flex-col items-center justify-center p-10 gap-3 w-full">
+			<p class="text-2xl">{LtInfo.name}</p>
+			<p>{holdDateJp}</p>
+		</div>
 		<!-- 人数カウンタ -->
 		<div class="w-fit rounded-3xl px-5 py-1 flex gap-10">
 			<div class="flex flex-col justify-center items-center gap-2">

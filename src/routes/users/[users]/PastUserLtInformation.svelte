@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import type { userLtInformation } from '$lib/LtInfoFacade'; 
+	import type { userLtInformation } from '$lib/LtInfoFacade';
 
 	export let LtData: userLtInformation;
 
 	function convertDate(date: Date) {
 		const DateJp = date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
-		return DateJp
+		return DateJp;
 	}
-
 </script>
 
 <div class="bg-slate-300 rounded-sm p-2">

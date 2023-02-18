@@ -5,11 +5,11 @@ export interface profile {
 }
 
 export interface error {
-	message: string
+	message: string;
 }
 
 export interface profileOutput {
-	data:{ id: string; username: string; avatarURL: string;};
+	data: { id: string; username: string; avatarURL: string };
 	error: error;
 }
 
@@ -19,9 +19,13 @@ export abstract class ProfileRequestInterface {
 	abstract upsertProfile(userProfile: profile): Promise<error>;
 	abstract deleteProfile(id: string): Promise<error>;
 
-	static NULL(): profileOutput {return {
-		data: {id: "", username: "", avatarURL: ""},
-		error: {message: ""}
-	}};
-	static NULLERR(): error {return {message: ""}};
+	static NULL(): profileOutput {
+		return {
+			data: { id: '', username: '', avatarURL: '' },
+			error: { message: '' }
+		};
+	}
+	static NULLERR(): error {
+		return { message: '' };
+	}
 }

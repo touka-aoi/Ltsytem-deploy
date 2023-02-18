@@ -20,8 +20,8 @@ export interface speakerInformation {
 }
 
 export interface LtSpeakerOutput {
-	data : Array<speakerInformation>,
-	error : error
+	data: Array<speakerInformation>;
+	error: error;
 }
 
 export interface error {
@@ -42,23 +42,25 @@ export abstract class LtSpeakerRequestInterface {
 
 	static NULL(): LtSpeakerOutput {
 		const Null = {
-			data: [{
-				id: 0,
-				Ltname: "",
-				LtID: 0,
-				userID: "",
-				LtLink: "",
-				LtTitle: "",
-				LtComment: "",
-				tags: [],
-			}],
-			error: {message: ""},
-		}
+			data: [
+				{
+					id: 0,
+					Ltname: '',
+					LtID: 0,
+					userID: '',
+					LtLink: '',
+					LtTitle: '',
+					LtComment: '',
+					tags: []
+				}
+			],
+			error: { message: '' }
+		};
 		return Null;
 	}
-	
+
 	static NULLERR(): error {
-		const Null = {message: ""};
+		const Null = { message: '' };
 		return Null;
 	}
 }

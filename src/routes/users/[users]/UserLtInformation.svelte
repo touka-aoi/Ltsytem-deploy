@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import type { userLtInformation } from '$lib/LtInfoFacade'; 	
+	import type { userLtInformation } from '$lib/LtInfoFacade';
 	import Tags from '../../Tags.svelte';
 
 	export let LtData: userLtInformation;
@@ -8,7 +8,7 @@
 
 	function convertDate(date: Date) {
 		const DateJp = date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
-		return DateJp
+		return DateJp;
 	}
 </script>
 
@@ -31,8 +31,8 @@
 			<p class="text-xl font-bold">{LtData.data.LtTitle}</p>
 			<p class="mt-2">{LtData.data.LtComment}</p>
 			<div class="flex flex-col my-2 gap-2">
-			<Tags tags={LtData.data.tags}/>
-				{#if LtData.data.LtLink == ""}
+				<Tags tags={LtData.data.tags} />
+				{#if LtData.data.LtLink == ''}
 					<p class="text-red-500">スライドURLが入力されていません</p>
 				{:else}
 					<a href={LtData.data.LtLink}>

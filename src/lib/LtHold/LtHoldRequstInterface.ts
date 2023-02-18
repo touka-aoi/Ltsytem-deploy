@@ -16,14 +16,13 @@ export interface LtInformation {
 }
 
 export interface LtInfoOutput {
-	data : Array<LtInformation>,
-	error: error,
+	data: Array<LtInformation>;
+	error: error;
 }
 
 export interface error {
-	message: string
+	message: string;
 }
-
 
 export abstract class LtHoldRequestInterface {
 	// idからLT情報を得る
@@ -36,16 +35,18 @@ export abstract class LtHoldRequestInterface {
 	abstract deleteLtInfo(id: Number): Promise<error>;
 
 	static NULL(): LtInfoOutput {
-	return {
-		data: [{
-			id: 0,
-			name: "",
-			desc: "",
-			maxMem: 0,
-			holdDate: new Date(0),
-			holdPlace: "",
-		}],
-			error : {message: ""},
+		return {
+			data: [
+				{
+					id: 0,
+					name: '',
+					desc: '',
+					maxMem: 0,
+					holdDate: new Date(0),
+					holdPlace: ''
+				}
+			],
+			error: { message: '' }
 		};
 	}
 }

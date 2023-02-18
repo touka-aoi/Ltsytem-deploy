@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { LtInformation } from '$lib/LtHold/LtHoldRequstInterface';
 	import { base } from '$app/paths';
-	import Tags from "./Tags.svelte"
+	import Tags from './Tags.svelte';
 
 	const statusColor: { [key: string]: string } = {
 		募集中: 'bg-green-300',
@@ -12,13 +12,12 @@
 
 	// loading
 	let loading = true;
-	
+
 	// LT詳細情報
 	export let LtData: LtInformation;
-	
+
 	$: speakerMember = 0;
 	$: speakers = [];
-	
 
 	onMount(async () => {
 		const res = await fetch(`/api/speakerinfo?ltid=${LtData.id}`);
@@ -27,7 +26,6 @@
 		speakers = speakerdata.data;
 		loading = false;
 	});
-
 
 	const holdDate = new Date(LtData.holdDate);
 	const holdDateFormarted = holdDate.toLocaleTimeString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
@@ -49,7 +47,7 @@
 				<p class="text-xl font-bold mt-2">{LtData.name}</p>
 			</div>
 			{#if loading}
-				<p></p>
+				<p />
 			{:else}
 				<div class="flex justify-between  gap-2 items-center my-2 ">
 					<!-- LT状態 -->
@@ -66,19 +64,19 @@
 		</div>
 		<!-- 登壇者情報 -->
 		<div class="w-full rounded-sm flex-col flex gap-2">
-		{#if loading}
-			<p class = "text-center my-3">読み込み中...</p>
-		{:else}
-			{#each speakers as { username, LtTitle, tags }}
-				<div class="flex flex-col justify-center mx-2 px-5 py-2 gap-2 rounded-sm border-b">
-					<div class="border-solid w-full overflow-hidden">
-						<p class="font-bold truncate ...">{LtTitle}</p>
+			{#if loading}
+				<p class="text-center my-3">読み込み中...</p>
+			{:else}
+				{#each speakers as { username, LtTitle, tags }}
+					<div class="flex flex-col justify-center mx-2 px-5 py-2 gap-2 rounded-sm border-b">
+						<div class="border-solid w-full overflow-hidden">
+							<p class="font-bold truncate ...">{LtTitle}</p>
+						</div>
+						<Tags {tags} />
+						<p>{username}</p>
 					</div>
-					<Tags tags={tags}/>
-					<p>{username}</p>
-				</div>
-			{/each}
-		{/if}
+				{/each}
+			{/if}
 		</div>
 		<!-- ボタン -->
 		<div class="">
