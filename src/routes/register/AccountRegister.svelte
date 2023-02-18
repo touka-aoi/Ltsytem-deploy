@@ -58,7 +58,7 @@
 				if (error?.message) throw Error(error.message);
 			}
 
-			const error = await request.profileRequest.insertProfile({ id: id, username: username, avatarURL: Avatarurl });
+			const error = await request.profileRequest.upsertProfile({ id: id, username: username, avatarURL: Avatarurl });
 
 			if (error.message) throw Error(error.message);
 
@@ -81,7 +81,7 @@
 <!-- 登録フォーム全体 -->
 <div class="flex flex-col">
 	<form on:submit|preventDefault={updateProfile}>
-		<div class="flex items-center gap-20">
+		<div class="flex flex-col items-center gap-20">
 			<!-- アバター登録 -->
 			<div class="flex flex-col gap-3">
 				<!-- アバター表示 -->
