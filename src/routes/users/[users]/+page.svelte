@@ -1,20 +1,82 @@
 <script lang="ts">
-	import Logout from '$lib/Login/Logout.svelte';
-	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
-	import UserInfo from './Userinfo.svelte';
-	import UserLtInformation from './UserLtInformation.svelte';
+	import type { speakerInformation } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
+	import type { LtInfoOutput } from '$lib/LtHold/LtHoldRequstInterface';
+	import type { userLtInformation, LtSpeakerInfomation } from '$lib/LtInfoFacade';
+	import type { PageData } from './$types';
 	import PastUserLtInformation from './PastUserLtInformation.svelte';
+	import UserLtInformation from './UserLtInformation.svelte';
+	import Logout from '$lib/Login/Logout.svelte';
+	import UserInfo from './Userinfo.svelte';
+
 
 	// サーバー情報
 	export let data: PageData;
 
-	const userName = data.user;
-	const LtData = data.LtData;
-	const isUser = data.isUser;
-	$: speakerReserveData = LtData.speaker.reserve;
-	$: speakerEndData = LtData.speaker.end;
-	onMount(async () => {});
+	const speakerData = data.speakerData.data;
+	
+	const viewrData = data.viewerData;
+	const userData = data.userData;
+	const session = data.session;
+
+	$: isUser = false;
+	$: userName = userData.username;
+
+	$: reserveLt = [];
+	$: endLt = [];
+
+	async function getLtInfromation(LtID: Number) {
+		const res = await fetch(`/api/ltinfo?ltid=${LtID}`);
+		const LtInfo: LtInfoOutput = await res.json();
+		return LtInfo
+	}
+
+	async function getSpeakerData(LtID: Number) {
+		const res = await fetch(`/api/speakerinfo?ltid=${LtID}`);
+		const speakerdata: LtSpeakerInfomation = await res.json();
+		return speakerdata;
+	}
+
+	async function createUserLtData(speakerData: Array<speakerInformation>): Promise<Array<userLtInformation>> {
+		let response: Array<userLtInformation> = [];
+		for (let speaker of speakerData) {
+			// get Lthold Data
+			const LtInfo = await getLtInfromation(speaker.LtID);
+			// get speaker Data
+			const speakerInfo = await getSpeakerData(speaker.LtID);
+			const result: userLtInformation = {
+				data: {
+				Ltname: LtInfo.data[0].name,
+				LtID: LtInfo.data[0].id as number,
+				maxMem:LtInfo.data[0].maxMem,
+				holdDate: LtInfo.data[0].holdDate,
+				holdPlace: LtInfo.data[0].holdPlace,
+				assignMem: speakerInfo.data.length,
+				LtLink: speaker.LtLink,
+				LtTitle: speaker.LtTitle,
+				LtComment: speaker.LtComment,
+				tags:speaker.tags}}
+			response.push(result);
+		}			
+		return response;
+	}
+
+	onMount(async () => {
+		if (session?.user.id == userData.id) isUser = true;
+		const userLtInfo =  await createUserLtData(speakerData);
+		const reserve: any = [];
+		const end: any = [];
+		for (let data of userLtInfo) {
+			if (new Date(data.data.holdDate) > new Date()) {
+				reserve.push(data);
+			} else {
+				end.push(data);
+			}
+		}
+		reserveLt = reserve;
+		endLt = end;
+	});
+
 </script>
 
 <div class="flex flex-col md:flex-row justify-center gap-10 my-10">
@@ -25,46 +87,24 @@
 		<!-- Latest LT -->
 		<div class="min-w-[70vw]">
 			<h2 class="text-2xl pb-4">参加予定LT</h2>
-			<!-- LTデータが存在する -->
-			{#if speakerReserveData.length != 0}
-				{#each speakerReserveData as data}
-					<UserLtInformation LtData={data} canRevise={isUser} />
-				{/each}
-			{:else}
-				<div class="bg-slate-300 rounded-sm min-h-[190px] flex flex-col justify-center items-center">
-					<p class="font-bold text-xl text-gray-500">参加予定LTはありません</p>
-				</div>
-			{/if}
+			<!-- reserve LT  -->
+			{#each reserveLt as speaker}
+				<UserLtInformation LtData={speaker} canRevise={isUser}/>
+			{/each}
 		</div>
-		<!-- <div class="mt-10">
-				<h2 class="text-2xl mb-4">視聴予定LT</h2>
-				{#if LtData.viewer.reserve.length != 0}
-					{#each LtData.viewer.reserve as data}
-						{data.Ltname}
-						{data.holdDay}
-						{data.holdHour}
-						{data.holdPlace}
-						{data.Ltid}
-					{/each}
-				{:else}
-					<div
-						class="bg-slate-300 rounded-sm min-h-[190px] flex flex-col justify-center items-center"
-					>
-						<p class="font-bold text-xl text-gray-500">視聴予定LTはありません</p>
-					</div>
-				{/if}
-			</div> -->
+		
 		<!-- Past LT -->
 		<div>
 			<p class="text-2xl pt-20 pb-4">参加したLT</p>
-			{#each speakerEndData as data}
+			{#each endLt as data}
 				<PastUserLtInformation LtData={data} />
 			{/each}
 		</div>
 		{#if isUser}
 			<div class="flex justify-between my-4 items-end">
-				<a href="/users/preference" class="bg-slate-100 rounded drop-shadow">
+				<a href="/users/preference" class="bg-slate-100 rounded shadow-md flex gap-2 items-center p-2">
 					<img src="/config.svg" class="max-w-[28px] min-w-[28px]" alt="preference" />
+					<p class="font-bold">config</p>
 				</a>
 				<Logout />
 			</div>
