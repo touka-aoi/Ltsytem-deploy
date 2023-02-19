@@ -13,7 +13,7 @@ export const load: PageServerLoad = async (event) => {
 	// thrown 404 for unkown user
 	if (data.username == '') throw error(404, 'Not found');
 
-	const userSpeakerData = LtInfoService.LtSpeakerRequest.getLtSpeakerInfoFromUserID(data.id);
+	const userSpeakerData = LtInfoService.LtSpeakerRequest.getLtSpeakerAndLtHoldInfoFromUserID(data.id);
 	const userViewrDarta = LtInfoService.LtviewerRequest.getLtsfromUser(data.id);
 
 	return {

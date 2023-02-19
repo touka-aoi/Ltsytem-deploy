@@ -19,6 +19,10 @@ export class LtSpeakerRequest {
 		return this._LtSpeakerRequstInterface.getSpeakerInfoFromLtID(LtID);
 	}
 
+	async getLtSpeakerAndLtHoldInfoFromUserID(userID: string) {
+		return this._LtSpeakerRequstInterface.getLtSpeakerAndLtHoldInfoFromUserID(userID);
+	}
+
 	async upsertLtSpeakerInfo(LtSpeakerInfo: LtSpeakerInput) {
 		return await this._LtSpeakerRequstInterface.upsertLtSpeakerInfo(LtSpeakerInfo);
 	}

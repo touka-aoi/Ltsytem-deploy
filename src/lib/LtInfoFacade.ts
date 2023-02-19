@@ -20,22 +20,21 @@ export interface LtSpeakerInfomation {
 	error: { message: string };
 }
 
+export interface userSpeakHoldInfo {
+	Ltname: string;
+	LtID: number;
+	maxMem: Number;
+	holdDate: Date;
+	holdPlace: string;
+	assignMem: Number;
+	LtLink: string;
+	LtTitle: string;
+	LtComment: string;
+	tags: Array<string>;
+}
+
 export interface userLtInformation {
-	data: {
-		// hold LtData
-		Ltname: string;
-		LtID: number;
-		maxMem: Number;
-		holdDate: Date;
-		holdPlace: string;
-		// speaker LtData
-		assignMem: Number;
-		// user LtData
-		LtLink: string;
-		LtTitle: string;
-		LtComment: string;
-		tags: Array<string>;
-	};
+	data: userSpeakHoldInfo;
 }
 
 export class LtInfoFacade {

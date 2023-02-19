@@ -1,4 +1,4 @@
-import type { LtSpeakerInput, LtSpeakerOutput, error } from './LtSpeakerRequestInterface';
+import type { LtSpeakerInput, LtSpeakerOutput, error, userLtSpeakAndHoldInformation } from './LtSpeakerRequestInterface';
 import { LtSpeakerRequestInterface } from './LtSpeakerRequestInterface';
 import type { Pool } from 'pg';
 import { pool } from '../../hooks.server';
@@ -28,15 +28,50 @@ function convertData(data: postgresqlData) {
 	return convData;
 }
 
+function convertData2(data: any) {
+	const convData = {
+		id: data.id,
+		userID: data.userid,
+		assignMem: 0,
+		LtID: data.ltid,
+		Ltname: data.ltname,
+		LtComment: data.ltcomment,
+		LtLink: data.ltlink,
+		LtTitle: data.lttitle,
+		tags: data.tags,
+		maxMem: data.maxmem,
+		holdDate: data.holddate,
+		holdPlace: data.holdplace,
+	};
+	return convData;
+}
+
 export class LtSpeakerRequestPostgresql implements LtSpeakerRequestInterface {
 	private client: Pool;
 
 	constructor() {
 		this.client = pool;
 	}
-
+	
 	async connect() {
 		await this.client.connect();
+	}
+
+	async getLtSpeakerAndLtHoldInfoFromUserID(userID: string): Promise<userLtSpeakAndHoldInformation> {
+		let response = LtSpeakerRequestInterface.NULLLT();
+		try {
+			const res = await this.client.query(`
+						SELECT * 
+							FROM LtSpeakerInfo 
+							INNER JOIN ltinfo on ltinfo.id = LtSpeakerInfo.ltid
+						Where userid = $1
+						`, [userID]);
+			const Lts = res.rows.map(convertData2);
+			response.data = Lts;
+		} catch (e) {
+			if (e instanceof Error) response.error = { message: e.message };
+		}
+		return response;
 	}
 
 	// 特定のユーザーの特定のLT情報を持ってくる
