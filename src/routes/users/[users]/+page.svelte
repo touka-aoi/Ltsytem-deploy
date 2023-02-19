@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { speakerInformation } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
-	import type { LtInfoOutput } from '$lib/LtHold/LtHoldRequstInterface';
-	import type { userLtInformation, LtSpeakerInfomation } from '$lib/LtInfoFacade';
 	import type { PageData } from './$types';
 	import PastUserLtInformation from './PastUserLtInformation.svelte';
 	import UserLtInformation from './UserLtInformation.svelte';
@@ -21,61 +18,8 @@
 	$: isUser = false;
 	$: userName = userData.username;
 
-	$: reserveLt = [];
-	$: endLt = [];
-
-	async function getLtInfromation(LtID: Number) {
-		const res = await fetch(`/API/ltinfo?ltid=${LtID}`);
-		const LtInfo: LtInfoOutput = await res.json();
-		return LtInfo;
-	}
-
-	async function getSpeakerData(LtID: Number) {
-		const res = await fetch(`/API/speakerinfo?ltid=${LtID}`);
-		const speakerdata: LtSpeakerInfomation = await res.json();
-		return speakerdata;
-	}
-
-	async function createUserLtData(speakerData: Array<speakerInformation>): Promise<Array<userLtInformation>> {
-		let response: Array<userLtInformation> = [];
-		for (let speaker of speakerData) {
-			// get Lthold Data
-			const LtInfo = await getLtInfromation(speaker.LtID);
-			// get speaker Data
-			const speakerInfo = await getSpeakerData(speaker.LtID);
-			const result: userLtInformation = {
-				data: {
-					Ltname: LtInfo.data[0].name,
-					LtID: LtInfo.data[0].id as number,
-					maxMem: LtInfo.data[0].maxMem,
-					holdDate: LtInfo.data[0].holdDate,
-					holdPlace: LtInfo.data[0].holdPlace,
-					assignMem: speakerInfo.data.length,
-					LtLink: speaker.LtLink,
-					LtTitle: speaker.LtTitle,
-					LtComment: speaker.LtComment,
-					tags: speaker.tags
-				}
-			};
-			response.push(result);
-		}
-		return response;
-	}
-
 	onMount(async () => {
 		if (session?.user.id == userData.id) isUser = true;
-		const userLtInfo = await createUserLtData(speakerData);
-		const reserve: any = [];
-		const end: any = [];
-		for (let data of userLtInfo) {
-			if (new Date(data.data.holdDate) > new Date()) {
-				reserve.push(data);
-			} else {
-				end.push(data);
-			}
-		}
-		reserveLt = reserve;
-		endLt = end;
 	});
 </script>
 
@@ -88,17 +32,21 @@
 		<div class="min-w-[70vw]">
 			<h2 class="text-2xl pb-4">参加予定LT</h2>
 			<!-- reserve LT  -->
-			{#each reserveLt as speaker}
-				<UserLtInformation LtData={speaker} canRevise={isUser} />
+			{#each speakerData as speaker}
+				{#if new Date(speaker.holdDate) > new Date()}
+					<UserLtInformation LtData={speaker} canRevise={isUser} />
+				{/if}
 			{/each}
 		</div>
 
 		<!-- Past LT -->
 		<div>
 			<p class="text-2xl pt-20 pb-4">参加したLT</p>
-			{#each endLt as data}
-				<PastUserLtInformation LtData={data} />
-			{/each}
+			{#each speakerData as speaker}
+			{#if new Date(speaker.holdDate) < new Date()}
+				<PastUserLtInformation LtData={speaker} />
+			{/if}
+		{/each}
 		</div>
 		{#if isUser}
 			<div class="flex justify-between my-4 items-end">
