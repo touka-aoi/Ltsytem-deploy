@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       colors: {
         "google-blue": "#4285F4",
-        "google-white": "#FFFFFF"
+        "google-white": "#FFFFFF",
+        "discord": "#7289DA"
       },
       height: {
         "10v": "10vh",
