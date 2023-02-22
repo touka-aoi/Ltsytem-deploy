@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Account } from '$lib/AccountsFacade';
 	import type { speakerInformation } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
 	import Tags from '../../Tags.svelte';
@@ -39,20 +40,22 @@
 	<div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3 w-[80vw] md:w-[50vw]">
 		<!-- profile Data -->
 		<div class="flex flex-col justify-center items-center gap-3">
-			<!-- avatar Data -->
-			{#if data?.avatarURL}
+			<a href="{base}/users/{data?.username}" class = " p-2 rounded-lg px-5 shadow-md">
+				<!-- avatar Data -->
+				{#if data?.avatarURL}
 				{#await accountService.avatarRequest.downloadAvatar(data?.avatarURL) then avatar}
-					<div class="overflow-hidden rounded-full w-[3em] h-[3em] md:w-[4em] md:h-[4em]">
-						<img src={avatar.fileUrl} alt="avatar" />
-					</div>
+				<div class="overflow-hidden rounded-full w-[3em] h-[3em] md:w-[4em] md:h-[4em]">
+					<img src={avatar.fileUrl} alt="avatar" />
+				</div>
 				{/await}
-			{:else}
+				{:else}
 				<div class="bg-slate-100 rounded-full flex flex-col justify-center items-center" />
-			{/if}
-			<!-- username -->
-			<p>
-				{data?.username}
-			</p>
+				{/if}
+				<!-- username -->
+				<p>
+					{data?.username}
+				</p>
+			</a>
 		</div>
 		<div class="flex flex-col gap-2">
 			<p class="text-lg font-bold text-center bg-white py-2 rounded-lg">
