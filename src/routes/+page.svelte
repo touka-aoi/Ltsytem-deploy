@@ -6,14 +6,17 @@
 	export let data: PageData;
 	const latestLts = data.latestLts;
 	const latestLt = latestLts.data[0];
+	const holdPlace = "https://discord.gg/3cP8gScET7";
 </script>
 
 <!-- ヒーロー画面 -->
 <section>
 	<!-- 最新LT -->
-	<div class="bg-gray-300 h-50v flex items-center justify-center">
+	<div class="bg-gray-300 h-50v flex items-center justify-center flex-col gap-10">
 		<a href="{base}/lts/{latestLt.id}" class="minibtn bg-slate-100 cursor-pointer shadow-md">LTに参加する</a>
+		<a href="{holdPlace}" class="minibtn bg-discord	text-white cursor-pointer shadow-md">LTサーバーを覗いてみる</a>
 	</div>
+	
 </section>
 <section>
 	<div class="py-10 px-4 flex flex-col items-center justify-center gap-8 bg-slate-100">
