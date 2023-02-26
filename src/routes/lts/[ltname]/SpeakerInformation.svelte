@@ -40,7 +40,7 @@
 	<div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3 w-[80vw] md:w-[50vw]">
 		<!-- profile Data -->
 		<div class="flex flex-col justify-center items-center gap-3">
-			<a href="{base}/users/{data?.username}" class = " p-2 rounded-lg px-5 shadow-md">
+			<a href="{base}/users/{data?.username}" class = " p-2 rounded-lg px-5 shadow-md flex flex-col items-center justify-center">
 				<!-- avatar Data -->
 				{#if data?.avatarURL}
 				{#await accountService.avatarRequest.downloadAvatar(data?.avatarURL) then avatar}
