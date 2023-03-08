@@ -27,7 +27,7 @@
 	<!-- userInfo -->
 	<UserInfo {userName} size={12} />
 	<!-- LT info -->
-	<div class="px-3">
+	<div class="px-3 transitionLT">
 		<!-- Latest LT -->
 		<div class="min-w-[70vw]">
 			<h2 class="text-2xl pb-4">参加予定LT</h2>

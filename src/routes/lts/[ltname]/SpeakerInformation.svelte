@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { Account } from '$lib/AccountsFacade';
+	import {goto} from '$app/navigation';
 	import type { speakerInformation } from '$lib/LtSpeaker/LtSpeakerRequestInterface';
 	import Tags from '../../Tags.svelte';
 
@@ -30,6 +31,23 @@
 	const userID = speaker.userID;
 	const userProfile = accountService.profileRequest.getProfile(userID);
 
+	function sendUserPage(event: any)
+	{
+		let target = event.target;
+		target.classList.add("transisionAvatar");
+		if (!document.startViewTransition) {
+			gotoMyPage();
+		}
+
+		const transition = document.startViewTransition(() => gotoMyPage());
+	}
+
+	async function gotoMyPage() 
+	{
+		const userProfile = await accountService.profileRequest.getProfile(userID);
+		await goto(`${base}/users/${userProfile.data.username}`);
+	}
+
 	$: LtTitle = speaker.LtTitle;
 	$: LtComment = speaker.LtComment;
 	$: LtLink = speaker.LtLink;
@@ -40,12 +58,12 @@
 	<div class="flex flex-col bg-zinc-50 roudned-sm p-4 gap-3 w-[80vw] md:w-[50vw]">
 		<!-- profile Data -->
 		<div class="flex flex-col justify-center items-center gap-3">
-			<a href="{base}/users/{data?.username}" class = " p-2 rounded-lg px-5 shadow-md flex flex-col items-center justify-center">
+			<button class = "p-2 rounded-lg px-5 shadow-md flex flex-col items-center justify-center" on:click={sendUserPage}>
 				<!-- avatar Data -->
 				{#if data?.avatarURL}
 				{#await accountService.avatarRequest.downloadAvatar(data?.avatarURL) then avatar}
-				<div class="overflow-hidden rounded-full w-[3em] h-[3em] md:w-[4em] md:h-[4em]">
-					<img src={avatar.fileUrl} alt="avatar" />
+				<div class="overflow-hidden rounded-full pointer-events-none w-[3em] h-[3em] md:w-[4em] md:h-[4em]">
+					<img src={avatar.fileUrl} alt="avatar"/>
 				</div>
 				{/await}
 				{:else}
@@ -55,7 +73,7 @@
 				<p>
 					{data?.username}
 				</p>
-			</a>
+			</button>
 		</div>
 		<div class="flex flex-col gap-2">
 			<p class="text-lg font-bold text-center bg-white py-2 rounded-lg">

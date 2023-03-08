@@ -2,7 +2,6 @@
 	import LTInformation from './LtInformation.svelte';
 	import { base } from '$app/paths';
 	import type { PageData } from './$types';
-	import AccountRegister from './register/AccountRegister.svelte';
 	import {goto} from '$app/navigation';
 
 	export let data: PageData;
@@ -13,6 +12,10 @@
 
 	async function sendLatestLTPage()
 	{
+		if (!document.startViewTransition) {
+			gotoLT();
+		}
+
 		const transition = document.startViewTransition(() => gotoLT());
 	}
 

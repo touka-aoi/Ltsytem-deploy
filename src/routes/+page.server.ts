@@ -1,7 +1,6 @@
 import type { PageServerLoad } from './$types';
 
 import { LtInfoFacade } from '$lib/LtInfoFacade';
-import { Account } from '$lib/AccountsFacade';
 
 import type { LtInfoOutput } from '$lib/LtHold/LtHoldRequstInterface';
 

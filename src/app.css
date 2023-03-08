@@ -20,3 +20,38 @@
   }
 
 }
+
+.transisionAvatar {
+  view-transition-name: userAvatar;
+  contain: paint;
+}
+
+.transitionLT{
+  view-transition-name: LT;
+}
+
+@keyframes slide-to-left {
+  from {
+    left: 0%;
+  }
+  to {
+    left: -100%;
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0%;
+  }
+}
+
+::view-transition-old(LT) {
+  animation-name: slide-to-left;
+}
+
+::view-transition-new(LT) {
+  animation-name: slide-from-right;
+}

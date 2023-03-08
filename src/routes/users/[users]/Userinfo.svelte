@@ -21,7 +21,7 @@
 	});
 </script>
 
-<div class="flex flex-col items-center">
+<div class="transisionAvatar flex flex-col items-center">
 	<div style="height: {size}em; width: {size}em;" class="overflow-hidden rounded-full">
 		{#if avatarData}
 			<img src={avatarData} alt={avatarData ? 'Avatar' : 'No image'} />
