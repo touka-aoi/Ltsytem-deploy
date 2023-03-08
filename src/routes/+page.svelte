@@ -2,18 +2,31 @@
 	import LTInformation from './LtInformation.svelte';
 	import { base } from '$app/paths';
 	import type { PageData } from './$types';
+	import AccountRegister from './register/AccountRegister.svelte';
+	import {goto} from '$app/navigation';
 
 	export let data: PageData;
 	const latestLts = data.latestLts;
 	const latestLt = latestLts.data[0];
 	const holdPlace = "https://discord.gg/3cP8gScET7";
+
+
+	async function sendLatestLTPage()
+	{
+		const transition = document.startViewTransition(() => gotoLT());
+	}
+
+	async function gotoLT() 
+	{
+		await goto(`${base}/lts/${latestLt.id}`);
+	}
 </script>
 
 <!-- ヒーロー画面 -->
 <section>
 	<!-- 最新LT -->
 	<div class="bg-gray-300 h-50v flex items-center justify-center flex-col gap-10">
-		<a href="{base}/lts/{latestLt.id}" class="minibtn bg-slate-100 cursor-pointer shadow-md">LTに参加する</a>
+		<button on:click={sendLatestLTPage} class="minibtn bg-slate-100 cursor-pointer shadow-md">LTに参加する </button>
 		<a href="{holdPlace}" class="minibtn bg-discord	text-white cursor-pointer shadow-md">LTサーバーを覗いてみる</a>
 	</div>
 	
@@ -47,3 +60,4 @@
 		</div>
 	</div>
 </section>
+
